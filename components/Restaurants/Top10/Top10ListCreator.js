@@ -11,10 +11,10 @@ import {
 import IconContainer from './IconContainer'
 import PriceAndLocatio from './PriceAndLocatio'
 
-function Top10ListCreator({ ListedRes }) {
+function Top10ListCreator({ ListedRest }) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {ListedRes.map((list, index) => (
+      {ListedRest.map((list, index) => (
         <View key={index} style={styles.listContainer}>
           <View style={styles.textContainer}>
             <View style={styles.resHeaderCont}>

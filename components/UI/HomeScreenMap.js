@@ -1,22 +1,32 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  Text,
+  ActivityIndicator,
+  Dimensions,
+} from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 import * as Location from 'expo-location'
 
 export default function StartScreenMap() {
   const [location, setLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
+  const [mapDimensions, setMapDimensions] = useState({
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  })
 
   useEffect(() => {
     const getLocation = async () => {
       try {
-        await Location.requestForegroundPermissionsAsync()
-        // if (status !== 'granted') {
-        //   setErrorMsg('Permission to access location was denied')
-        //   return
-        // }
+        const { status } = await Location.requestForegroundPermissionsAsync()
+        if (status !== 'granted') {
+          setErrorMsg('Permission to access location was denied')
+          return
+        }
 
-        let loc = await Location.getCurrentPositionAsync({})
+        const loc = await Location.getCurrentPositionAsync({})
         setLocation(loc.coords)
       } catch (error) {
         setErrorMsg('Permission to access location was denied')
@@ -25,6 +35,19 @@ export default function StartScreenMap() {
     }
 
     getLocation()
+
+    const updateDimensions = () => {
+      setMapDimensions({
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height,
+      })
+    }
+
+    Dimensions.addEventListener('change', updateDimensions)
+
+    return () => {
+      Dimensions.removeEventListener('change', updateDimensions)
+    }
   }, [])
 
   if (errorMsg) {
@@ -46,30 +69,34 @@ export default function StartScreenMap() {
   }
 
   return (
-    <MapView
-      style={styles.map}
-      initialRegion={{
-        latitude: location.latitude,
-        longitude: location.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      }}
-    >
-      <Marker
-        coordinate={{
+    <View style={{ ...styles.mapContainer, ...mapDimensions }}>
+      <MapView
+        style={styles.map}
+        initialRegion={{
           latitude: location.latitude,
           longitude: location.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
         }}
-        title="Your Location"
-      />
-    </MapView>
+      >
+        <Marker
+          coordinate={{
+            latitude: location.latitude,
+            longitude: location.longitude,
+          }}
+          title="Your Location"
+        />
+      </MapView>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  mapContainer: {
+    flex: 1,
+  },
   map: {
-    height: '100%',
-    width: '100%',
+    flex: 1,
   },
   loadingIndicator: {
     flex: 1,

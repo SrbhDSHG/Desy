@@ -1,6 +1,3 @@
-import { View } from 'react-native'
-
-import HomeScreen from './components/HomeScreen/SlideInfoDisplay'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import LoginPage from './components/Login/LoginPage'
@@ -25,6 +22,7 @@ import { useEffect } from 'react'
 import EmailAdd from './components/SignUp/EmailAdd'
 import Top10Restaurants from './components/Restaurants/Top10/Top10Restaurants'
 import DataProvider from './components/store/context/DataContext'
+import ListPressed from './components/Restaurants/Top10/ListPressed'
 
 // import AppLoading from 'expo-app-loading'
 
@@ -63,7 +61,7 @@ export default function App() {
       <DataProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Email Add"
+            initialRouteName="Top10 Restaurants"
             screenOptions={{
               headerShown: true,
               title: '',
@@ -133,6 +131,16 @@ export default function App() {
             <Stack.Screen
               name="Top10 Restaurants"
               component={Top10Restaurants}
+            />
+            <Stack.Screen
+              name="Top 10 NYC Italian"
+              component={ListPressed}
+              options={{
+                headerShown: true,
+                headerBackTitleVisible: true,
+                headerShadowVisible: true,
+                headerTransparent: false,
+              }}
             />
           </Stack.Navigator>
         </NavigationContainer>

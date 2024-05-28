@@ -1,27 +1,64 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { ImageBackground, StyleSheet, Text, View } from 'react-native'
 import TopDish from '../../Utility/StaticData/DishesPics/TopPic.jpeg'
 import ListAndMapTab from './ListAndMapTab'
 import { Top10DishList } from '../../Utility/StaticData/Top10ResData'
-import Top10ListCreator from './Top10Listed'
+import Top10ListCreator from './Top10ListCreator'
 
 import InfoText from './InfoText'
+import OnMapListed from './OnMapListed'
+import ListPressed from './ListPressed'
 
+const tabs = [
+  { text: 'List', iconName: 'list' },
+  { text: 'Map', iconName: 'map-pin' },
+]
 function Top10Restaurants() {
+  const [tabSelected, setTabSelected] = useState(false)
+  const [activeTab, setActiveTab] = useState(tabs[0])
+  const tabSelectHandler = () => {
+    setTabSelected(true)
+  }
+  const handlePress = (tab) => {
+    setActiveTab(tab)
+    console.log(`${tab.text} pressed`)
+    // tabSelected()
+    setTabSelected(true)
+  }
   return (
     <View style={styles.container}>
-      <View style={styles.TopDishPicContainer}>
-        <ImageBackground source={TopDish} style={styles.TopDishPic} />
-        <View style={styles.desyAndMapContainer}>
-          <Text style={styles.desyText}>Desy</Text>
-          <ListAndMapTab />
-        </View>
-        <InfoText />
-      </View>
-      <View style={styles.ListItem}>
-        <Top10ListCreator ListedRes={Top10DishList.reverse()} />
-      </View>
+      {tabSelected ? (
+        activeTab.text === 'Map' ? (
+          <OnMapListed />
+        ) : (
+          <>
+            <ListPressed
+              activeTab={activeTab}
+              handlePress={handlePress}
+              tabs={tabs}
+            />
+          </>
+        )
+      ) : (
+        <>
+          <View style={styles.TopDishPicContainer}>
+            <ImageBackground source={TopDish} style={styles.TopDishPic} />
+            <View style={styles.desyAndMapContainer}>
+              <Text style={styles.desyText}>Desy</Text>
+              <ListAndMapTab
+                activeTab={activeTab}
+                handlePress={handlePress}
+                tabs={tabs}
+              />
+            </View>
+            <InfoText />
+          </View>
+          <View style={styles.ListItem}>
+            <Top10ListCreator ListedRest={Top10DishList.reverse()} />
+          </View>
+        </>
+      )}
     </View>
   )
 }

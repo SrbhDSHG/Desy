@@ -1,17 +1,22 @@
 import React, { useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Feather } from '@expo/vector-icons'
+import OnMapListed from './OnMapListed'
+import { Top10DishList } from '../../Utility/StaticData/Top10ResData'
+import Top10Listed from './Top10ListCreator'
+import Top10ListCreator from './Top10ListCreator'
 
-const tabs = [
-  { text: 'List', iconName: 'list' },
-  { text: 'Map', iconName: 'map-pin' },
-]
-function ListAndMapTab() {
-  const [activeTab, setActiveTab] = useState(tabs[0])
+// const tabs = [
+//   { text: 'List', iconName: 'list' },
+//   { text: 'Map', iconName: 'map-pin' },
+// ]
+function ListAndMapTab({ handlePress, tabs, activeTab }) {
+  // const [activeTab, setActiveTab] = useState(tabs[0])
+  // const [tabSelected, setTabSelected] = useState(false)
   const handlePrss = (tab) => {
-    setActiveTab(tab)
-    console.log(`${tab.text} pressed`)
+    handlePress(tab)
   }
+
   return (
     <View style={styles.container}>
       {tabs.map((tab, index) => (
@@ -55,7 +60,6 @@ const styles = StyleSheet.create({
   tab: {
     width: 80,
     height: 40,
-    // backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'space-evenly',
     borderRadius: 10,
