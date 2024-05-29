@@ -5,14 +5,14 @@ import OnMapListed from './OnMapListed'
 import { Top10DishList } from '../../Utility/StaticData/Top10ResData'
 import Top10Listed from './Top10ListCreator'
 import Top10ListCreator from './Top10ListCreator'
+import { useData } from '../../store/context/DataContext'
 
 // const tabs = [
 //   { text: 'List', iconName: 'list' },
 //   { text: 'Map', iconName: 'map-pin' },
 // ]
-function ListAndMapTab({ handlePress, tabs, activeTab }) {
-  // const [activeTab, setActiveTab] = useState(tabs[0])
-  // const [tabSelected, setTabSelected] = useState(false)
+function ListAndMapTab({ handlePress }) {
+  const { activeTab, tabs } = useData()
   const handlePrss = (tab) => {
     handlePress(tab)
   }
@@ -20,20 +20,26 @@ function ListAndMapTab({ handlePress, tabs, activeTab }) {
   return (
     <View style={styles.container}>
       {tabs.map((tab, index) => (
-        <Pressable key={index} onPress={() => handlePrss(tab)}>
+        <Pressable key={index} onPress={() => handlePrss(tab.text)}>
           <View
-            style={[styles.tab, activeTab === tab && styles.pressedBackground]}
+            style={[
+              styles.tab,
+              activeTab === tab.text && styles.pressedBackground,
+            ]}
           >
             <Feather
               name={tab.iconName}
               size={18}
               style={[
                 styles.iconColor,
-                activeTab === tab && styles.iconPressedColor,
+                activeTab === tab.text && styles.iconPressedColor,
               ]}
             />
             <Text
-              style={[styles.tabText, activeTab == tab && styles.pressedColor]}
+              style={[
+                styles.tabText,
+                activeTab == tab.text && styles.pressedColor,
+              ]}
             >
               {tab.text}
             </Text>

@@ -9,56 +9,43 @@ import Top10ListCreator from './Top10ListCreator'
 import InfoText from './InfoText'
 import OnMapListed from './OnMapListed'
 import ListPressed from './ListPressed'
+import { useData } from '../../store/context/DataContext'
 
 const tabs = [
   { text: 'List', iconName: 'list' },
   { text: 'Map', iconName: 'map-pin' },
 ]
+
 function Top10Restaurants() {
-  const [tabSelected, setTabSelected] = useState(false)
-  const [activeTab, setActiveTab] = useState(tabs[0])
+  const {
+    activeTab,
+    setActiveTab,
+    tabSelected,
+    setTabSelected,
+    TopTenReversed,
+  } = useData()
   const tabSelectHandler = () => {
     setTabSelected(true)
   }
   const handlePress = (tab) => {
     setActiveTab(tab)
-    console.log(`${tab.text} pressed`)
+    console.log(`${tab} pressed`)
     // tabSelected()
     setTabSelected(true)
   }
   return (
     <View style={styles.container}>
-      {tabSelected ? (
-        activeTab.text === 'Map' ? (
-          <OnMapListed />
-        ) : (
-          <>
-            <ListPressed
-              activeTab={activeTab}
-              handlePress={handlePress}
-              tabs={tabs}
-            />
-          </>
-        )
-      ) : (
-        <>
-          <View style={styles.TopDishPicContainer}>
-            <ImageBackground source={TopDish} style={styles.TopDishPic} />
-            <View style={styles.desyAndMapContainer}>
-              <Text style={styles.desyText}>Desy</Text>
-              <ListAndMapTab
-                activeTab={activeTab}
-                handlePress={handlePress}
-                tabs={tabs}
-              />
-            </View>
-            <InfoText />
-          </View>
-          <View style={styles.ListItem}>
-            <Top10ListCreator ListedRest={Top10DishList.reverse()} />
-          </View>
-        </>
-      )}
+      <View style={styles.TopDishPicContainer}>
+        <ImageBackground source={TopDish} style={styles.TopDishPic} />
+        <View style={styles.desyAndMapContainer}>
+          <Text style={styles.desyText}>Desy</Text>
+          <ListAndMapTab handlePress={handlePress} />
+        </View>
+        <InfoText />
+      </View>
+      <View style={styles.ListItem}>
+        <Top10ListCreator />
+      </View>
     </View>
   )
 }

@@ -10,11 +10,13 @@ import {
 } from 'react-native'
 import IconContainer from './IconContainer'
 import PriceAndLocatio from './PriceAndLocatio'
+import { useData } from '../../store/context/DataContext'
 
-function Top10ListCreator({ ListedRest }) {
+function Top10ListCreator() {
+  const { TopTenReversed } = useData()
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {ListedRest.map((list, index) => (
+      {TopTenReversed.map((list, index) => (
         <View key={index} style={styles.listContainer}>
           <View style={styles.textContainer}>
             <View style={styles.resHeaderCont}>

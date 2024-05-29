@@ -4,7 +4,7 @@ import Top10ListCreator from './Top10ListCreator'
 import { Top10DishList } from '../../Utility/StaticData/Top10ResData'
 import { StyleSheet, View } from 'react-native'
 import Container from '../../UI/Container'
-
+const TopTenReversed = Top10DishList.slice().reverse()
 function ListPressed({ activeTab, handlePress, tabs }) {
   return (
     <View style={styles.container}>
@@ -16,7 +16,7 @@ function ListPressed({ activeTab, handlePress, tabs }) {
         />
       </View>
       <View style={styles.top10}>
-        <Top10ListCreator ListedRest={Top10DishList.reverse()} />
+        <Top10ListCreator ListedRest={TopTenReversed} />
       </View>
     </View>
   )

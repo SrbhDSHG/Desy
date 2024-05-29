@@ -1,5 +1,7 @@
 import { createContext, useContext, useState } from 'react'
 import { fetchEmailVerify, fetchOtpVerify } from './DataService'
+import { useTabs } from '../useTabs'
+import { Top10DishList } from '../../Utility/StaticData/Top10ResData'
 
 const defaultValue = {
   firstName: '',
@@ -22,7 +24,16 @@ const defaultValue = {
   setDietaryRestriction: () => {},
   defaultCity: '',
   setDefaultCity: () => {},
+  tabSelected: '',
+  setTabSelected: () => {},
+  activeTab: '',
+  setActiveTab: () => {},
 }
+export const tabs = [
+  { text: 'List', iconName: 'list' },
+  { text: 'Map', iconName: 'map-pin' },
+]
+export const TopTenReversed = Top10DishList.slice().reverse()
 
 export const DataContext = createContext(defaultValue)
 
@@ -40,6 +51,8 @@ function DataProvider({ children }) {
   const [dietaryRestriction, setDietaryRestriction] = useState([])
   const [defaultCity, setDefaultCity] = useState([])
   const [emailVerified, setEmailVerified] = useState(false)
+
+  const { activeTab, setActiveTab, tabSelected, setTabSelected } = useTabs(tabs)
 
   // firstName && console.log('firstName: , lastName:', firstName, lastName)
   // phoneNumber && console.log('phoneNumber:', phoneNumber)
@@ -88,6 +101,12 @@ function DataProvider({ children }) {
     emailverification,
     otpverification,
     setEmailVerified,
+    tabs,
+    activeTab,
+    setActiveTab,
+    tabSelected,
+    setTabSelected,
+    TopTenReversed,
   }
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>
 }

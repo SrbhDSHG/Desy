@@ -23,6 +23,7 @@ import EmailAdd from './components/SignUp/EmailAdd'
 import Top10Restaurants from './components/Restaurants/Top10/Top10Restaurants'
 import DataProvider from './components/store/context/DataContext'
 import ListPressed from './components/Restaurants/Top10/ListPressed'
+import OnMapListed from './components/Restaurants/Top10/OnMapListed'
 
 // import AppLoading from 'expo-app-loading'
 
@@ -137,6 +138,17 @@ export default function App() {
               component={ListPressed}
               options={{
                 headerShown: true,
+                headerBackTitleVisible: true,
+                headerShadowVisible: true,
+                headerTransparent: false,
+              }}
+            />
+            <Stack.Screen
+              name="OnMapListed"
+              component={OnMapListed}
+              options={{
+                headerShown: true,
+                title: 'Top 10 NYC Italian',
                 headerBackTitleVisible: true,
                 headerShadowVisible: true,
                 headerTransparent: false,
