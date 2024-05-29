@@ -16,7 +16,7 @@ const tabs = [
   { text: 'Map', iconName: 'map-pin' },
 ]
 
-function Top10Restaurants() {
+function Top10Restaurants({ navigation }) {
   const {
     activeTab,
     setActiveTab,
@@ -24,14 +24,16 @@ function Top10Restaurants() {
     setTabSelected,
     TopTenReversed,
   } = useData()
-  const tabSelectHandler = () => {
-    setTabSelected(true)
-  }
+
   const handlePress = (tab) => {
-    setActiveTab(tab)
-    console.log(`${tab} pressed`)
     // tabSelected()
-    setTabSelected(true)
+    // tab == 'List' && navigation.navigate('List View Pressed')
+    if (tab == 'List') {
+      navigation.navigate('List View Pressed')
+    }
+    if (tab == 'Map') {
+      navigation.navigate('OnMapListed')
+    }
   }
   return (
     <View style={styles.container}>

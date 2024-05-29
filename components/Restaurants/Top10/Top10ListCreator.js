@@ -41,7 +41,6 @@ export default Top10ListCreator
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    // paddingVertical: 20,
     paddingHorizontal: 10,
   },
   listContainer: {

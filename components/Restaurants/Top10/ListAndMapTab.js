@@ -7,13 +7,12 @@ import Top10Listed from './Top10ListCreator'
 import Top10ListCreator from './Top10ListCreator'
 import { useData } from '../../store/context/DataContext'
 
-// const tabs = [
-//   { text: 'List', iconName: 'list' },
-//   { text: 'Map', iconName: 'map-pin' },
-// ]
 function ListAndMapTab({ handlePress }) {
-  const { activeTab, tabs } = useData()
+  const { tabs, activeTab, setActiveTab, setTabSelected } = useData()
   const handlePrss = (tab) => {
+    setActiveTab(tab)
+    setTabSelected(true)
+    console.log(`${tab} pressed`)
     handlePress(tab)
   }
 

@@ -1,15 +1,11 @@
 import { StyleSheet, View } from 'react-native'
 import HomeScreenMap from '../../UI/HomeScreenMap'
 import ListAndMapTab from './ListAndMapTab'
-function OnMapListed({ activeTab, handlePress, tabs }) {
+function OnMapListed() {
   return (
     <View style={styles.container}>
       <View style={styles.listAndMap}>
-        <ListAndMapTab
-          activeTab={activeTab}
-          handlePress={handlePress}
-          tabs={tabs}
-        />
+        <ListAndMapTab />
       </View>
       <HomeScreenMap />
     </View>

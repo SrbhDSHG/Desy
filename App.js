@@ -24,6 +24,7 @@ import Top10Restaurants from './components/Restaurants/Top10/Top10Restaurants'
 import DataProvider from './components/store/context/DataContext'
 import ListPressed from './components/Restaurants/Top10/ListPressed'
 import OnMapListed from './components/Restaurants/Top10/OnMapListed'
+import ShareIcon from './components/UI/ShareIcon'
 
 // import AppLoading from 'expo-app-loading'
 
@@ -142,6 +143,25 @@ export default function App() {
                 headerShadowVisible: true,
                 headerTransparent: false,
               }}
+            />
+            <Stack.Screen
+              name="List View Pressed"
+              component={ListPressed}
+              options={({ navigation }) => ({
+                headerRight: () => (
+                  <ShareIcon
+                    icon="share"
+                    size={24}
+                    color={'black'}
+                    onPress={() => navigation.navigate('')}
+                  />
+                ),
+                headerShown: true,
+                title: 'Top 10 NYC Italian',
+                headerBackTitleVisible: true,
+                headerShadowVisible: false,
+                headerTransparent: false,
+              })}
             />
             <Stack.Screen
               name="OnMapListed"

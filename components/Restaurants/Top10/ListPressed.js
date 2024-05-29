@@ -1,22 +1,19 @@
 import React from 'react'
 import ListAndMapTab from './ListAndMapTab'
 import Top10ListCreator from './Top10ListCreator'
-import { Top10DishList } from '../../Utility/StaticData/Top10ResData'
 import { StyleSheet, View } from 'react-native'
-import Container from '../../UI/Container'
-const TopTenReversed = Top10DishList.slice().reverse()
-function ListPressed({ activeTab, handlePress, tabs }) {
+
+function ListPressed() {
+  // const { setActiveTab } = useData()
   return (
     <View style={styles.container}>
-      <View style={styles.listAndMap}>
-        <ListAndMapTab
-          activeTab={activeTab}
-          handlePress={handlePress}
-          tabs={tabs}
-        />
+      <View style={styles.forElevation}>
+        <View style={styles.listAndMap}>
+          <ListAndMapTab />
+        </View>
       </View>
-      <View style={styles.top10}>
-        <Top10ListCreator ListedRest={TopTenReversed} />
+      <View style={styles.top10ListContainer}>
+        <Top10ListCreator />
       </View>
     </View>
   )
@@ -25,18 +22,24 @@ function ListPressed({ activeTab, handlePress, tabs }) {
 export default ListPressed
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
   },
-  listAndMap: {
-    marginTop: 200,
-    elevation: 2,
-
+  forElevation: {
+    marginTop: 30,
+    elevation: 1,
     width: '100%',
+    paddingVertical: 10,
+    // flex: 1,
   },
-  top10: {
-    position: 'relative',
+  listAndMap: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    // paddingVertical: 2,
+  },
+  top10ListContainer: {
+    // position: 'absolute',
   },
 })
