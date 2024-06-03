@@ -7,6 +7,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import ButtonDesyV2 from '../Utility/ButtonDesy'
 import CircleWithGradient from '../Utility/CircleWithGradient'
 import CardContainer from '../UI/CardContainer'
+import * as Location from 'expo-location'
 
 const bodyTextLines = [
   'Desy needs location permission in',
@@ -17,6 +18,7 @@ const bodyTextLines = [
 function DesyAnyWhere({ navigation }) {
   const buttonPressHanlder = () => {
     console.log('Allow location')
+    navigationPressHandler()
   }
   const navigationPressHandler = () => {
     setTimeout(() => {

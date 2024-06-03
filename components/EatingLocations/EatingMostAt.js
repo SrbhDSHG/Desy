@@ -7,7 +7,7 @@ import { importantCitiesUSA } from '../Utility/StaticData/USCityList'
 import { Entypo } from '@expo/vector-icons'
 import SnackbarCreator from '../Utility/SnackbarCreator'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { AddCityList } from '../Utility/AddCityList'
+import { addArrayList } from '../Utility/AddArrayList'
 import { useData } from '../store/context/DataContext'
 
 bodyText = (
@@ -32,7 +32,7 @@ function EatingMostAt({ navigation }) {
   const pressHandler = (id) => {
     console.log(importantCitiesUSA[id - 1].name)
     const city = importantCitiesUSA[id - 1].name
-    setDefaultCity((prev) => AddCityList(city, prev))
+    setDefaultCity((prev) => addArrayList(city, prev))
   }
   const buttonPressHandler = () => {
     setTimeout(() => {

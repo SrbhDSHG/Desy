@@ -15,6 +15,10 @@ const bodyTextLines = [
 ]
 
 function FindYourFriends({ navigation }) {
+  const pressToAllowContacts = () => {
+    console.log('Contacts are allowed')
+    onPressHandler()
+  }
   const onPressHandler = () => {
     setTimeout(() => {
       navigation.navigate('Stay Connected')
@@ -71,7 +75,11 @@ function FindYourFriends({ navigation }) {
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <ButtonDesyV2 buttonText={'Allow Contacts'} isEnabled={true} />
+        <ButtonDesyV2
+          buttonText={'Allow Contacts'}
+          isEnabled={true}
+          onPress={pressToAllowContacts}
+        />
       </View>
 
       <Text onPress={onPressHandler} style={styles.notNowText}>

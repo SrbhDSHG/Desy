@@ -1,28 +1,37 @@
-import React from 'react'
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native'
+import React, { useState } from 'react'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import PriceAndLocatio from './PriceAndLocatio'
 import { useData } from '../../store/context/DataContext'
+import ImageWithLoadingIndicator from '../../Utility/ImageWithLoadingIndicator'
 
 function Top10ListCreator() {
-  const { TopTenReversed } = useData()
+  const [loading, setLoading] = useState(true)
+  const { top10RestList } = useData()
+  // console.log('Top 10 list :', top10RestList)
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {TopTenReversed.map((list, index) => (
-        <View key={index} style={styles.listContainer}>
-          <View style={styles.textContainer}>
-            <View style={styles.resHeaderCont}>
-              <Text style={[styles.resName, styles.number]}>{`${
-                10 - index
-              }.`}</Text>
-              <Text style={styles.resName}>{list.resName}</Text>
+      {top10RestList
+        .slice()
+        .reverse()
+        .map((list, index) => (
+          <View key={index} style={styles.listContainer}>
+            <View style={styles.textContainer}>
+              <View style={styles.resHeaderCont}>
+                <Text style={[styles.resName, styles.number]}>{`${
+                  10 - index
+                }.`}</Text>
+                <Text style={styles.resName}>{list.name}</Text>
+              </View>
+              <PriceAndLocatio list={list} />
             </View>
-            <PriceAndLocatio list={list} />
+            <View style={[styles.imageContainer, styles.image]}>
+              <ImageWithLoadingIndicator
+                source={{ uri: list.imagelink }}
+                style={styles.image}
+              />
+            </View>
           </View>
-          <View style={[styles.imageContainer, styles.image]}>
-            <Image source={list.image} style={styles.image} />
-          </View>
-        </View>
-      ))}
+        ))}
     </ScrollView>
   )
 }

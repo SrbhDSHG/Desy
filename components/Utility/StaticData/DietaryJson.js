@@ -1,26 +1,4 @@
-// export const dietaryRestriction = [
-//   'Dairy Allergy',
-//   'Gluten Free',
-//   'Halal',
-//   'Kosher',
-//   'No Beef',
-//   'Nut Allergy',
-//   'Lactose Intolerant',
-//   'Vegetarian',
-//   'Vegan',
-//   'No Alcohol',
-//   'No Egg',
-//   'No Pork',
-//   'No Fish',
-//   'Soy-Free',
-//   'Low Carb',
-//   'Low FODMAP',
-//   'Mediterranean Diet',
-//   'Paleo Diet',
-//   'Shellfish-Free',
-// ]
-
-export const dietaryRestriction = [
+export const dietaryRestrictionList = [
   { id: '1', name: 'Dairy Allergy' },
   { id: '2', name: 'Gluten Free' },
   { id: '3', name: 'Halal' },

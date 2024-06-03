@@ -22,13 +22,12 @@ function ListPressed({ navigation }) {
 export default ListPressed
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
   },
   forElevation: {
-    marginTop: 30,
     elevation: 5,
     width: '100%',
     paddingVertical: 10,
@@ -41,6 +40,7 @@ const styles = StyleSheet.create({
     // paddingVertical: 2,
   },
   top10ListContainer: {
+    flex: 1,
     // position: 'absolute',
   },
 })

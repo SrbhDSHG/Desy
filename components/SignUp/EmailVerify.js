@@ -34,7 +34,7 @@ const EmailVerify = ({ navigation }) => {
     }
   }
   const onPressHandle = async () => {
-    console.log('value of the otp', otp.join(''))
+    // console.log('value of the otp', otp.join(''))
     const response = await otpverification(email, otp.join(''))
     if (response.message === 'OTP Verified') {
       setEmailVerified(true)

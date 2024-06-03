@@ -1,46 +1,38 @@
 import React, { useState } from 'react'
-import {
-  FlatList,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
 import { cuisineTypes } from '../Utility/StaticData/CusineType'
 import SnackbarCreator from '../Utility/SnackbarCreator'
 import HeadingCreator from '../UI/HeadingCreator'
-import { FontAwesome } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Entypo } from '@expo/vector-icons'
 import ButtonDesyV2 from '../Utility/ButtonDesy'
 import Container from '../UI/Container'
+import { addArrayList } from '../Utility/AddArrayList'
+import { useData } from '../store/context/DataContext'
 
 function CuisineNotLike({ navigation }) {
   const [restrictionArray, setRestrictionArray] = useState(
     cuisineTypes.slice(0, 6)
   )
-  const [showMore, setShowMore] = useState(false)
+  const { cuisineNotLike, setCuisineNotLike } = useData()
+  // const [showMore, setShowMore] = useState(false)
   const [selectedRestrictions, setSelectedRestrictions] = useState('')
 
-  const toggleItemSelect = (item) => {}
+  // const toggleItemSelect = (item) => {}
 
   const pressHandler = (id) => {
-    if (selectedRestrictions.includes(id)) {
-      setSelectedRestrictions((prevIds) =>
-        prevIds.filter((itemId) => itemId !== id)
-      )
-    } else {
-      setSelectedRestrictions((prevIds) => [...prevIds, id])
-    }
+    console.log(cuisineTypes[id - 1].name)
+    const cuisines = cuisineTypes[id - 1].name
+    setCuisineNotLike((prev) => addArrayList(cuisines, prev))
   }
   const toggleShowMore = () => {
     setRestrictionArray(cuisineTypes.slice(6, -1))
   }
   const buttonPressHandler = () => {
     setTimeout(() => {
+      if (cuisineNotLike.length == 0) {
+        setCuisineNotLike('I like everthing')
+      }
       navigation.navigate('Dietary Restriction')
     }, 300)
   }
@@ -81,9 +73,7 @@ function CuisineNotLike({ navigation }) {
       <View style={styles.buttonContainer}>
         <ButtonDesyV2
           buttonText={
-            selectedRestrictions.length > 0
-              ? 'Continue'
-              : 'Nope, I like everything'
+            cuisineNotLike.length > 0 ? 'Continue' : 'Nope, I like everything'
           }
           isEnabled={true}
           onPress={buttonPressHandler}

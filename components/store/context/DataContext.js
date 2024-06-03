@@ -1,5 +1,9 @@
-import { createContext, useContext, useState } from 'react'
-import { fetchEmailVerify, fetchOtpVerify } from './DataService'
+import { createContext, useContext, useEffect, useState } from 'react'
+import {
+  fetchEmailVerify,
+  fetchOtpVerify,
+  fetchRestaurants,
+} from './DataService'
 import { useTabs } from '../useTabs'
 import { Top10DishList } from '../../Utility/StaticData/Top10ResData'
 
@@ -16,7 +20,7 @@ const defaultValue = {
 
   cuisineNotLike: [],
   setCuisineNotLike: () => {},
-  image: '',
+  imagelink: '',
   setImage: () => {},
   cuisineNotLike: [],
   setCuisineNotLike: () => {},
@@ -33,11 +37,14 @@ export const tabs = [
   { text: 'List', iconName: 'list' },
   { text: 'Map', iconName: 'map-pin' },
 ]
-export const TopTenReversed = Top10DishList.slice().reverse()
+// export const TopTenReversed = []
+// export const TopTenReversed = Top10DishList.slice().reverse()
+// export const TopTenReversed = await fetchRestaurants.data.restaurants
 
 export const DataContext = createContext(defaultValue)
 
 export const useData = () => useContext(DataContext)
+
 function DataProvider({ children }) {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -45,23 +52,33 @@ function DataProvider({ children }) {
   const [email, setEmail] = useState('')
   const [usrName, setUsrName] = useState('')
   const [password, setPassword] = useState('')
-  const [image, setImage] = useState(null)
+  const [imagelink, setImage] = useState(null)
   const [photoAdded, setPhotoAdded] = useState(false)
   const [cuisineNotLike, setCuisineNotLike] = useState([])
   const [dietaryRestriction, setDietaryRestriction] = useState([])
   const [defaultCity, setDefaultCity] = useState([])
   const [emailVerified, setEmailVerified] = useState(false)
+  const [top10RestList, setTop10RestList] = useState([])
 
   const { activeTab, setActiveTab, tabSelected, setTabSelected } = useTabs(tabs)
 
+  useEffect(() => {
+    const fetchRestaurantsList = async () => {
+      const response = await fetchRestaurants()
+      setTop10RestList(response.data.restaurants)
+    }
+    fetchRestaurantsList()
+  }, [])
   // firstName && console.log('firstName: , lastName:', firstName, lastName)
   // phoneNumber && console.log('phoneNumber:', phoneNumber)
   // email && console.log('email:', email)
   // password && console.log('password:', password)
-  // image && console.log('image:', image)
+  imagelink && console.log('image:', image)
   // cuisineNotLike && console.log('cuisineNotLike:', cuisineNotLike)
   // usrName && console.log('usrName:', usrName)
   // defaultCity && console.log('defaultCity:', defaultCity)
+  // dietaryRestriction && console.log('dietaryRestriction:', dietaryRestriction)
+
   const emailverification = async (email) => {
     console.log('In the  data context', email)
     const response = await fetchEmailVerify(email)
@@ -71,6 +88,24 @@ function DataProvider({ children }) {
     console.log('In the  data context', email, otp)
     const response = await fetchOtpVerify(email, otp)
     console.log('response of otp verification', response.data)
+    return response.data
+  }
+  const createUser = async () => {
+    const response = await sendUserData(
+      firstName,
+      lastName,
+      phoneNumber,
+      photoAdded,
+      email,
+      password,
+      imagelink,
+      cuisineNotLike,
+      dietaryRestriction,
+      usrName,
+      defaultCity,
+      emailVerified
+    )
+    console.log('User created :', response)
     return response.data
   }
 
@@ -87,7 +122,7 @@ function DataProvider({ children }) {
     setEmail,
     password,
     setPassword,
-    image,
+    imagelink,
     setImage,
     photoAdded,
     setPhotoAdded,
@@ -106,7 +141,9 @@ function DataProvider({ children }) {
     setActiveTab,
     tabSelected,
     setTabSelected,
-    TopTenReversed,
+    // TopTenReversed,
+    top10RestList,
+    createUser,
   }
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>
 }

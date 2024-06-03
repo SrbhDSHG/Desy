@@ -11,6 +11,7 @@ import * as Location from 'expo-location'
 
 export default function StartScreenMap() {
   const [location, setLocation] = useState(null)
+  const [permissionStatus, setPermissionStatus] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
   const [mapDimensions, setMapDimensions] = useState({
     width: Dimensions.get('window').width,
@@ -18,10 +19,11 @@ export default function StartScreenMap() {
   })
 
   useEffect(() => {
-    const getLocation = async () => {
+    const requestLocationPermission = async () => {
       try {
         // Request permission to access location
         const { status } = await Location.requestForegroundPermissionsAsync()
+        setPermissionStatus(status)
         console.log('Permission status:', status)
 
         if (status !== 'granted') {
@@ -40,7 +42,7 @@ export default function StartScreenMap() {
       }
     }
 
-    getLocation()
+    requestLocationPermission()
 
     const updateDimensions = () => {
       setMapDimensions({
@@ -55,6 +57,16 @@ export default function StartScreenMap() {
       Dimensions.removeEventListener('change', updateDimensions)
     }
   }, [])
+
+  if (permissionStatus === null) {
+    return (
+      <ActivityIndicator
+        size="large"
+        color="#03A4FF"
+        style={styles.loadingIndicator}
+      />
+    )
+  }
 
   if (errorMsg) {
     return (

@@ -1,33 +1,31 @@
 import React, { useState } from 'react'
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
-import { dietaryRestriction } from '../Utility/StaticData/DietaryJson'
+import { dietaryRestrictionList } from '../Utility/StaticData/DietaryJson'
 import SnackbarCreator from '../Utility/SnackbarCreator'
 import HeadingCreator from '../UI/HeadingCreator'
 import { FontAwesome } from '@expo/vector-icons'
 import { Entypo } from '@expo/vector-icons'
 import ButtonDesyV2 from '../Utility/ButtonDesy'
 import Container from '../UI/Container'
+import { useData } from '../store/context/DataContext'
+import { addArrayList } from '../Utility/AddArrayList'
 
 function DietaryRest({ navigation }) {
   const [restrictionArray, setRestrictionArray] = useState(
-    dietaryRestriction.slice(0, 6)
+    dietaryRestrictionList.slice(0, 6)
   )
+  const { dietaryRestriction, setDietaryRestriction } = useData()
   const [showMore, setShowMore] = useState(false)
-  const [selectedRestrictions, setSelectedRestrictions] = useState('')
 
   const toggleItemSelect = (item) => {}
 
   const pressHandler = (id) => {
-    if (selectedRestrictions.includes(id)) {
-      setSelectedRestrictions((prevIds) =>
-        prevIds.filter((itemId) => itemId !== id)
-      )
-    } else {
-      setSelectedRestrictions((prevIds) => [...prevIds, id])
-    }
+    console.log(dietaryRestrictionList[id - 1].name)
+    const restriction = dietaryRestrictionList[id - 1].name
+    setDietaryRestriction((prev) => addArrayList(restriction, prev))
   }
   const toggleShowMore = () => {
-    setRestrictionArray(dietaryRestriction.slice(6, -1))
+    setRestrictionArray(dietaryRestrictionList.slice(6, -1))
   }
   const buttonPressHandler = () => {
     setTimeout(() => {
@@ -64,7 +62,7 @@ function DietaryRest({ navigation }) {
       </View>
       <View style={styles.buttonContainer}>
         <ButtonDesyV2
-          buttonText={selectedRestrictions.length > 0 ? 'Continue' : 'Nope'}
+          buttonText={dietaryRestriction.length > 0 ? 'Continue' : 'Nope'}
           isEnabled={true}
           onPress={buttonPressHandler}
         />

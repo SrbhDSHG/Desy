@@ -11,11 +11,11 @@ function PriceAndLocatio({ list }) {
         </Text>
         <Text style={styles.vertical}>|</Text>
         <Text style={[styles.type, styles.fontTypeToSubLettr]}>
-          {list.type}
+          {`${list.dishType}`}
         </Text>
       </View>
       <Text style={[styles.location, styles.fontTypeToSubLettr]}>
-        {list.location}
+        {`${list.address.borough}, ${list.address.neighbourhood}`}
       </Text>
       <IconContainer />
     </View>

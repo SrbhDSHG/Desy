@@ -1,10 +1,11 @@
 import { LinearGradient } from 'expo-linear-gradient'
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import ButtonDesyV2 from '../Utility/ButtonDesy'
 import CircleWithGradient from '../Utility/CircleWithGradient'
 import CardContainer from '../UI/CardContainer'
+import { useData } from '../store/context/DataContext'
 
 // const bodyTextLines = [
 //   'We’ll send you notifications when',
@@ -17,10 +18,17 @@ const bodyTextLines =
   'We’ll send you notifications when your friends interact with you, when new friends join, and when we have exclusive restaurant info to share!'
 
 function StayConnected({ navigation }) {
-  const onPressHandler = () => {
-    setTimeout(() => {
-      navigation.navigate('Top10 Restaurants')
-    }, 300)
+  const { createUser } = useData()
+  const [loading, setLoading] = useState(false)
+  const onPressHandler = async () => {
+    const response = await createUser()
+    setLoading(true)
+    if (response.status === 'success') {
+      setLoading(false)
+      setTimeout(() => {
+        navigation.navigate('Top10 Restaurants')
+      }, 300)
+    }
   }
   return (
     <View style={styles.container}>
@@ -46,6 +54,19 @@ function StayConnected({ navigation }) {
       <Text style={styles.notNowText} onPress={onPressHandler}>
         Not Now
       </Text>
+
+      <Modal
+        transparent={true}
+        animationType="none"
+        visible={loading}
+        onRequestClose={() => setLoading(false)}
+      >
+        <View style={styles.modalBackground}>
+          <View style={styles.activityIndicatorWrapper}>
+            <ActivityIndicator size="large" color="#03A4FF" />
+          </View>
+        </View>
+      </Modal>
     </View>
   )
 }
@@ -89,5 +110,20 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#6E6E6E',
     marginVertical: 20,
+  },
+  modalBackground: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  activityIndicatorWrapper: {
+    backgroundColor: '#FFFFFF',
+    height: 100,
+    width: 100,
+    borderRadius: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 })
