@@ -1,35 +1,28 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Modal, ActivityIndicator } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import ButtonDesyV2 from '../Utility/ButtonDesy'
 import CircleWithGradient from '../Utility/CircleWithGradient'
 import CardContainer from '../UI/CardContainer'
 import { useData } from '../store/context/DataContext'
 
-// const bodyTextLines = [
-//   'We’ll send you notifications when',
-//   'your friends interact with you,',
-//   'when new friends join, and',
-//   'when we have exclusive restaurant info',
-//   'to share!',
-// ]
 const bodyTextLines =
   'We’ll send you notifications when your friends interact with you, when new friends join, and when we have exclusive restaurant info to share!'
 
 function StayConnected({ navigation }) {
   const { createUser } = useData()
   const [loading, setLoading] = useState(false)
+
   const onPressHandler = async () => {
-    const response = await createUser()
     setLoading(true)
+    const response = await createUser()
+    setLoading(false)
     if (response.status === 'success') {
-      setLoading(false)
-      setTimeout(() => {
-        navigation.navigate('Top10 Restaurants')
-      }, 300)
+      navigation.navigate('Top10 Restaurants')
     }
   }
+
   return (
     <View style={styles.container}>
       <CardContainer>
@@ -50,7 +43,6 @@ function StayConnected({ navigation }) {
           onPress={onPressHandler}
         />
       </View>
-
       <Text style={styles.notNowText} onPress={onPressHandler}>
         Not Now
       </Text>
@@ -63,7 +55,7 @@ function StayConnected({ navigation }) {
       >
         <View style={styles.modalBackground}>
           <View style={styles.activityIndicatorWrapper}>
-            <ActivityIndicator size="large" color="#03A4FF" />
+            <ActivityIndicator size="large" color="#0000ff" />
           </View>
         </View>
       </Modal>
@@ -86,7 +78,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
   headerText: {
     marginVertical: 5,
     fontSize: 26,
@@ -96,11 +87,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: 10,
     fontSize: 16,
-  },
-  cardWrapper: {
-    borderRadius: 10,
-    overflow: 'hidden', // Clip child views to the bounds of this View
-    elevation: 0.3,
   },
   buttonContainer: {
     marginTop: 40,

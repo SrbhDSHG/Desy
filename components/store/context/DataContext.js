@@ -3,6 +3,7 @@ import {
   fetchEmailVerify,
   fetchOtpVerify,
   fetchRestaurants,
+  sendUserData,
 } from './DataService'
 import { useTabs } from '../useTabs'
 import { Top10DishList } from '../../Utility/StaticData/Top10ResData'
@@ -69,15 +70,15 @@ function DataProvider({ children }) {
     }
     fetchRestaurantsList()
   }, [])
-  // firstName && console.log('firstName: , lastName:', firstName, lastName)
-  // phoneNumber && console.log('phoneNumber:', phoneNumber)
-  // email && console.log('email:', email)
-  // password && console.log('password:', password)
-  imagelink && console.log('image:', image)
-  // cuisineNotLike && console.log('cuisineNotLike:', cuisineNotLike)
-  // usrName && console.log('usrName:', usrName)
-  // defaultCity && console.log('defaultCity:', defaultCity)
-  // dietaryRestriction && console.log('dietaryRestriction:', dietaryRestriction)
+  firstName && console.log('firstName: , lastName:', firstName, lastName)
+  phoneNumber && console.log('phoneNumber:', phoneNumber)
+  email && console.log('email:', email)
+  password && console.log('password:', password)
+  imagelink && console.log('image:', imagelink)
+  cuisineNotLike && console.log('cuisineNotLike:', cuisineNotLike)
+  usrName && console.log('usrName:', usrName)
+  defaultCity && console.log('defaultCity:', defaultCity)
+  dietaryRestriction && console.log('dietaryRestriction:', dietaryRestriction)
 
   const emailverification = async (email) => {
     console.log('In the  data context', email)
@@ -91,22 +92,27 @@ function DataProvider({ children }) {
     return response.data
   }
   const createUser = async () => {
-    const response = await sendUserData(
-      firstName,
-      lastName,
-      phoneNumber,
-      photoAdded,
-      email,
-      password,
-      imagelink,
-      cuisineNotLike,
-      dietaryRestriction,
-      usrName,
-      defaultCity,
-      emailVerified
-    )
-    console.log('User created :', response)
-    return response.data
+    try {
+      const response = await sendUserData({
+        firstName,
+        lastName,
+        phoneNumber,
+        photoAdded,
+        email,
+        password,
+        imagelink,
+        cuisineNotLike,
+        dietaryRestriction,
+        usrName,
+        defaultCity,
+        emailVerified,
+        imagelink,
+      })
+      console.log('User created :', response)
+      return response
+    } catch (e) {
+      console.log('User creation error', e)
+    }
   }
 
   const value = {

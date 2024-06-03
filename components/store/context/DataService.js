@@ -36,25 +36,35 @@ export const fetchRestaurants = async () => {
   }
 }
 
-export const sendUserData = async () => {
-  try {
-    const response = await axios.post(`${baseUrl}users/`, {
-      firstName,
-      lastName,
-      phoneNumber,
-      photoAdded,
-      email,
-      password,
-      imagelink,
-      cuisineNotLike,
-      dietaryRestriction,
-      usrName,
-      defaultCity,
-      emailVerified,
-    })
+export const sendUserData = async (userdata) => {
+  console.log('Sending user data', userdata)
 
+  const formData = new FormData()
+  for (const key in userdata) {
+    if (userdata.hasOwnProperty(key)) {
+      if (key === 'imagelink') {
+        formData.append(key, {
+          uri: userdata[key],
+          name: 'profile.jpg',
+          type: 'image/jpeg',
+        })
+      } else if (Array.isArray(userdata[key])) {
+        userdata[key].forEach((item) => formData.append(key, item))
+      } else {
+        formData.append(key, userdata[key])
+      }
+    }
+  }
+  try {
+    const response = await axios.post(`${baseUrl}users`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    console.log('response senduser data', response)
     return response
   } catch (error) {
     console.log('unable to create user', error)
+    throw error
   }
 }
