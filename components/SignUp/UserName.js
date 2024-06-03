@@ -6,8 +6,8 @@ import ButtonDesyV2 from '../Utility/ButtonDesy'
 import { useData } from '../store/context/DataContext'
 
 function UserName({ navigation }) {
-  const { usrName, setUsrName } = useData()
-  // const [usrName, setUsrName] = useState('')
+  const { userName, setUsrName } = useData()
+  // const [userName, setUsrName] = useState('')
 
   const handleChangeUsrName = (text) => {
     setUsrName(text)
@@ -34,12 +34,12 @@ function UserName({ navigation }) {
           <Text style={styles.textAtDrate}>@</Text>
           <TextInput
             style={styles.input}
-            value={usrName}
+            value={userName}
             onChangeText={handleChangeUsrName}
             placeholder="Enter username"
             placeholderTextColor="#B2B2B2"
           />
-          {usrName.length > 1 && (
+          {userName.length > 1 && (
             <View style={styles.rightIconContainer}>
               <AntDesign name="checkcircle" size={24} color="#24b924" />
             </View>
@@ -62,7 +62,7 @@ function UserName({ navigation }) {
         <ButtonDesyV2
           buttonText="Continue"
           onPress={onPressHandler}
-          isEnabled={usrName.length > 1}
+          isEnabled={userName.length > 1}
         />
       </View>
     </View>

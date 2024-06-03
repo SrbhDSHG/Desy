@@ -51,7 +51,7 @@ function DataProvider({ children }) {
   const [lastName, setLastName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [email, setEmail] = useState('')
-  const [usrName, setUsrName] = useState('')
+  const [userName, setUsrName] = useState('')
   const [password, setPassword] = useState('')
   const [imagelink, setImage] = useState(null)
   const [photoAdded, setPhotoAdded] = useState(false)
@@ -103,7 +103,7 @@ function DataProvider({ children }) {
         imagelink,
         cuisineNotLike,
         dietaryRestriction,
-        usrName,
+        userName,
         defaultCity,
         emailVerified,
         imagelink,
