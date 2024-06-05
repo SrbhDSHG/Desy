@@ -24,7 +24,8 @@ import Top10Restaurants from './components/Restaurants/Top10/Top10Restaurants'
 import DataProvider from './components/store/context/DataContext'
 import ListPressed from './components/Restaurants/Top10/ListPressed'
 import OnMapListed from './components/Restaurants/Top10/OnMapListed'
-import ShareIcon from './components/UI/ShareIcon'
+import RestaurantMenu from './components/Restaurants/Restaurant/RestaurantMenu'
+import Icon from './components/UI/Icon'
 
 // import AppLoading from 'expo-app-loading'
 
@@ -179,6 +180,26 @@ export default function App() {
                 title: 'Top 10 NYC Italian',
                 headerBackTitleVisible: true,
                 headerShadowVisible: true,
+                headerTransparent: false,
+              })}
+            />
+            <Stack.Screen
+              name="Restaurant Menu"
+              component={RestaurantMenu}
+              options={({ navigation }) => ({
+                headerRight: () => (
+                  <Icon
+                    iconFamily={'AntDesign'}
+                    icon={['share', 'ellipsis1']}
+                    size={24}
+                    color={'black'}
+                    onPress={() => navigation.navigate('')}
+                  />
+                ),
+                headerShown: true,
+                title: '',
+                headerBackTitleVisible: true,
+                headerShadowVisible: false,
                 headerTransparent: false,
               })}
             />

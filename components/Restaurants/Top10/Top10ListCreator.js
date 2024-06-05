@@ -3,13 +3,15 @@ import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native'
 import PriceAndLocatio from './PriceAndLocatio'
 import { useData } from '../../store/context/DataContext'
 import ImageWithLoadingIndicator from '../../Utility/ImageWithLoadingIndicator'
+import RestaurantMenu from '../Restaurant/RestaurantMenu'
 
-function Top10ListCreator() {
+function Top10ListCreator({ navigation }) {
   const [loading, setLoading] = useState(true)
   const { top10RestList } = useData()
   // console.log('Top 10 list :', top10RestList)
   const pressHandler = (id) => {
     console.log('Pressed restuarant:', id)
+    navigation.navigate('Restaurant Menu', { id })
   }
   return (
     <ScrollView contentContainerStyle={styles.container}>

@@ -20,7 +20,7 @@ function Top10Restaurants({ navigation }) {
         <InfoText />
       </View>
       <View style={styles.ListItem}>
-        <Top10ListCreator />
+        <Top10ListCreator navigation={navigation} />
       </View>
     </View>
   )
