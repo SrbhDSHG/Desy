@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native'
-import HomeScreenMap from '../../UI/HomeScreenMap'
+import MapScreen from '../../UI/MapScreen'
 import ListAndMapTab from './ListAndMapTab'
 function OnMapListed({ navigation }) {
   return (
@@ -7,7 +7,7 @@ function OnMapListed({ navigation }) {
       <View style={styles.listAndMap}>
         <ListAndMapTab navigation={navigation} backgroundColor={'#FFFFFFBF'} />
       </View>
-      <HomeScreenMap />
+      <MapScreen />
     </View>
   )
 }

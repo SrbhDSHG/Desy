@@ -1,22 +1,30 @@
 import React from 'react'
 import { Pressable, StyleSheet } from 'react-native'
-import { Feather } from '@expo/vector-icons'
-import { AntDesign } from '@expo/vector-icons'
 
-function Icon({ iconFamily, icon, size, color, onPress }) {
+function Icon({ size, color, onPress }) {
+  const onPrss = () => {
+    onPress()
+  }
   return (
     <>
       <Pressable
-        style={({ pressed }) => [styles.shareIcon, pressed && styles.pressed]}
+        style={({ pressed }) => [
+          styles.iconContainer,
+          pressed && styles.pressed,
+        ]}
         onPress={onPress}
       >
-        <Feather name={icon[0]} size={size} color={color} />
+        <IconFamily name={icon} size={size} color={color} />
       </Pressable>
-      {iconFamily === 'AntDesign' && (
-        <Pressable>
-          <AntDesign name={icon[1]} size={size} color={color} />
-        </Pressable>
-      )}
+      <Pressable
+        style={({ pressed }) => [
+          styles.iconContainer,
+          pressed && styles.pressed,
+        ]}
+        onPress={onPress}
+      >
+        <IconFamily name={icon} size={size} color={color} />
+      </Pressable>
     </>
   )
 }
@@ -24,9 +32,9 @@ function Icon({ iconFamily, icon, size, color, onPress }) {
 export default Icon
 
 const styles = StyleSheet.create({
-  shareIcon: {
+  iconContainer: {
     padding: 8,
-    margin: 4,
+    margin: 2,
     justifyContent: 'center',
     alignItems: 'center',
   },

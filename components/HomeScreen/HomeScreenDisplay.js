@@ -8,7 +8,7 @@ import { Platform } from 'react-native'
 import LoginHelper from '../Login/LoginHelper'
 import SlideInfoDisplay from './SlideInfoDisplay'
 import GradientText from './GradientTextV2'
-import StartScreenMap from '../UI/HomeScreenMap'
+import StartScreenMap from '../UI/MapScreen'
 
 function HomeScreenDisplay({ navigation }) {
   const onPressHandler = () => {

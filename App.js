@@ -26,6 +26,8 @@ import ListPressed from './components/Restaurants/Top10/ListPressed'
 import OnMapListed from './components/Restaurants/Top10/OnMapListed'
 import RestaurantMenu from './components/Restaurants/Restaurant/RestaurantMenu'
 import Icon from './components/UI/Icon'
+import CustomHeader from './components/UI/CustomHeader'
+import { FeatherIcon } from './components/Utility/StaticData/IconFamily'
 
 // import AppLoading from 'expo-app-loading'
 
@@ -149,14 +151,8 @@ export default function App() {
               name="List View Pressed"
               component={ListPressed}
               options={({ navigation }) => ({
-                headerRight: () => (
-                  <ShareIcon
-                    icon="share"
-                    size={24}
-                    color={'black'}
-                    onPress={() => navigation.navigate('')}
-                  />
-                ),
+                header: () => <CustomHeader navigation={navigation} />,
+
                 headerShown: true,
                 title: 'Top 10 NYC Italian',
                 headerBackTitleVisible: true,
@@ -169,8 +165,9 @@ export default function App() {
               component={OnMapListed}
               options={({ navigation }) => ({
                 headerRight: () => (
-                  <ShareIcon
-                    icon="share"
+                  <Icon
+                    iconFamily={FeatherIcon}
+                    name="share"
                     size={24}
                     color={'black'}
                     onPress={() => navigation.navigate('')}
@@ -187,18 +184,10 @@ export default function App() {
               name="Restaurant Menu"
               component={RestaurantMenu}
               options={({ navigation }) => ({
-                headerRight: () => (
-                  <Icon
-                    iconFamily={'AntDesign'}
-                    icon={['share', 'ellipsis1']}
-                    size={24}
-                    color={'black'}
-                    onPress={() => navigation.navigate('')}
-                  />
-                ),
+                header: () => <CustomHeader navigation={navigation} />,
                 headerShown: true,
-                title: '',
-                headerBackTitleVisible: true,
+                // title: '',
+                headerBackTitleVisible: false,
                 headerShadowVisible: false,
                 headerTransparent: false,
               })}
