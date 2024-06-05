@@ -14,7 +14,7 @@ const defaultValue = {
   phoneNumber: '',
   email: '',
   setEmail: () => {},
-  usrName: '',
+  userName: '',
   setUsrName: () => {},
   password: '',
   setPassword: () => {},
@@ -76,7 +76,7 @@ function DataProvider({ children }) {
   password && console.log('password:', password)
   imagelink && console.log('image:', imagelink)
   cuisineNotLike && console.log('cuisineNotLike:', cuisineNotLike)
-  usrName && console.log('usrName:', usrName)
+  userName && console.log('userName:', userName)
   defaultCity && console.log('defaultCity:', defaultCity)
   dietaryRestriction && console.log('dietaryRestriction:', dietaryRestriction)
 
@@ -122,7 +122,7 @@ function DataProvider({ children }) {
     setLastName,
     phoneNumber,
     setPhoneNumber,
-    usrName,
+    userName,
     setUsrName,
     email,
     setEmail,

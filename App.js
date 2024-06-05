@@ -63,7 +63,7 @@ export default function App() {
       <DataProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Home"
+            initialRouteName="Top10 Restaurants"
             screenOptions={{
               headerShown: true,
               title: '',

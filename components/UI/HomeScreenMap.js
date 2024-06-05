@@ -11,7 +11,7 @@ import * as Location from 'expo-location'
 
 export default function StartScreenMap() {
   const [location, setLocation] = useState(null)
-  const [permissionStatus, setPermissionStatus] = useState(null)
+  const [permissionStatus, setPermissionStatus] = useState('denied')
   const [errorMsg, setErrorMsg] = useState(null)
   const [mapDimensions, setMapDimensions] = useState({
     width: Dimensions.get('window').width,
@@ -23,14 +23,13 @@ export default function StartScreenMap() {
       try {
         // Request permission to access location
         const { status } = await Location.requestForegroundPermissionsAsync()
-        setPermissionStatus(status)
-        console.log('Permission status:', status)
 
         if (status !== 'granted') {
           setErrorMsg('Permission to access location was denied')
           return
         }
-
+        setPermissionStatus(status)
+        console.log('Permission status:', status)
         // Get current location
         const loc = await Location.getCurrentPositionAsync({})
         console.log('Location:', loc)

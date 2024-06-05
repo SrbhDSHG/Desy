@@ -17,8 +17,9 @@ function StayConnected({ navigation }) {
   const onPressHandler = async () => {
     setLoading(true)
     const response = await createUser()
+    console.log(response.data)
     setLoading(false)
-    if (response.status === 'success') {
+    if (response.data.status == 'success') {
       navigation.navigate('Top10 Restaurants')
     }
   }
@@ -55,7 +56,8 @@ function StayConnected({ navigation }) {
       >
         <View style={styles.modalBackground}>
           <View style={styles.activityIndicatorWrapper}>
-            <ActivityIndicator size="large" color="#0000ff" />
+            <ActivityIndicator size="large" color="#03A4FF" />
+            <Text style={styles.modalText}>Creating user...</Text>
           </View>
         </View>
       </Modal>
@@ -111,5 +113,11 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  modalText: {
+    marginTop: 10,
+    textAlign: 'center',
+    color: '#000',
+    fontSize: 16,
   },
 })
