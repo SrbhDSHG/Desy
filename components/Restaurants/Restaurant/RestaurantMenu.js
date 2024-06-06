@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { ImageBackground, StyleSheet, Text, View } from 'react-native'
 import { useData } from '../../store/context/DataContext'
 import { useRoute } from '@react-navigation/native'
 import IconContainer from '../Top10/IconContainer'
@@ -7,7 +7,6 @@ import MapScreen from '../../UI/MapScreen'
 import RestaurantMap from './RestaurantMap'
 
 function RestaurantMenu() {
-  const { top10RestList } = useData()
   const route = useRoute()
   const { id, coordinates, name } = route.params
 
@@ -16,9 +15,11 @@ function RestaurantMenu() {
   console.log('selectedRestaurant: ', name)
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.mapContainer}>
         <RestaurantMap coordinates={coordinates} name={name} />
       </View>
+      <View style={styles.menuContainerr}></View>
+      <View style={styles.footerContainer}></View>
     </View>
   )
 }
@@ -30,11 +31,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'yellow',
+    backgroundColor: 'white',
   },
   mapContainer: {
+    width: '100%',
+    position: 'absolute',
     backgroundColor: 'yellow',
-    flex: 1,
+    height: '30%',
+    top: 0,
     // opacity: 0.5,
   },
   headerTextAndIcon: {
@@ -53,7 +57,7 @@ const styles = StyleSheet.create({
     marginLeft: -10,
   },
   menuContainer: {
-    flex: 0.15,
+    // flex: 1,
     width: '100%',
     elevation: 5,
     backgroundColor: 'white',
@@ -61,7 +65,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   footerContainer: {
-    flex: 0.65,
+    // flex: 1,
     width: '100%',
     backgroundColor: 'white',
     justifyContent: 'center',

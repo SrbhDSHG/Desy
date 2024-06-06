@@ -193,7 +193,7 @@ export default function App() {
                 // title: '',
                 headerBackTitleVisible: false,
                 headerShadowVisible: false,
-                headerTransparent: false,
+                headerTransparent: true,
               })}
             />
           </Stack.Navigator>
