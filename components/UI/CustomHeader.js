@@ -1,43 +1,35 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { Feather, AntDesign } from '@expo/vector-icons'
 import Icon from './Icon'
 
 const CustomHeader = ({
   navigation,
-  iconFamily,
-  icon,
-  size,
-  color,
-  onPress,
+  iconFamily = [],
+  icons = [],
+  size = 24,
+  color = 'black',
 }) => {
+  // console.log('Navigation', navigation)
   return (
     <View style={styles.headerContainer}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Icon iconFamily="AntDesign" icon="arrowleft" size={24} color="black" />
+        <AntDesign name="arrowleft" size={size} color={color} />
       </TouchableOpacity>
       <Text style={styles.headerTitle}>Restaurant Menu</Text>
       <View style={styles.iconContainer}>
-        <Icon
-          iconFamily={iconFamily}
-          icon={['share']}
-          size={24}
-          color="black"
-          onPress={() => navigation.navigate('')}
-        />
-        {/* <Icon
-          iconFamily="AntDesign"
-          icon={['share']}
-          size={24}
-          color="black"
-          onPress={() => navigation.navigate('')}
-        />
-        <Icon
-          iconFamily="AntDesign"
-          icon={[]}
-          size={24}
-          color="black"
-          onPress={() => navigation.navigate('')}
-        /> */}
+        {iconFamily.map((family, index) => (
+          <Icon
+            key={index}
+            iconFamily={family}
+            icon={icons[index]}
+            size={size}
+            color={color}
+            onPress={() => {
+              // Add your navigation logic here if needed
+            }}
+          />
+        ))}
       </View>
     </View>
   )
@@ -52,10 +44,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     paddingHorizontal: 10,
-    marginTop: 15,
-    paddingTop: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
-    // opacity: 0.5,
+    marginTop: 20,
+    paddingTop: 20,
+    paddingBottom: 10,
+    backgroundColor: 'white',
+    // backgroundColor: 'rgba(255, 255, 255, 0.5)',
   },
   headerTitle: {
     fontSize: 18,

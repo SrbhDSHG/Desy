@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 10,
     flexDirection: 'row',
-    marginTop: 10,
+    // marginTop: 5,
   },
   tab: {
     width: 80,

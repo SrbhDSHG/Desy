@@ -1,5 +1,12 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Pressable,
+  ActivityIndicator,
+} from 'react-native'
 import PriceAndLocatio from './PriceAndLocatio'
 import { useData } from '../../store/context/DataContext'
 import ImageWithLoadingIndicator from '../../Utility/ImageWithLoadingIndicator'
@@ -9,10 +16,11 @@ function Top10ListCreator({ navigation }) {
   const [loading, setLoading] = useState(true)
   const { top10RestList } = useData()
   // console.log('Top 10 list :', top10RestList)
-  const pressHandler = (id) => {
+  const pressHandler = (id, coordinates, name) => {
     console.log('Pressed restuarant:', id)
-    navigation.navigate('Restaurant Menu', { id })
+    navigation.navigate('Restaurant Menu', { id, coordinates, name })
   }
+  console.log('restaurant length:', top10RestList.length > 0)
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {top10RestList
@@ -21,7 +29,7 @@ function Top10ListCreator({ navigation }) {
         .map((list, index) => (
           <Pressable
             key={list._id}
-            onPress={() => pressHandler(list._id)}
+            onPress={() => pressHandler(list._id, list.coordinates, list.name)}
             style={({ pressed }) => [pressed && styles.pressedContainer]}
           >
             <View key={index} style={[styles.listContainer]}>

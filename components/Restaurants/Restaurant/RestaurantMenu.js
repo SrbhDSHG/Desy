@@ -4,29 +4,21 @@ import { useData } from '../../store/context/DataContext'
 import { useRoute } from '@react-navigation/native'
 import IconContainer from '../Top10/IconContainer'
 import MapScreen from '../../UI/MapScreen'
+import RestaurantMap from './RestaurantMap'
 
 function RestaurantMenu() {
   const { top10RestList } = useData()
   const route = useRoute()
-  const { id } = route.params
-  const selectedRestaurant = top10RestList.find((rest) => rest._id === id)
+  const { id, coordinates, name } = route.params
+
   console.log('id: ', id)
   //   console.log('top10ResList', top10RestList)
-  console.log('selectedRestaurant: ', selectedRestaurant)
+  console.log('selectedRestaurant: ', name)
   return (
     <View style={styles.container}>
-      <View style={styles.mapContainer}>
-        <MapScreen />
+      <View>
+        <RestaurantMap coordinates={coordinates} name={name} />
       </View>
-      <View style={styles.headerTextAndIcon}>
-        <View style={styles.textContainer}>
-          <Text style={styles.headerText}>{selectedRestaurant.name}</Text>
-        </View>
-        <IconContainer />
-      </View>
-      <View style={styles.menuContainer}></View>
-      <View style={styles.RestInfoContainer}></View>
-      <View style={styles.footerContainer}></View>
     </View>
   )
 }
@@ -38,11 +30,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'yellow',
   },
   mapContainer: {
-    flex: 0.25,
-    opacity: 0.5,
+    backgroundColor: 'yellow',
+    flex: 1,
+    // opacity: 0.5,
   },
   headerTextAndIcon: {
     flexDirection: 'row',

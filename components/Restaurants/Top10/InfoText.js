@@ -42,13 +42,13 @@ const styles = StyleSheet.create({
   infoTextContainer: {
     paddingHorizontal: 10,
     left: 100,
-    bottom: 0,
+    bottom: -45,
     position: 'absolute',
   },
   textColor: {
     color: '#FFFFFF',
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: { width: -1, height: 3 },
+    textShadowOffset: { width: -1, height: 2 },
     textShadowRadius: 5,
   },
   threeIcons: {
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   subText2: {
     fontSize: 14,
     fontFamily: 'Mulish-Medium',
-    marginTop: 10,
+    marginTop: 5,
   },
   iconBox: {
     width: 50,

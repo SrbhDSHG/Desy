@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
 
   TopDishPicContainer: {
-    flex: 1.5,
+    flex: 0.6,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'pink',
@@ -49,13 +49,13 @@ const styles = StyleSheet.create({
   },
   TopDishPic: {
     width: 550,
-    height: 446,
+    height: 380,
     left: -10,
     transform: [{ rotate: '-90deg' }],
   },
   desyListMapContainer: {
     position: 'absolute',
-    top: 50,
+    top: 40,
   },
   desyText: {
     fontFamily: 'Philosopher-Bold',
@@ -63,13 +63,11 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
   },
-  map: {
-    marginVertical: 5,
-  },
 
   ListItem: {
-    flex: 1,
-    // ?marginTop: 10,
+    flex: 0.5,
+    width: '100%',
+    marginTop: 50,
     backgroundColor: 'white',
   },
 })

@@ -13,7 +13,7 @@ function ListPressed({ navigation }) {
         </View>
       </View>
       <View style={styles.top10ListContainer}>
-        <Top10ListCreator />
+        <Top10ListCreator navigation={navigation} />
       </View>
     </View>
   )
@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
   forElevation: {
     elevation: 5,
     width: '100%',
-    paddingVertical: 10,
+    paddingBottom: 10,
+    // paddingVertical: 5,
     backgroundColor: 'white',
   },
   listAndMap: {

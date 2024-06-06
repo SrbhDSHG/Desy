@@ -151,7 +151,13 @@ export default function App() {
               name="List View Pressed"
               component={ListPressed}
               options={({ navigation }) => ({
-                header: () => <CustomHeader navigation={navigation} />,
+                header: () => (
+                  <CustomHeader
+                    navigation={navigation}
+                    iconFamily={['Feather']}
+                    icons={['share']}
+                  />
+                ),
 
                 headerShown: true,
                 title: 'Top 10 NYC Italian',
@@ -164,13 +170,11 @@ export default function App() {
               name="OnMapListed"
               component={OnMapListed}
               options={({ navigation }) => ({
-                headerRight: () => (
-                  <Icon
-                    iconFamily={FeatherIcon}
-                    name="share"
-                    size={24}
-                    color={'black'}
-                    onPress={() => navigation.navigate('')}
+                header: () => (
+                  <CustomHeader
+                    navigation={navigation}
+                    iconFamily={['Feather']}
+                    icons={['share']}
                   />
                 ),
                 headerShown: true,
