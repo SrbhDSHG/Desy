@@ -11,6 +11,8 @@ import {
   Ionicons,
   FontAwesome,
   MaterialCommunityIcons,
+  MaterialIcons,
+  Feather,
 } from '@expo/vector-icons'
 
 const defaultValue = {
@@ -73,6 +75,34 @@ export const RestauInfo = [
     icon: (
       <MaterialCommunityIcons name="directions" size={14} color={'#03A4FF'} />
     ),
+  },
+]
+
+const restauFooterIcon = [
+  {
+    id: 0,
+    text: 'Feed',
+    icon: <Ionicons name="grid-outline" size={24} color="#03A4FF" />,
+  },
+  {
+    id: 1,
+    text: 'Your List',
+    icon: <MaterialIcons name="list-alt" size={24} color="#03A4FF" />,
+  },
+  {
+    id: 2,
+    text: 'Search',
+    icon: <FontAwesome name="plus-circle" size={40} color="#03A4FF" />,
+  },
+  {
+    id: 3,
+    text: 'Leaderboard',
+    icon: <Ionicons name="trophy-outline" size={24} color="#03A4FF" />,
+  },
+  {
+    id: 4,
+    text: 'Profile',
+    icon: <FontAwesome name="user-o" size={24} color="#03A4FF" />,
   },
 ]
 // export const TopTenReversed = []
@@ -189,6 +219,7 @@ function DataProvider({ children }) {
     createUser,
     restauOptionHeader,
     RestauInfo,
+    restauFooterIcon,
   }
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>
 }

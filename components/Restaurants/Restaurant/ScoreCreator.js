@@ -8,7 +8,7 @@ function ScoreCreator({
   bodyText = 'How much we think, you would like to it',
 }) {
   return (
-    <View style={styles.container}>
+    <View key={headerText} style={styles.container}>
       <View style={styles.contentContainer}>
         <View style={styles.circleContainer}>
           <View style={styles.bcircle}>

@@ -8,6 +8,8 @@ import RestaurantMap from './RestaurantMap'
 import PriceAndLocatio from '../Top10/PriceAndLocatio'
 import InfoBoxCreator from '../../UI/InfoBoxCreator'
 import ScoreCreator from './ScoreCreator'
+import ImageWithLoadingIndicator from '../../Utility/ImageWithLoadingIndicator'
+import FooterIcons from './FooterIcons'
 
 const scoreData = [
   {
@@ -67,7 +69,10 @@ function RestaurantMenu() {
           ))}
         </View>
       </View>
-      <View style={styles.footerContainer}></View>
+      <View>{/* <ImageWithLoadingIndicator/> */}</View>
+      <View style={styles.footerContainer}>
+        <FooterIcons />
+      </View>
     </View>
   )
 }
@@ -131,6 +136,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'absolute',
+    bottom: 0,
   },
   bottonMenu: {
     elevation: 5,
