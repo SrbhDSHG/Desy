@@ -7,6 +7,22 @@ import MapScreen from '../../UI/MapScreen'
 import RestaurantMap from './RestaurantMap'
 import PriceAndLocatio from '../Top10/PriceAndLocatio'
 import InfoBoxCreator from '../../UI/InfoBoxCreator'
+import ScoreCreator from './ScoreCreator'
+
+const scoreData = [
+  {
+    score: '8.8',
+    scoredBy: '2k',
+    headerText: 'Rec Score',
+    bodyText: 'How much we think, you would like to it',
+  },
+  {
+    score: '9.8',
+    scoredBy: '1',
+    headerText: 'Friend Score',
+    bodyText: 'What your frieds think',
+  },
+]
 
 function RestaurantMenu() {
   const {
@@ -18,7 +34,7 @@ function RestaurantMenu() {
   } = useData()
   const route = useRoute()
   const { list } = route.params
-  console.log('RestauInfo ', RestauInfo)
+  // console.log('RestauInfo ', RestauInfo)
   // console.log('selectedRestaurant: ', list.name)
   return (
     <View style={styles.container}>
@@ -33,10 +49,23 @@ function RestaurantMenu() {
       <View>
         <PriceAndLocatio list={list} iconEnable={false} />
       </View>
-      <View>
+      <View style={styles.infoBoxContainer}>
         {RestauInfo.map((info, index) => (
           <InfoBoxCreator info={info} />
         ))}
+      </View>
+      <View>
+        <Text style={styles.scoreText}>Scores</Text>
+        <View style={styles.scoreBox}>
+          {scoreData.map((score, index) => (
+            <ScoreCreator
+              score={score.score}
+              scoredBy={score.scoredBy}
+              headerText={score.headerText}
+              bodyText={score.bodyText}
+            />
+          ))}
+        </View>
       </View>
       <View style={styles.footerContainer}></View>
     </View>
@@ -83,6 +112,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  infoBoxContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: 10,
+  },
+  scoreBox: {
+    flexDirection: 'row',
+  },
+  scoreText: {
+    fontSize: 17,
+    fontFamily: 'Mulish-Bold',
+    marginVertical: 10,
+  },
+
   footerContainer: {
     // flex: 1,
     width: '100%',

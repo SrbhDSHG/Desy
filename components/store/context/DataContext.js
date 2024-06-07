@@ -6,7 +6,12 @@ import {
   sendUserData,
 } from './DataService'
 import { useTabs } from '../useTabs'
-import { Top10DishList } from '../../Utility/StaticData/Top10ResData'
+import {
+  Foundation,
+  Ionicons,
+  FontAwesome,
+  MaterialCommunityIcons,
+} from '@expo/vector-icons'
 
 const defaultValue = {
   firstName: '',
@@ -49,12 +54,12 @@ export const restauOptionHeader = [
 export const RestauInfo = [
   {
     id: 0,
-    text: 'website',
+    text: 'Website',
     icon: <Foundation name="web" size={14} color={'#03A4FF'} />,
   },
   {
     id: 1,
-    text: 'call',
+    text: 'Call',
     icon: <Ionicons name="call-outline" size={14} color={'#03A4FF'} />,
   },
   {
