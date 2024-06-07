@@ -38,6 +38,38 @@ export const tabs = [
   { text: 'List', iconName: 'list' },
   { text: 'Map', iconName: 'map-pin' },
 ]
+
+export const restauOptionHeader = [
+  { id: 0, text: 'Date Night' },
+  { id: 1, text: 'Short list' },
+  { id: 2, text: 'Tasting Menu' },
+  { id: 3, text: 'Atmosphere' },
+]
+
+export const RestauInfo = [
+  {
+    id: 0,
+    text: 'website',
+    icon: <Foundation name="web" size={14} color={'#03A4FF'} />,
+  },
+  {
+    id: 1,
+    text: 'call',
+    icon: <Ionicons name="call-outline" size={14} color={'#03A4FF'} />,
+  },
+  {
+    id: 2,
+    text: 'Reserve',
+    icon: <FontAwesome name="calendar" size={14} color={'#03A4FF'} />,
+  },
+  {
+    id: 3,
+    text: 'Direction',
+    icon: (
+      <MaterialCommunityIcons name="directions" size={14} color={'#03A4FF'} />
+    ),
+  },
+]
 // export const TopTenReversed = []
 // export const TopTenReversed = Top10DishList.slice().reverse()
 // export const TopTenReversed = await fetchRestaurants.data.restaurants
@@ -150,6 +182,8 @@ function DataProvider({ children }) {
     // TopTenReversed,
     top10RestList,
     createUser,
+    restauOptionHeader,
+    RestauInfo,
   }
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>
 }

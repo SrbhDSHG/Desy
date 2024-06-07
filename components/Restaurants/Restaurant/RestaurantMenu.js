@@ -5,20 +5,39 @@ import { useRoute } from '@react-navigation/native'
 import IconContainer from '../Top10/IconContainer'
 import MapScreen from '../../UI/MapScreen'
 import RestaurantMap from './RestaurantMap'
+import PriceAndLocatio from '../Top10/PriceAndLocatio'
+import InfoBoxCreator from '../../UI/InfoBoxCreator'
 
 function RestaurantMenu() {
+  const {
+    restauOptionHeader,
+    RestauInfo,
+    activeTab,
+    setActiveTab,
+    setTabSelected,
+  } = useData()
   const route = useRoute()
-  const { id, coordinates, name } = route.params
-
-  console.log('id: ', id)
-  //   console.log('top10ResList', top10RestList)
-  console.log('selectedRestaurant: ', name)
+  const { list } = route.params
+  console.log('RestauInfo ', RestauInfo)
+  // console.log('selectedRestaurant: ', list.name)
   return (
     <View style={styles.container}>
       <View style={styles.mapContainer}>
-        <RestaurantMap coordinates={coordinates} name={name} />
+        <RestaurantMap coordinates={list.coordinates} name={list.name} />
       </View>
-      <View style={styles.menuContainerr}></View>
+      <View style={styles.menuContainer}>
+        {restauOptionHeader.map((option, index) => (
+          <Text key={index}>{option.text}</Text>
+        ))}
+      </View>
+      <View>
+        <PriceAndLocatio list={list} iconEnable={false} />
+      </View>
+      <View>
+        {RestauInfo.map((info, index) => (
+          <InfoBoxCreator info={info} />
+        ))}
+      </View>
       <View style={styles.footerContainer}></View>
     </View>
   )
@@ -57,9 +76,9 @@ const styles = StyleSheet.create({
     marginLeft: -10,
   },
   menuContainer: {
-    // flex: 1,
+    flexDirection: 'row',
     width: '100%',
-    elevation: 5,
+    // elevation: 5,
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',

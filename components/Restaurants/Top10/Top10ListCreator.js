@@ -16,9 +16,9 @@ function Top10ListCreator({ navigation }) {
   const [loading, setLoading] = useState(true)
   const { top10RestList } = useData()
   // console.log('Top 10 list :', top10RestList)
-  const pressHandler = (id, coordinates, name) => {
-    console.log('Pressed restuarant:', id)
-    navigation.navigate('Restaurant Menu', { id, coordinates, name })
+  const pressHandler = (list) => {
+    console.log('Pressed restuarant:', list._id)
+    navigation.navigate('Restaurant Menu', { list })
   }
   console.log('restaurant length:', top10RestList.length > 0)
   return (
@@ -29,7 +29,7 @@ function Top10ListCreator({ navigation }) {
         .map((list, index) => (
           <Pressable
             key={list._id}
-            onPress={() => pressHandler(list._id, list.coordinates, list.name)}
+            onPress={() => pressHandler(list)}
             style={({ pressed }) => [pressed && styles.pressedContainer]}
           >
             <View key={index} style={[styles.listContainer]}>

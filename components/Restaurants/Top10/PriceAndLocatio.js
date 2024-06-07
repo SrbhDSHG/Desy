@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import IconContainer from './IconContainer'
 
-function PriceAndLocatio({ list }) {
+function PriceAndLocatio({ list, iconEnable = true }) {
   return (
     <View>
       <View style={styles.priceAndType}>
@@ -17,7 +17,7 @@ function PriceAndLocatio({ list }) {
       <Text style={[styles.location, styles.fontTypeToSubLettr]}>
         {`${list.address.borough}, ${list.address.neighbourhood}`}
       </Text>
-      <IconContainer />
+      {iconEnable && <IconContainer />}
     </View>
   )
 }
