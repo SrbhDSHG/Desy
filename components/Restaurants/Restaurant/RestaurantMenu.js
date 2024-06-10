@@ -113,18 +113,19 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontFamily: 'Mulish-Bold',
     marginVertical: 10,
+    paddingHorizontal: 5,
   },
   scoreBox: {
     flexDirection: 'row',
   },
 
   popularDishesContainer: {
-    marginHorizontal: 10,
+    marginHorizontal: 5,
+    paddingHorizontal: 10,
   },
   popularDishesHeaderContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginHorizontal: 10,
   },
   popularDishesHeader: {
     fontFamily: 'Mulish-Bold',
