@@ -23,7 +23,7 @@ const scoreData = [
     score: '9.8',
     scoredBy: '1',
     headerText: 'Friend Score',
-    bodyText: 'What your frieds think',
+    bodyText: 'What your friends think',
   },
 ]
 
@@ -37,8 +37,7 @@ function RestaurantMenu() {
   } = useData()
   const route = useRoute()
   const { list } = route.params
-  // console.log('RestauInfo ', RestauInfo)
-  // console.log('selectedRestaurant: ', list.name)
+
   return (
     <View style={styles.container}>
       <View style={styles.mapContainer}>
@@ -47,19 +46,20 @@ function RestaurantMenu() {
       <View style={styles.menuContainer}>
         <TopScrollingMenu restauOptionHeader={restauOptionHeader} />
       </View>
-      <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
+      <View style={styles.priceAndLocationContainer}>
         <PriceAndLocatio list={list} iconEnable={false} />
       </View>
       <View style={styles.infoBoxContainer}>
         {RestauInfo.map((info, index) => (
-          <InfoBoxCreator info={info} />
+          <InfoBoxCreator key={index} info={info} />
         ))}
       </View>
-      <View style={styles.scoreBoxContainer}>
+      <View style={styles.scoreContainer}>
         <Text style={styles.scoreText}>Scores</Text>
         <View style={styles.scoreBox}>
           {scoreData.map((score, index) => (
             <ScoreCreator
+              key={index}
               score={score.score}
               scoredBy={score.scoredBy}
               headerText={score.headerText}
@@ -68,14 +68,8 @@ function RestaurantMenu() {
           ))}
         </View>
       </View>
-      <View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginHorizontal: 10,
-          }}
-        >
+      <View style={styles.popularDishesContainer}>
+        <View style={styles.popularDishesHeaderContainer}>
           <Text style={styles.popularDishesHeader}>Popular Dishes</Text>
           <Text style={[styles.popularDishesHeader, styles.photoText]}>
             See All Photos
@@ -94,80 +88,59 @@ export default RestaurantMenu
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    // alignItems: 'center',
     backgroundColor: 'white',
   },
   mapContainer: {
     width: '100%',
-    position: 'absolute',
-    backgroundColor: 'yellow',
     height: '30%',
-    top: 0,
-    // opacity: 0.5,
-  },
-  headerTextAndIcon: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-    paddingHorizontal: 40,
-  },
-
-  headerText: {
-    fontSize: 30,
-    color: '#03A4FF',
-    fontFamily: 'Mulish-Bold',
-    paddingTop: 8,
-    marginLeft: -10,
-  },
-  photoText: {
-    color: '#03A4FF',
-    fontSize: 16,
   },
   menuContainer: {
-    flexDirection: 'row',
-    width: '100%',
     marginTop: -30,
-    // elevation: 5,
-    backgroundColor: 'white',
-    justifyContent: 'center',
     alignItems: 'center',
   },
-  scoreBoxContainer: {
-    marginHorizontal: 10,
+  priceAndLocationContainer: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
   },
   infoBoxContainer: {
-    flexDirection: 'row',
     paddingHorizontal: 10,
-  },
-  scoreBox: {
     flexDirection: 'row',
+  },
+  scoreContainer: {
+    marginHorizontal: 10,
   },
   scoreText: {
     fontSize: 17,
     fontFamily: 'Mulish-Bold',
     marginVertical: 10,
   },
+  scoreBox: {
+    flexDirection: 'row',
+  },
+
+  popularDishesContainer: {
+    marginHorizontal: 10,
+  },
+  popularDishesHeaderContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 10,
+  },
   popularDishesHeader: {
-    // textAlign: 'left',
-    marginLeft: 10,
     fontFamily: 'Mulish-Bold',
     fontSize: 17,
     marginVertical: 10,
   },
-
+  photoText: {
+    color: '#03A4FF',
+    fontSize: 16,
+  },
   footerContainer: {
-    // flex: 1,
     width: '100%',
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
     bottom: 0,
-  },
-  bottonMenu: {
-    elevation: 5,
-    backgroundColor: 'white',
   },
 })

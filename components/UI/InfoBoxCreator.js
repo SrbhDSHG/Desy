@@ -13,6 +13,7 @@ function InfoBoxCreator({ info }) {
   }
   return (
     <Pressable
+      key={info.text}
       onPress={onPressHandler}
       style={({ pressed }) => [
         styles.superContainer,

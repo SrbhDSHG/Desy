@@ -31,26 +31,22 @@ export default ScoreCreator
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'flex-start', // Align contents to the left
     borderColor: '#03A4FF',
     borderWidth: 1,
     borderRadius: 10,
     width: 165,
     height: 69,
-    marginHorizontal: 5,
+    marginHorizontal: 2,
   },
   contentContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
     flexDirection: 'row',
-    paddingLeft: 30,
-    paddingRight: 10,
+    alignItems: 'center',
   },
   circleContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative', // Needed for absolute positioning of scircle
+    position: 'relative',
+    marginLeft: 5,
   },
   bcircle: {
     width: 44,
@@ -61,12 +57,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#E9F7FF',
-    position: 'relative', // Needed for absolute positioning of scircle
+    position: 'relative',
   },
   bcircleText: {
     fontSize: 16,
     fontFamily: 'Mulish-Bold',
-    // color: '#03A4FF',
   },
   scircle: {
     width: 19,
@@ -76,8 +71,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    bottom: -3, // Position at 7 o'clock
-    right: -3, // Position at 7 o'clock
+    bottom: -3,
+    right: -3,
   },
   scircleText: {
     color: 'white',
@@ -85,8 +80,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Mulish-SemiBold',
   },
   textContainer: {
-    marginLeft: 20,
-    justifyContent: 'center',
+    marginLeft: 10,
+    flex: 1,
+    paddingRight: 5, // Add right padding to move text a bit to the right
   },
   headerText: {
     fontSize: 16,
@@ -95,8 +91,5 @@ const styles = StyleSheet.create({
   bodyText: {
     fontSize: 10,
     fontFamily: 'Mulish-Regular',
-  },
-  textColor: {
-    color: 'black',
   },
 })
