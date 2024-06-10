@@ -2,6 +2,7 @@ import { ImageBackground, StyleSheet, Text, View } from 'react-native'
 import TopDish from '../../Utility/StaticData/DishesPics/TopPic.jpeg'
 import ListAndMapTab from './ListAndMapTab'
 import Top10ListCreator from './Top10ListCreator'
+import { LinearGradient } from 'expo-linear-gradient'
 
 import InfoText from './InfoText'
 
@@ -17,7 +18,12 @@ function Top10Restaurants({ navigation }) {
             backgroundColor={'#FFFFFFBF'}
           />
         </View>
-        <InfoText />
+        <LinearGradient
+          colors={['rgba(0, 0, 0, 0.03)', 'rgba(0, 0, 0, 0.6)']}
+          style={styles.infoTextOverlay}
+        >
+          <InfoText />
+        </LinearGradient>
       </View>
       <View style={styles.ListItem}>
         <Top10ListCreator navigation={navigation} />
@@ -38,6 +44,13 @@ const styles = StyleSheet.create({
 
   textColor: {
     color: '#FFFFFFFF',
+  },
+  infoTextOverlay: {
+    position: 'absolute',
+    bottom: -60,
+    left: 90,
+    width: '110%',
+    padding: 10,
   },
 
   TopDishPicContainer: {

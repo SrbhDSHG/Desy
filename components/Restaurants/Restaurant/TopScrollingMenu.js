@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 function TopScrollingMenu({ restauOptionHeader }) {
-  const [selectedOption, setSelectedOption] = useState(null)
+  const [selectedOption, setSelectedOption] = useState(restauOptionHeader[0])
 
   const handlePress = (index) => {
     setSelectedOption(index)
@@ -24,7 +24,7 @@ function TopScrollingMenu({ restauOptionHeader }) {
               {
                 borderBottomColor:
                   selectedOption === index ? '#03A4FF' : 'transparent',
-                borderBottomWidth: selectedOption === index ? 2 : 0,
+                borderBottomWidth: selectedOption === index ? 1 : 0,
               },
             ]}
           >

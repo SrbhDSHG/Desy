@@ -40,15 +40,14 @@ export default InfoText
 
 const styles = StyleSheet.create({
   infoTextContainer: {
-    paddingHorizontal: 10,
-    left: 100,
-    bottom: -45,
-    position: 'absolute',
+    padding: 10,
+    borderRadius: 10,
+    // position: 'absolute',
   },
   textColor: {
     color: '#FFFFFF',
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: { width: -1, height: 2 },
+    textShadowOffset: { width: -1, height: 3 },
     textShadowRadius: 5,
   },
   threeIcons: {

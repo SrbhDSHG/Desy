@@ -1,13 +1,19 @@
 import { StyleSheet, View } from 'react-native'
 import MapScreen from '../../UI/MapScreen'
 import ListAndMapTab from './ListAndMapTab'
+import MapDisplay from './MapDisplay'
+import { useData } from '../../store/context/DataContext'
 function OnMapListed({ navigation }) {
+  const { top10RestList } = useData()
+
+  // console.log('coordinates', coordinates)
   return (
     <View style={styles.container}>
       <View style={styles.listAndMap}>
         <ListAndMapTab navigation={navigation} backgroundColor={'#FFFFFFBF'} />
       </View>
-      <MapScreen />
+      <MapDisplay locations={top10RestList} />
+      {/* <MapScreen /> */}
     </View>
   )
 }

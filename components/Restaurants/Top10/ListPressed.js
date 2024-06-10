@@ -4,7 +4,6 @@ import Top10ListCreator from './Top10ListCreator'
 import { StyleSheet, View } from 'react-native'
 
 function ListPressed({ navigation }) {
-  // const { setActiveTab } = useData()
   return (
     <View style={styles.container}>
       <View style={styles.forElevation}>
@@ -20,6 +19,7 @@ function ListPressed({ navigation }) {
 }
 
 export default ListPressed
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -28,20 +28,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   forElevation: {
-    elevation: 5,
     width: '100%',
     paddingBottom: 10,
-    // paddingVertical: 5,
     backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 5,
   },
   listAndMap: {
     justifyContent: 'center',
     alignItems: 'center',
-
-    // paddingVertical: 2,
   },
   top10ListContainer: {
     flex: 1,
-    // position: 'absolute',
   },
 })
