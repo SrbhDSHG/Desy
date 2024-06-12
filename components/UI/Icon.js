@@ -1,11 +1,9 @@
 import React from 'react'
-import { Pressable, StyleSheet } from 'react-native'
-import { AntDesign, Feather } from '@expo/vector-icons'
+import { TouchableOpacity } from 'react-native'
+import { Feather, AntDesign, MaterialIcons } from '@expo/vector-icons' // Add more icon families as needed
 
 const Icon = ({ iconFamily, icon, size, color, onPress }) => {
   let IconComponent
-
-  // Determine which icon set to use based on the iconFamily prop
   switch (iconFamily) {
     case 'Feather':
       IconComponent = Feather
@@ -13,30 +11,19 @@ const Icon = ({ iconFamily, icon, size, color, onPress }) => {
     case 'AntDesign':
       IconComponent = AntDesign
       break
+    case 'MaterialIcons':
+      IconComponent = MaterialIcons
+      break
+    // Add more cases for other icon families
     default:
-      IconComponent = AntDesign // Default to AntDesign if not specified
+      IconComponent = AntDesign // Default to AntDesign if no family is specified
   }
 
   return (
-    <Pressable
-      style={({ pressed }) => [styles.iconContainer, pressed && styles.pressed]}
-      onPress={onPress}
-    >
+    <TouchableOpacity onPress={onPress} style={{ marginLeft: 10 }}>
       <IconComponent name={icon} size={size} color={color} />
-    </Pressable>
+    </TouchableOpacity>
   )
 }
 
 export default Icon
-
-const styles = StyleSheet.create({
-  iconContainer: {
-    padding: 8,
-    margin: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  pressed: {
-    opacity: 0.7,
-  },
-})

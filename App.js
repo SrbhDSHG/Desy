@@ -28,6 +28,8 @@ import RestaurantMenu from './components/Restaurants/Restaurant/RestaurantMenu'
 import Icon from './components/UI/Icon'
 import CustomHeader from './components/UI/CustomHeader'
 import { FeatherIcon } from './components/Utility/StaticData/IconFamily'
+import MemberDishPics from './components/Restaurants/Members/MemberDishPics'
+import MemberProfile from './components/Restaurants/Members/MemberProfile'
 
 // import AppLoading from 'expo-app-loading'
 
@@ -194,6 +196,49 @@ export default function App() {
                 headerBackTitleVisible: false,
                 headerShadowVisible: false,
                 headerTransparent: true,
+              })}
+            />
+            <Stack.Screen
+              name="Member Dish Pics"
+              component={MemberDishPics}
+              options={({ navigation, route }) => ({
+                header: () => (
+                  <CustomHeader
+                    navigation={navigation}
+                    elevation={2}
+                    backgroundColor="white"
+                    headerTitle={
+                      route.params?.headerTitle || 'Member Dish Pics'
+                    }
+                  />
+                ),
+                headerShown: true,
+                // title: '',
+                headerBackTitleVisible: true,
+                headerShadowVisible: true,
+                headerTransparent: true,
+              })}
+            />
+            <Stack.Screen
+              name="MemberProfile"
+              component={MemberProfile}
+              options={({ navigation, route }) => ({
+                header: () => (
+                  <CustomHeader
+                    navigation={navigation}
+                    elevation={2}
+                    backgroundColor="white"
+                    title={true}
+                    // headerTitle="Profile"
+                    headerTitle={route.params?.headerTitle || ''} // Use route.params to set the title dynamically
+                    iconFamily={['AntDesign']}
+                    icons={['ellipsis1']}
+                    color="black"
+                    size={24}
+                  />
+                ),
+                headerShown: true,
+                headerBackTitleVisible: false,
               })}
             />
           </Stack.Navigator>

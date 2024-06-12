@@ -7,8 +7,7 @@ function TopScrollingMenu({ restauOptionHeader }) {
   const handlePress = (index) => {
     setSelectedOption(index)
   }
-  console.log(`restauOptionHeader ${restauOptionHeader[0].text}`)
-  console.log(`selectedOption ${selectedOption[0]}`)
+  // console.log(`restauOptionHeader ${restauOptionHeader[0].text}`)
   return (
     <View style={styles.container}>
       <ScrollView

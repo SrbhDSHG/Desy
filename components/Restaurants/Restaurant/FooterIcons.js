@@ -1,11 +1,16 @@
 import React from 'react'
 import { useData } from '../../store/context/DataContext'
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 
-function FooterIcons() {
+function FooterIcons({ navigation, list }) {
   const { restauFooterIcon } = useData()
   const firstTwo = restauFooterIcon.slice(0, 2)
   const lastTwo = restauFooterIcon.slice(-2)
+  const middlePressHandler = () => {
+    // console.log('middle icon pressed')
+    // console.log('middle icon pressed, list', list)
+    navigation.navigate('Member Dish Pics', { list })
+  }
 
   return (
     <View style={styles.container}>
@@ -18,10 +23,12 @@ function FooterIcons() {
         ))}
       </View>
       <View style={styles.middleIconContainer}>
-        <View style={styles.footerIcon}>
-          <View style={styles.middleIcon}>{restauFooterIcon[2].icon}</View>
-          <Text style={styles.text}>{restauFooterIcon[2].text}</Text>
-        </View>
+        <Pressable onPress={middlePressHandler}>
+          <View style={styles.footerIcon}>
+            <View style={styles.middleIcon}>{restauFooterIcon[2].icon}</View>
+            <Text style={styles.text}>{restauFooterIcon[2].text}</Text>
+          </View>
+        </Pressable>
       </View>
       <View style={[styles.iconWithText]}>
         {lastTwo.map((item) => (

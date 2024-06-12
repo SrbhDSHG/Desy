@@ -1,5 +1,11 @@
 import React from 'react'
-import { ImageBackground, StyleSheet, Text, View } from 'react-native'
+import {
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import { useData } from '../../store/context/DataContext'
 import { useRoute } from '@react-navigation/native'
 import IconContainer from '../Top10/IconContainer'
@@ -11,6 +17,8 @@ import ScoreCreator from './ScoreCreator'
 import ImageWithLoadingIndicator from '../../Utility/ImageWithLoadingIndicator'
 import FooterIcons from './FooterIcons'
 import TopScrollingMenu from './TopScrollingMenu'
+import PopularDishes from './PopularDishes'
+import DishHorztScrollabe from './DishHorztScrollabe'
 
 const scoreData = [
   {
@@ -27,7 +35,7 @@ const scoreData = [
   },
 ]
 
-function RestaurantMenu() {
+function RestaurantMenu({ navigation }) {
   const {
     restauOptionHeader,
     RestauInfo,
@@ -37,6 +45,8 @@ function RestaurantMenu() {
   } = useData()
   const route = useRoute()
   const { list } = route.params
+
+  // console.log('Pouplar dish list', list.popularDish)
 
   return (
     <View style={styles.container}>
@@ -75,9 +85,10 @@ function RestaurantMenu() {
             See All Photos
           </Text>
         </View>
+        <DishHorztScrollabe popularDish={list.popularDish} />
       </View>
       <View style={styles.footerContainer}>
-        <FooterIcons />
+        <FooterIcons navigation={navigation} list={list} />
       </View>
     </View>
   )
@@ -121,6 +132,7 @@ const styles = StyleSheet.create({
 
   popularDishesContainer: {
     marginHorizontal: 5,
+    marginVertical: 20,
     paddingHorizontal: 10,
   },
   popularDishesHeaderContainer: {
@@ -143,5 +155,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     bottom: 0,
+  },
+  dishContainer: {
+    flexDirection: 'row',
+    marginVertical: 10,
   },
 })
