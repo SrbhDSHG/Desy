@@ -1,6 +1,8 @@
 import axios from 'axios'
 
-const baseUrl = 'http://192.168.23.187:8000/api/v1/'
+//look for the ipv4 address and paste here
+const baseUrl = 'http://192.168.142.141:8000/api/v1/'
+// const baseUrl = 'http://192.168.23.187:8000/api/v1/'
 
 export const fetchEmailVerify = async (email) => {
   console.log('email id for verification', email)
