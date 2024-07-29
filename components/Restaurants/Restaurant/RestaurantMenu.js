@@ -47,6 +47,9 @@ function RestaurantMenu({ navigation }) {
   const { list } = route.params
 
   // console.log('Pouplar dish list', list.popularDish)
+  const pressToViewAllPhotos = () => {
+    navigation.navigate('Restaurant Dish', { list })
+  }
 
   return (
     <View style={styles.container}>
@@ -81,11 +84,14 @@ function RestaurantMenu({ navigation }) {
       <View style={styles.popularDishesContainer}>
         <View style={styles.popularDishesHeaderContainer}>
           <Text style={styles.popularDishesHeader}>Popular Dishes</Text>
-          <Text style={[styles.popularDishesHeader, styles.photoText]}>
+          <Text
+            onPress={() => pressToViewAllPhotos(list)}
+            style={[styles.popularDishesHeader, styles.photoText]}
+          >
             See All Photos
           </Text>
         </View>
-        <DishHorztScrollabe popularDish={list.popularDish} />
+        <DishHorztScrollabe popularDish={list.dishes} />
       </View>
       <View style={styles.footerContainer}>
         <FooterIcons navigation={navigation} list={list} />

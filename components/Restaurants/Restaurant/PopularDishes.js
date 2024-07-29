@@ -5,27 +5,29 @@ function PopularDishes({ imagelink, dishName, recommended = '123' }) {
   const [loading, setLoading] = useState(true)
 
   return (
-    <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        {loading && (
-          <ActivityIndicator
-            size="large"
-            color="#03A4FF"
-            style={styles.activityIndicator}
+    <View>
+      <View style={styles.container}>
+        <View style={styles.imageContainer}>
+          {loading && (
+            <ActivityIndicator
+              size="large"
+              color="#03A4FF"
+              style={styles.activityIndicator}
+            />
+          )}
+          <Image
+            style={styles.image}
+            source={{ uri: imagelink }}
+            onLoad={() => setLoading(false)}
+            onError={() => setLoading(false)}
           />
-        )}
-        <Image
-          style={styles.image}
-          source={{ uri: imagelink }}
-          onLoad={() => setLoading(false)}
-          onError={() => setLoading(false)}
-        />
-      </View>
-      <View style={styles.textContainer}>
-        <Text style={styles.dishName} numberOfLines={1}>
-          {dishName}
-        </Text>
-        <Text style={styles.recommended}>{`${recommended} recommended`}</Text>
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.dishName} numberOfLines={1}>
+            {dishName}
+          </Text>
+          <Text style={styles.recommended}>{`${recommended} recommended`}</Text>
+        </View>
       </View>
     </View>
   )

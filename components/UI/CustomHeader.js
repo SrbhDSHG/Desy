@@ -13,11 +13,11 @@ const CustomHeader = ({
   title = true,
   headerTitle = '',
   backgroundColor = 'transparent',
-  elevation = 0,
+  style = {},
 }) => {
   return (
-    <SafeAreaView style={[styles.safeArea, { backgroundColor, elevation }]}>
-      <View style={styles.headerContainer}>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor }, style]}>
+      <View style={[styles.headerContainer, { backgroundColor }]}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={styles.backButton}
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 15,
     paddingVertical: 10,
-    elevation: 0,
+    marginBottom: 5,
   },
   backButton: {
     paddingRight: 10,

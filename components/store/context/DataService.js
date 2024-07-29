@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 //look for the ipv4 address and paste here
-const baseUrl = 'http://192.168.142.141:8000/api/v1/'
+const baseUrl = 'http://192.168.142.141:8080/api/v1/'
 // const baseUrl = 'http://192.168.23.187:8000/api/v1/'
 
 export const fetchEmailVerify = async (email) => {
@@ -67,6 +67,17 @@ export const sendUserData = async (userdata) => {
     return response
   } catch (error) {
     console.log('unable to create user', error)
+    throw error
+  }
+}
+
+exports.fetchUserDishPhotos = async (id) => {
+  try {
+    const response = await axios.get(`${baseUrl}users/${id}/dishphotos`)
+    console.log('User dish photos response:', response.data.dishPhotos)
+    return response.data.dishPhotos
+  } catch (error) {
+    console.log('Unable to fetch user dishes', error)
     throw error
   }
 }

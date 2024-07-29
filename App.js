@@ -30,6 +30,8 @@ import CustomHeader from './components/UI/CustomHeader'
 import { FeatherIcon } from './components/Utility/StaticData/IconFamily'
 import MemberDishPics from './components/Restaurants/Members/MemberDishPics'
 import MemberProfile from './components/Restaurants/Members/MemberProfile'
+// import RestaurantAllDish from './components/Restaurants/Restaurant/RestaurantAllDish'
+import RestaurantAllDish2 from './components/Restaurants/Restaurant/RestaurantAllDish2'
 
 // import AppLoading from 'expo-app-loading'
 
@@ -129,6 +131,10 @@ export default function App() {
 
             <Stack.Screen name="Eating Most At" component={EatingMostAt} />
             <Stack.Screen name="Desy Anywhere" component={DesyAnyWhere} />
+            {/* <Stack.Screen
+              name="Restaurant All Dish"
+              component={RestaurantAllDish}
+            /> */}
             <Stack.Screen
               name="Find Your Freinds "
               component={FindYourFriends}
@@ -190,12 +196,17 @@ export default function App() {
               name="Restaurant Menu"
               component={RestaurantMenu}
               options={({ navigation }) => ({
-                header: () => <CustomHeader navigation={navigation} />,
+                header: () => (
+                  <CustomHeader
+                    navigation={navigation}
+                    backgroundColor="transparent"
+                  />
+                ),
                 headerShown: true,
                 // title: '',
-                headerBackTitleVisible: false,
-                headerShadowVisible: false,
-                headerTransparent: true,
+                // headerBackTitleVisible: false,
+                // headerShadowVisible: false,
+                // headerTransparent: true,
               })}
             />
             <Stack.Screen
@@ -217,6 +228,33 @@ export default function App() {
                 headerBackTitleVisible: true,
                 headerShadowVisible: true,
                 headerTransparent: true,
+              })}
+            />
+            <Stack.Screen
+              name="Restaurant Dish"
+              component={RestaurantAllDish2}
+              options={({ navigation, route }) => ({
+                headerShown: true,
+                // headerBackTitleVisible: true,
+                // headerShadowVisible: true,
+                headerTransparent: false,
+                header: () => (
+                  <CustomHeader
+                    navigation={(navigation, route)}
+                    headerTitle={`${route.params.list.name}, ${route.params.list.address.city}`}
+                    backgroundColor="white"
+                    style={{
+                      backgroundColor: '#FFFFFF',
+                      shadowColor: '#000000',
+                      shadowOffset: { width: 0, height: 2 },
+                      shadowOpacity: 0.15,
+                      shadowRadius: 8,
+                      elevation: 5,
+                    }}
+                  />
+                ),
+                headerShown: true,
+                headerBackTitleVisible: false,
               })}
             />
             <Stack.Screen
