@@ -12,7 +12,7 @@ import YouAreIn from './YouAreIn'
 import { useData } from '../store/context/DataContext'
 
 function AddProfilePhoto({ navigation }) {
-  const { photoAdded, setPhotoAdded, imagelink, setImage } = useData()
+  const { photoAdded, setPhotoAdded, userPhoto, setUserPhoto } = useData()
 
   const [cameraPermissionInformation, requestPermission] =
     useCameraPermissions()
@@ -44,7 +44,7 @@ function AddProfilePhoto({ navigation }) {
     })
 
     if (!img.canceled) {
-      setImage(img.assets[0].uri)
+      setUserPhoto(img.assets[0].uri)
 
       setPhotoAdded(true)
     } else {
@@ -75,7 +75,7 @@ function AddProfilePhoto({ navigation }) {
   return (
     <View style={styles.container}>
       {photoAdded ? (
-        <YouAreIn photoSource={imagelink} navigation={navigation} />
+        <YouAreIn photoSource={userPhoto} navigation={navigation} />
       ) : (
         <>
           <View style={styles.cardWrapper}>

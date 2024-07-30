@@ -11,7 +11,7 @@ import {
 import { FontAwesome5, AntDesign } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 
-function DesyMemberPhotos2({ dishPhotos, loading, setLoading }) {
+function DesyMemberPhotos2({ dishPhotos, loading, setLoading, navigation }) {
   console.log('dishPhotos passed in desyMemberPhotos2', dishPhotos)
   const pressHandler = (photo) => {
     console.log('pressed photo', photo)

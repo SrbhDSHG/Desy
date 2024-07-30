@@ -1,23 +1,13 @@
-import React from 'react'
-import { Image, StyleSheet, View, Text } from 'react-native'
-import { useRoute } from '@react-navigation/native'
-import { contains } from 'validator'
-import { LinearGradient } from 'expo-linear-gradient'
-import LinearGradientCompnt from '../../UI/LinearGradient'
-
-const name = 'Judy T'
-const date = new Date()
-function MemberProfile({ navigation }) {
+function DesyMemberOtherDishPics() {
   const route = useRoute()
   const { photo } = route.params
-
-  console.log('photo', photo)
+  console.log('pressed photo received ', photo)
   return (
     <View style={styles.superContainer}>
       <View style={styles.container}>
         <View style={styles.picAndTextContainer}>
           <Image
-            source={uri: }
+            source={require('../../Utility/StaticData/DishesPics/Judy.jpeg')}
             style={styles.profilePic}
           />
           <View style={styles.textContainer}>
@@ -30,7 +20,7 @@ function MemberProfile({ navigation }) {
         <View style={styles.headerImageContainer}>
           <Image source={photo.imagelink} style={styles.image} />
           <View style={styles.rectangle}>
-            <LinearGradientCompnt photoName={'Burger'} />
+            <LinearGradientCompnt photoName={photo.dishType} />
           </View>
         </View>
         <View style={styles.other}>
@@ -40,8 +30,7 @@ function MemberProfile({ navigation }) {
     </View>
   )
 }
-
-export default MemberProfile
+export default DesyMemberOtherDishPics
 
 const styles = StyleSheet.create({
   superContainer: {

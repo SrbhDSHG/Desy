@@ -16,7 +16,14 @@ import ButtonDesyV2 from '../Utility/ButtonDesy'
 import { useData } from '../store/context/DataContext'
 
 function EmailAdd({ navigation }) {
-  const { email, setEmail, emailVerified, emailverification } = useData()
+  const {
+    email,
+    setEmail,
+    emailVerified,
+    emailverification,
+    firstName,
+    lastName,
+  } = useData()
   const [loading, setLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
 
@@ -31,7 +38,7 @@ function EmailAdd({ navigation }) {
     }
     setLoading(true)
     try {
-      const response = await emailverification(email)
+      const response = await emailverification(email, firstName, lastName)
       console.log('response from email verification', response)
       if (response.data.email === email) {
         navigation.navigate('email verify')

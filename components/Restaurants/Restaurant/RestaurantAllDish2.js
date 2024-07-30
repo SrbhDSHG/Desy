@@ -5,7 +5,7 @@ import PopularDishes from './PopularDishes'
 import DesyMemberPhotos2 from './DesiMemberPhotos2'
 import { fetchUserDishPhotos } from '../../store/context/DataService'
 
-function RestaurantAllDish2({ route }) {
+function RestaurantAllDish2({ navigation, route }) {
   const { list } = route.params
   const [photos, setPhotos] = useState([])
   const [searchValue, setSearchValue] = useState('')
@@ -22,8 +22,6 @@ function RestaurantAllDish2({ route }) {
         setPhotos(result)
       } catch (err) {
         setError(err.message)
-      } finally {
-        setLoading(false)
       }
     }
 
@@ -60,35 +58,39 @@ function RestaurantAllDish2({ route }) {
           </View>
         </View>
       </View>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.popularDishes}
-      >
-        {list.dishes.map((lst, index) => (
-          <PopularDishes
-            key={index}
-            imagelink={lst.imagelink}
-            dishName={lst.name}
-            recommended={lst.recommended}
-          />
-        ))}
-      </ScrollView>
-
-      <View style={styles.desiMemberPicCont}>
-        <Text style={styles.headerDesiPhotoText}>Photos from desy members</Text>
+      <Text style={styles.popularDishesText}>Popular Dishes </Text>
+      <View>
         <ScrollView
-          vertical
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.scrollViewContent}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.popularDishes}
         >
-          <DesyMemberPhotos2
-            dishPhotos={photos}
-            loading={loading}
-            setLoading={setLoading}
-          />
+          {list.dishes.map((lst, index) => (
+            <PopularDishes
+              key={index}
+              imagelink={lst.imagelink}
+              dishName={lst.name}
+              recommended={lst.recommended}
+            />
+          ))}
         </ScrollView>
       </View>
+
+      {/* <View style={styles.desiMemberPicCont}> */}
+      <Text style={styles.headerDesiPhotoText}>Photos from Desy members</Text>
+      <ScrollView
+        vertical
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollViewContent}
+      >
+        <DesyMemberPhotos2
+          dishPhotos={photos}
+          loading={loading}
+          setLoading={setLoading}
+          navigation={navigation}
+        />
+      </ScrollView>
+      {/* </View> */}
     </View>
   )
 }
@@ -99,18 +101,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    paddingTop: 10,
+    padding: 10,
   },
   searchContainer: {
     backgroundColor: 'white',
-    marginBottom: 5,
+    marginBottom: 2,
     padding: 10,
   },
   iconAndText: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
     backgroundColor: '#EFEFEF',
     borderRadius: 10,
   },
@@ -123,6 +125,11 @@ const styles = StyleSheet.create({
     height: 40,
     fontSize: 16,
     color: '#000',
+  },
+  popularDishesText: {
+    fontSize: 17,
+    fontFamily: 'Mulish-Bold',
+    marginBottom: 5,
   },
   sliderContainer: {
     backgroundColor: '#03A4FF',
@@ -138,17 +145,18 @@ const styles = StyleSheet.create({
     padding: 2,
   },
   desiMemberPicCont: {
-    paddingHorizontal: 10,
-    marginTop: 20,
+    // paddingHorizontal: 10,
+    marginTop: 10,
   },
   headerDesiPhotoText: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 10,
+    fontFamily: 'Mulish-Bold',
   },
   popularDishes: {
     paddingBottom: 10,
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
   },
   scrollViewContent: {
     paddingBottom: 20,

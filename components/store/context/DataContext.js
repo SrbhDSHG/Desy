@@ -29,7 +29,7 @@ const defaultValue = {
   cuisineNotLike: [],
   setCuisineNotLike: () => {},
   imagelink: '',
-  setImage: () => {},
+  setUserPhoto: () => {},
   cuisineNotLike: [],
   setCuisineNotLike: () => {},
   dietaryRestriction: [],
@@ -120,7 +120,7 @@ function DataProvider({ children }) {
   const [email, setEmail] = useState('')
   const [userName, setUsrName] = useState('')
   const [password, setPassword] = useState('')
-  const [imagelink, setImage] = useState(null)
+  const [userPhoto, setUserPhoto] = useState(null)
   const [photoAdded, setPhotoAdded] = useState(false)
   const [cuisineNotLike, setCuisineNotLike] = useState([])
   const [dietaryRestriction, setDietaryRestriction] = useState([])
@@ -141,15 +141,15 @@ function DataProvider({ children }) {
   phoneNumber && console.log('phoneNumber:', phoneNumber)
   email && console.log('email:', email)
   password && console.log('password:', password)
-  imagelink && console.log('image:', imagelink)
+  userPhoto && console.log('image:', userPhoto)
   cuisineNotLike && console.log('cuisineNotLike:', cuisineNotLike)
   userName && console.log('userName:', userName)
   defaultCity && console.log('defaultCity:', defaultCity)
   dietaryRestriction && console.log('dietaryRestriction:', dietaryRestriction)
 
-  const emailverification = async (email) => {
-    console.log('In the  data context', email)
-    const response = await fetchEmailVerify(email)
+  const emailverification = async (email, firstName, lastName) => {
+    console.log('In the  data context, email:', email)
+    const response = await fetchEmailVerify(email, firstName, lastName)
     return response
   }
   const otpverification = async (email, otp) => {
@@ -167,13 +167,12 @@ function DataProvider({ children }) {
         photoAdded,
         email,
         password,
-        imagelink,
+        userPhoto,
         cuisineNotLike,
         dietaryRestriction,
         userName,
         defaultCity,
         emailVerified,
-        imagelink,
       })
       console.log('User created :', response)
       return response
@@ -195,8 +194,8 @@ function DataProvider({ children }) {
     setEmail,
     password,
     setPassword,
-    imagelink,
-    setImage,
+    userPhoto,
+    setUserPhoto,
     photoAdded,
     setPhotoAdded,
     defaultCity,

@@ -4,10 +4,14 @@ import axios from 'axios'
 const baseUrl = 'http://192.168.142.141:8080/api/v1/'
 // const baseUrl = 'http://192.168.23.187:8000/api/v1/'
 
-export const fetchEmailVerify = async (email) => {
+export const fetchEmailVerify = async (email, firstName, lastName) => {
   console.log('email id for verification', email)
   try {
-    const response = await axios.post(`${baseUrl}users/emailverify`, { email })
+    const response = await axios.post(`${baseUrl}users/emailverify`, {
+      email,
+      firstName,
+      lastName,
+    })
     return response.data
   } catch (error) {
     console.log(error)
@@ -44,7 +48,7 @@ export const sendUserData = async (userdata) => {
   const formData = new FormData()
   for (const key in userdata) {
     if (userdata.hasOwnProperty(key)) {
-      if (key === 'imagelink') {
+      if (key === 'userPhoto') {
         formData.append(key, {
           uri: userdata[key],
           name: 'profile.jpg',

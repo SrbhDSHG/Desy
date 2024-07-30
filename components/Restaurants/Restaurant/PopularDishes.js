@@ -5,7 +5,7 @@ function PopularDishes({ imagelink, dishName, recommended = '123' }) {
   const [loading, setLoading] = useState(true)
 
   return (
-    <View>
+    <View style={styles.superContainer}>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
           {loading && (
@@ -18,7 +18,7 @@ function PopularDishes({ imagelink, dishName, recommended = '123' }) {
           <Image
             style={styles.image}
             source={{ uri: imagelink }}
-            onLoad={() => setLoading(false)}
+            onLoadEnd={() => setLoading(false)}
             onError={() => setLoading(false)}
           />
         </View>
@@ -36,6 +36,9 @@ function PopularDishes({ imagelink, dishName, recommended = '123' }) {
 export default PopularDishes
 
 const styles = StyleSheet.create({
+  // superContainer: {
+  //   flex: 1,
+  // },
   container: {
     width: 135,
     height: 140,
