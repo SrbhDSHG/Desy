@@ -12,7 +12,7 @@ function RestaurantAllDish2({ navigation, route }) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  const userId = '664bfc8361b9e66e20b99981'
+  const userId = '66aa136e8e444562d8e82366'
   console.log('list value in Restaurant All dish', list)
 
   useEffect(() => {

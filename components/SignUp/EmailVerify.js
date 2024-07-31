@@ -1,9 +1,8 @@
 import React, { useState, useRef } from 'react'
-import { View, TextInput, StyleSheet } from 'react-native'
+import { View, TextInput, StyleSheet, Text } from 'react-native'
 import Container from '../UI/Container'
 import ButtonDesyV2 from '../Utility/ButtonDesy'
 import { useData } from '../store/context/DataContext'
-import CardContainer from '../UI/CardContainer'
 import HeadingCreator from '../UI/HeadingCreator'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import CircleWithGradient from '../Utility/CircleWithGradient'
@@ -11,6 +10,7 @@ import CircleWithGradient from '../Utility/CircleWithGradient'
 const EmailVerify = ({ navigation }) => {
   const { email, otpverification, setEmailVerified } = useData()
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
+  const [message, setMessage] = useState('')
   const inputs = useRef([])
 
   const handleChangeText = (text, index) => {
@@ -33,12 +33,33 @@ const EmailVerify = ({ navigation }) => {
       inputs.current[index - 1].focus()
     }
   }
+
+  const resetOtpInputs = () => {
+    setOtp(['', '', '', '', '', ''])
+    inputs.current[0].focus()
+  }
+
   const onPressHandle = async () => {
-    // console.log('value of the otp', otp.join(''))
-    const response = await otpverification(email, otp.join(''))
-    if (response.message === 'OTP Verified') {
-      setEmailVerified(true)
-      navigation.navigate('UserName')
+    setMessage('')
+    try {
+      const response = await otpverification(email, otp.join(''))
+      console.log('response of otp verification', response)
+      if (response.message === 'OTP Verified') {
+        setEmailVerified(true)
+        setMessage('OTP Verified successfully!')
+        setTimeout(() => {
+          navigation.navigate('UserName')
+        }, 2000) // Navigate after 2 seconds
+      } else {
+        setMessage('Invalid OTP. Please try again.')
+        resetOtpInputs()
+      }
+    } catch (error) {
+      console.log('Error during otp verification:', error.response.data)
+      setMessage(
+        error.response.data.message || 'An error occurred. Please try again.'
+      )
+      resetOtpInputs()
     }
   }
 
@@ -81,6 +102,7 @@ const EmailVerify = ({ navigation }) => {
           />
         ))}
       </View>
+      {message ? <Text style={styles.message}>{message}</Text> : null}
       <ButtonDesyV2
         buttonText={'Enter OTP to verify'}
         isEnabled={otp.length === 6 && otp.every((digit) => digit !== '')}
@@ -105,6 +127,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     marginHorizontal: 5,
+  },
+  message: {
+    marginTop: 20,
+    fontSize: 16,
+    color: 'red',
+    textAlign: 'center',
   },
 })
 

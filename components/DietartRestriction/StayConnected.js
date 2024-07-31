@@ -11,16 +11,21 @@ const bodyTextLines =
   'We’ll send you notifications when your friends interact with you, when new friends join, and when we have exclusive restaurant info to share!'
 
 function StayConnected({ navigation }) {
-  const { createUser } = useData()
+  const { createUser, setCurrentUser } = useData()
   const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState('')
 
   const onPressHandler = async () => {
     setLoading(true)
     const response = await createUser()
-    console.log(response.data)
+    console.log('reponse after creating user', response)
     setLoading(false)
-    if (response.data.status == 'success') {
-      navigation.navigate('Top10 Restaurants')
+    if (response.status == 'success') {
+      setCurrentUser(response.user)
+      setMessage(response.message)
+      setTimeout(() => {
+        navigation.navigate('Top10 Restaurants')
+      }, 3000) // Delay of 3 seconds
     }
   }
 
@@ -61,6 +66,12 @@ function StayConnected({ navigation }) {
           </View>
         </View>
       </Modal>
+
+      {message && (
+        <View style={styles.messageContainer}>
+          <Text style={styles.messageText}>{message}</Text>
+        </View>
+      )}
     </View>
   )
 }
@@ -119,5 +130,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#000',
     fontSize: 16,
+  },
+  messageContainer: {
+    marginTop: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: '#e0f7fa',
+    borderRadius: 10,
+  },
+  messageText: {
+    fontSize: 16,
+    color: '#00796b',
   },
 })

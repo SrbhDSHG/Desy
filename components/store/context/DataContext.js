@@ -25,6 +25,8 @@ const defaultValue = {
   setUsrName: () => {},
   password: '',
   setPassword: () => {},
+  currentUser: '',
+  setCurrentUser: () => {},
 
   cuisineNotLike: [],
   setCuisineNotLike: () => {},
@@ -127,6 +129,7 @@ function DataProvider({ children }) {
   const [defaultCity, setDefaultCity] = useState([])
   const [emailVerified, setEmailVerified] = useState(false)
   const [top10RestList, setTop10RestList] = useState([])
+  const [currentUser, setCurrentUser] = useState('')
 
   const { activeTab, setActiveTab, tabSelected, setTabSelected } = useTabs(tabs)
 
@@ -135,6 +138,7 @@ function DataProvider({ children }) {
       const response = await fetchRestaurants()
       setTop10RestList(response.data.restaurants)
     }
+
     fetchRestaurantsList()
   }, [])
   firstName && console.log('firstName: , lastName:', firstName, lastName)
@@ -154,9 +158,14 @@ function DataProvider({ children }) {
   }
   const otpverification = async (email, otp) => {
     console.log('In the  data context', email, otp)
-    const response = await fetchOtpVerify(email, otp)
-    console.log('response of otp verification', response.data)
-    return response.data
+    try {
+      const response = await fetchOtpVerify(email, otp)
+      console.log('response of otp verification', response.data)
+      return response.data
+    } catch (err) {
+      console.log('Error in otp verification', err)
+      throw err
+    }
   }
   const createUser = async () => {
     try {
@@ -175,13 +184,16 @@ function DataProvider({ children }) {
         emailVerified,
       })
       console.log('User created :', response)
-      return response
+
+      return response.data
     } catch (e) {
       console.log('User creation error', e)
     }
   }
 
   const value = {
+    currentUser,
+    setCurrentUser,
     firstName,
     setFirstName,
     lastName,

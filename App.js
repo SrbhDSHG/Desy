@@ -32,6 +32,7 @@ import MemberDishPics from './components/Restaurants/Members/MemberDishPics'
 import MemberProfile from './components/Restaurants/Members/MemberProfile'
 // import RestaurantAllDish from './components/Restaurants/Restaurant/RestaurantAllDish'
 import RestaurantAllDish2 from './components/Restaurants/Restaurant/RestaurantAllDish2'
+import UserOptions from './components/Restaurants/Member/UserOptions'
 
 // import AppLoading from 'expo-app-loading'
 
@@ -71,6 +72,10 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator
             initialRouteName="Top10 Restaurants"
+            // initialRouteName="email verify"
+            // initialRouteName="Stay Connected"
+            // initialRouteName="Home"
+            // initialRouteName="User options"
             screenOptions={{
               headerShown: true,
               title: '',
@@ -279,6 +284,28 @@ export default function App() {
                 headerBackTitleVisible: false,
               })}
             />
+            {/* <Stack.Screen
+              name="User options"
+              component={UserOptions}
+              options={({ navigation, route }) => ({
+                header: () => (
+                  <CustomHeader
+                    navigation={navigation}
+                    elevation={2}
+                    backgroundColor="white"
+                    title={true}
+                    // headerTitle="Profile"
+                    headerTitle={route.params?.headerTitle || ''} // Use route.params to set the title dynamically
+                    iconFamily={['AntDesign']}
+                    icons={['ellipsis1']}
+                    color="black"
+                    size={24}
+                  />
+                ),
+                headerShown: true,
+                headerBackTitleVisible: false,
+              })}
+            /> */}
           </Stack.Navigator>
         </NavigationContainer>
       </DataProvider>

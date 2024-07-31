@@ -27,8 +27,15 @@ export const fetchOtpVerify = async (email, otp) => {
     console.log('response from fetchOtpVerify', response)
     return response
   } catch (error) {
-    console.log('error in fetchOtpVerify', error.data)
-    // throw error
+    throw error
+    // if (error.response) {
+    //   console.log('error in fetchOtpVerify', error.response.data)
+    //   throw error.response.data
+    //   // throw new Error(error.response.data || 'An error occurred')
+    // } else {
+    //   console.log('error2 in fetchOtpVerify', error)
+    //   throw new Error('Network error')
+    // }
   }
 }
 
@@ -82,6 +89,17 @@ exports.fetchUserDishPhotos = async (id) => {
     return response.data.dishPhotos
   } catch (error) {
     console.log('Unable to fetch user dishes', error)
+    throw error
+  }
+}
+
+exports.fetchUser = async (id) => {
+  try {
+    const response = await axios.get(`${baseUrl}users/${id}`)
+    console.log('User response:', response.data)
+    return response.data
+  } catch (error) {
+    console.log('Unable to fetch user', error)
     throw error
   }
 }

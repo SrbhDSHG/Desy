@@ -8,6 +8,7 @@ import DesyMemberPhotos from './DesyMemberPhotos'
 import DishHorztScrollabe from '../Restaurant/DishHorztScrollabe'
 
 function MemberDishPics({ navigation }) {
+  //obselete function
   const [searchValue, setSearchValue] = useState('')
   const { top10RestList } = useData()
 

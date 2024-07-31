@@ -1,15 +1,35 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Image, StyleSheet, View, Text } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import { contains } from 'validator'
 import { LinearGradient } from 'expo-linear-gradient'
 import LinearGradientCompnt from '../../UI/LinearGradient'
+import { useData } from '../../store/context/DataContext'
+import { fetchUser } from '../../store/context/DataService'
 
 const name = 'Judy T'
 const date = new Date()
 function MemberProfile({ navigation }) {
+  const { currentUser, setCurrentUser } = useData()
   const route = useRoute()
   const { photo } = route.params
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetchUser('66aa136e8e444562d8e82366')
+        console.log('user fetched member profile', response.data)
+        setCurrentUser(response.data)
+      } catch (error) {
+        console.error('Error fetching user data:', error)
+      }
+    }
+
+    if (currentUser) {
+      fetchUserData()
+    }
+  }, [])
+
+  console.log('currentUser', currentUser)
 
   console.log('photo', photo)
   return (
@@ -17,20 +37,22 @@ function MemberProfile({ navigation }) {
       <View style={styles.container}>
         <View style={styles.picAndTextContainer}>
           <Image
-            source={uri: }
             style={styles.profilePic}
+            source={{ uri: currentUser.userPhoto }}
           />
           <View style={styles.textContainer}>
-            <Text style={styles.name}>{name}</Text>
+            <Text
+              style={styles.name}
+            >{`${currentUser.firstName} ${currentUser.lastName}`}</Text>
             <Text
               style={styles.date}
             >{`Member since ${date.toDateString()}`}</Text>
           </View>
         </View>
         <View style={styles.headerImageContainer}>
-          <Image source={photo.imagelink} style={styles.image} />
+          <Image source={{ uri: photo.imagelink }} style={styles.image} />
           <View style={styles.rectangle}>
-            <LinearGradientCompnt photoName={'Burger'} />
+            <LinearGradientCompnt photoName={photo.dishType} />
           </View>
         </View>
         <View style={styles.other}>
