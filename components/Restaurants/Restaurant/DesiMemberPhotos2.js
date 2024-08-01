@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   ActivityIndicator,
   ImageBackground,
@@ -11,17 +11,25 @@ import {
 import { FontAwesome5, AntDesign } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 
-function DesyMemberPhotos2({ dishPhotos, loading, setLoading, navigation }) {
-  console.log('dishPhotos passed in desyMemberPhotos2', dishPhotos)
-  const pressHandler = (photo) => {
-    console.log('pressed photo', photo)
-    navigation.navigate('MemberProfile', { photo })
+function PhotoFromDesyMembers({
+  allUsers,
+  loading,
+  setLoading,
+  navigation,
+  restaurantId,
+}) {
+  const [photos, setPhotos] = useState([])
+
+  console.log('all users passed are:', allUsers)
+  const pressHandler = (user) => {
+    console.log('pressed photo', user)
+    navigation.navigate('MemberProfile', { user })
   }
   return (
     <View style={styles.container}>
-      {dishPhotos.map((photo, index) => (
+      {allUsers.map((user, index) => (
         <Pressable
-          onPress={() => pressHandler(photo)}
+          onPress={() => pressHandler(user)}
           key={index}
           style={({ pressed }) => [
             pressed && styles.pressedContainer,
@@ -37,7 +45,7 @@ function DesyMemberPhotos2({ dishPhotos, loading, setLoading, navigation }) {
             />
           )}
           <ImageBackground
-            source={{ uri: photo.imagelink }}
+            source={{ uri: user.dishPhotos[0].imagelink }}
             onLoad={() => setLoading(false)}
             onError={() => setLoading(false)}
             style={styles.imageBackground}
@@ -51,7 +59,7 @@ function DesyMemberPhotos2({ dishPhotos, loading, setLoading, navigation }) {
                 style={styles.gradient}
               >
                 <View style={styles.textAndIcon}>
-                  <Text style={styles.text}>{photo.dishType}</Text>
+                  {/* <Text style={styles.text}>{photo.dishType}</Text> */}
                   <View style={styles.iconContainer}>
                     <View style={styles.iconBox}>
                       <FontAwesome5 name="fire" size={14} color="white" />
@@ -70,7 +78,7 @@ function DesyMemberPhotos2({ dishPhotos, loading, setLoading, navigation }) {
   )
 }
 
-export default DesyMemberPhotos2
+export default PhotoFromDesyMembers
 
 const styles = StyleSheet.create({
   scrollViewContent: {

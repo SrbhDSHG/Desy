@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "../desy_server"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}

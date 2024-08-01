@@ -1,32 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, ScrollView, TextInput, Text } from 'react-native'
 import { FontAwesome, Entypo } from '@expo/vector-icons'
+import { useRoute } from '@react-navigation/native'
 import PopularDishes from './PopularDishes'
-import DesyMemberPhotos2 from './DesiMemberPhotos2'
-import { fetchUserDishPhotos } from '../../store/context/DataService'
+import PhotoFromDesyMembers from './DesiMemberPhotos2'
+import { fetchUsersDishForARestau } from '../../store/context/DataService'
 
-function RestaurantAllDish2({ navigation, route }) {
+function RestaurantAllDish2({ navigation }) {
+  const route = useRoute()
   const { list } = route.params
-  const [photos, setPhotos] = useState([])
+  const [users, setUsers] = useState([])
   const [searchValue, setSearchValue] = useState('')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  const userId = '66aa136e8e444562d8e82366'
-  console.log('list value in Restaurant All dish', list)
+  const restId = list._id
+  console.log('restaurant id ', restId)
 
   useEffect(() => {
     const fetchPhotos = async () => {
       try {
-        const result = await fetchUserDishPhotos(userId)
-        setPhotos(result)
+        const result = await fetchUsersDishForARestau(restId)
+        if (result) {
+          console.log('result after fetching users dish', result)
+          setUsers(result.users)
+        }
       } catch (err) {
         setError(err.message)
       }
     }
 
     fetchPhotos()
-  }, [userId])
+  }, [restId])
 
   const onValueChange = (text) => {
     console.log('search value', text)
@@ -83,11 +88,12 @@ function RestaurantAllDish2({ navigation, route }) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollViewContent}
       >
-        <DesyMemberPhotos2
-          dishPhotos={photos}
+        <PhotoFromDesyMembers
+          allUsers={users}
           loading={loading}
           setLoading={setLoading}
           navigation={navigation}
+          restaurantId={list._id}
         />
       </ScrollView>
       {/* </View> */}

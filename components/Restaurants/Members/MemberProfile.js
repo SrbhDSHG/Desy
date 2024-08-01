@@ -6,53 +6,53 @@ import { LinearGradient } from 'expo-linear-gradient'
 import LinearGradientCompnt from '../../UI/LinearGradient'
 import { useData } from '../../store/context/DataContext'
 import { fetchUser } from '../../store/context/DataService'
+import cookiemonster from '../../Utility/StaticData/DishesPics/cookie_monster.jpg'
 
-const name = 'Judy T'
+const formatDate = (timestamp) => {
+  const date = new Date(timestamp)
+  return date.toISOString().split('T')[0] // Output in "YYYY-MM-DD" format
+}
+
+// const name = 'Judy T'
 const date = new Date()
 function MemberProfile({ navigation }) {
   const { currentUser, setCurrentUser } = useData()
   const route = useRoute()
-  const { photo } = route.params
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetchUser('66aa136e8e444562d8e82366')
-        console.log('user fetched member profile', response.data)
-        setCurrentUser(response.data)
-      } catch (error) {
-        console.error('Error fetching user data:', error)
-      }
-    }
+  const { user } = route.params
 
-    if (currentUser) {
-      fetchUserData()
-    }
-  }, [])
+  // const dishPhotoSource =
+  //   user.dishPhotos &&
+  //   user.dishPhotos.length > 0 &&
+  //   user.dishPhotos[0].imagelink
+  //     ? { uri: user.dishPhotos[0].imagelink }
+  //     : cookiemonster
 
-  console.log('currentUser', currentUser)
-
-  console.log('photo', photo)
   return (
     <View style={styles.superContainer}>
       <View style={styles.container}>
         <View style={styles.picAndTextContainer}>
-          <Image
-            style={styles.profilePic}
-            source={{ uri: currentUser.userPhoto }}
-          />
+          <Image style={styles.profilePic} source={{ uri: user.userPhoto }} />
           <View style={styles.textContainer}>
             <Text
               style={styles.name}
-            >{`${currentUser.firstName} ${currentUser.lastName}`}</Text>
-            <Text
-              style={styles.date}
-            >{`Member since ${date.toDateString()}`}</Text>
+            >{`${user.firstName} ${user.lastName}`}</Text>
+            <Text style={styles.date}>{`Member since ${formatDate(
+              user.createdAt
+            )}`}</Text>
           </View>
         </View>
         <View style={styles.headerImageContainer}>
-          <Image source={{ uri: photo.imagelink }} style={styles.image} />
+          <Image
+            source={{
+              uri: user.dishPhotos[0]
+                ? user.dishPhotos[0].imagelink
+                : cookiemonster,
+            }}
+            // source={dishPhotoSource}
+            style={styles.image}
+          />
           <View style={styles.rectangle}>
-            <LinearGradientCompnt photoName={photo.dishType} />
+            {/* <LinearGradientCompnt photoName={photo.dishType} /> */}
           </View>
         </View>
         <View style={styles.other}>

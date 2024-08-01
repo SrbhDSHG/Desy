@@ -103,3 +103,14 @@ exports.fetchUser = async (id) => {
     throw error
   }
 }
+
+exports.fetchUsersDishForARestau = async (id) => {
+  try {
+    const response = await axios.get(`${baseUrl}usersDishPhotos/${id}`)
+    console.log('User response for restaurant:', response.data)
+    return response.data
+  } catch (e) {
+    console.log('Unable to fetch users dishes for the restaurant', e)
+    throw e
+  }
+}

@@ -17,7 +17,7 @@ function Top10ListCreator({ navigation }) {
   const { top10RestList } = useData()
   // console.log('Top 10 list :', top10RestList)
   const pressHandler = (list) => {
-    console.log('Pressed restuarant:', list)
+    console.log('Pressed restuarant id:', list._id)
     navigation.navigate('Restaurant Menu', { list })
   }
   console.log('restaurant length:', top10RestList.length > 0)

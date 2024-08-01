@@ -46,8 +46,8 @@ function RestaurantMenu({ navigation }) {
   const route = useRoute()
   const { list } = route.params
 
-  // console.log('Pouplar dish list', list.popularDish)
   const pressToViewAllPhotos = () => {
+    console.log('In RestaurantMenu rest id:', list.id)
     navigation.navigate('Restaurant Dish', { list })
   }
 
