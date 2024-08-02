@@ -1,19 +1,21 @@
 import React from 'react'
-import PopularDishes from './PopularDishes'
 import { ScrollView, StyleSheet, View } from 'react-native'
+import PopularDishes from '../Restaurant/PopularDishes'
+import OtherPhotoListHoriz from './OtherPhotoListHoriz'
 
-function DishHorztScrollabe({ popularDish }) {
-  console.log('popularDish in DishHorztScrollabe', popularDish)
+function OthrPhotFrmDesyMem({ userDishes }) {
+  // console.log('userDishes in OthrPhotFrmDesyMem', userDishes)
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
       <View style={styles.dishContainer}>
-        {popularDish.map((dish, index) => {
+        {userDishes.map((dish, index) => {
           return (
-            <PopularDishes
+            <OtherPhotoListHoriz
               key={index}
               imagelink={dish.imagelink}
-              dishName={dish.name}
-              recommended={dish.recommended}
+              dishName={dish.dishType}
+              // recomndState={true}
+              // imageHeight={'100%'}
             />
           )
         })}
@@ -22,7 +24,7 @@ function DishHorztScrollabe({ popularDish }) {
   )
 }
 
-export default DishHorztScrollabe
+export default OthrPhotFrmDesyMem
 
 const styles = StyleSheet.create({
   dishContainer: {

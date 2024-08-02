@@ -3,10 +3,11 @@ import { StyleSheet, View, ScrollView, TextInput, Text } from 'react-native'
 import { FontAwesome, Entypo } from '@expo/vector-icons'
 import { useRoute } from '@react-navigation/native'
 import PopularDishes from './PopularDishes'
-import PhotoFromDesyMembers from './DesiMemberPhotos2'
-import { fetchUsersDishForARestau } from '../../store/context/DataService'
 
-function RestaurantAllDish2({ navigation }) {
+import { fetchUsersDishForARestau } from '../../store/context/DataService'
+import PhotoFromDesyMembers from './DesiMemberPhotos2'
+
+function RestaurantPoplrAndUserDishes({ navigation }) {
   const route = useRoute()
   const { list } = route.params
   const [users, setUsers] = useState([])
@@ -101,7 +102,7 @@ function RestaurantAllDish2({ navigation }) {
   )
 }
 
-export default RestaurantAllDish2
+export default RestaurantPoplrAndUserDishes
 
 const styles = StyleSheet.create({
   container: {

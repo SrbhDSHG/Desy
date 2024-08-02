@@ -4,7 +4,6 @@ import { FontAwesome, Entypo } from '@expo/vector-icons'
 import { useRoute } from '@react-navigation/native'
 import DishVertScrollabe from '../Restaurant/DishHorztScrollabe'
 import { useData } from '../../store/context/DataContext'
-import DesyMemberPhotos from './DesyMemberPhotos'
 import DishHorztScrollabe from '../Restaurant/DishHorztScrollabe'
 
 function MemberDishPics({ navigation }) {

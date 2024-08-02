@@ -31,8 +31,9 @@ import { FeatherIcon } from './components/Utility/StaticData/IconFamily'
 import MemberDishPics from './components/Restaurants/Members/MemberDishPics'
 import MemberProfile from './components/Restaurants/Members/MemberProfile'
 // import RestaurantAllDish from './components/Restaurants/Restaurant/RestaurantAllDish'
-import RestaurantAllDish2 from './components/Restaurants/Restaurant/RestaurantAllDish2'
 import UserOptions from './components/Restaurants/Member/UserOptions'
+import RestaurantPoplrAndUserDishes from './components/Restaurants/Restaurant/RestaurantAllDish2'
+import RestaurantOptionOne from './components/Restaurants/Member/RestaurantOptions/RestaurantOptionOne'
 
 // import AppLoading from 'expo-app-loading'
 
@@ -71,7 +72,8 @@ export default function App() {
       <DataProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Top10 Restaurants"
+            initialRouteName="RestaurantOptionOne"
+            // initialRouteName="Top10 Restaurants"
             // initialRouteName="email verify"
             // initialRouteName="Stay Connected"
             // initialRouteName="Home"
@@ -237,7 +239,7 @@ export default function App() {
             />
             <Stack.Screen
               name="Restaurant Dish"
-              component={RestaurantAllDish2}
+              component={RestaurantPoplrAndUserDishes}
               options={({ navigation, route }) => ({
                 headerShown: true,
                 // headerBackTitleVisible: true,
@@ -284,9 +286,9 @@ export default function App() {
                 headerBackTitleVisible: false,
               })}
             />
-            {/* <Stack.Screen
-              name="User options"
-              component={UserOptions}
+            <Stack.Screen
+              name="RestaurantOptionOne"
+              component={RestaurantOptionOne}
               options={({ navigation, route }) => ({
                 header: () => (
                   <CustomHeader
@@ -294,18 +296,25 @@ export default function App() {
                     elevation={2}
                     backgroundColor="white"
                     title={true}
-                    // headerTitle="Profile"
                     headerTitle={route.params?.headerTitle || ''} // Use route.params to set the title dynamically
                     iconFamily={['AntDesign']}
                     icons={['ellipsis1']}
                     color="black"
                     size={24}
+                    style={{
+                      backgroundColor: '#FFFFFF',
+                      shadowColor: '#000000',
+                      shadowOffset: { width: 0, height: 2 },
+                      shadowOpacity: 0.15,
+                      shadowRadius: 8,
+                      elevation: 5,
+                    }}
                   />
                 ),
                 headerShown: true,
                 headerBackTitleVisible: false,
               })}
-            /> */}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </DataProvider>

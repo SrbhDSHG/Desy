@@ -21,7 +21,7 @@ function CuisineNotLike({ navigation }) {
   // const toggleItemSelect = (item) => {}
 
   const pressHandler = (id) => {
-    console.log(cuisineTypes[id - 1].name)
+    // console.log(cuisineTypes[id - 1].name)
     const cuisines = cuisineTypes[id - 1].name
     setCuisineNotLike((prev) => addArrayList(cuisines, prev))
   }

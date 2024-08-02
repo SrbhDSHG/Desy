@@ -1,13 +1,20 @@
 import React, { useState } from 'react'
 import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native'
 
-function PopularDishes({ imagelink, dishName, recommended = '123' }) {
+function PopularDishes({
+  imagelink,
+  dishName,
+  recommended = '123',
+  // recomndState = true,
+  imageHeight = 80,
+}) {
   const [loading, setLoading] = useState(true)
 
   return (
     <View style={styles.superContainer}>
       <View style={styles.container}>
-        <View style={styles.imageContainer}>
+        {/* <View style={[styles.imageContainer]}> */}
+        <View style={[styles.imageContainer, { height: imageHeight }]}>
           {loading && (
             <ActivityIndicator
               size="large"
@@ -16,7 +23,7 @@ function PopularDishes({ imagelink, dishName, recommended = '123' }) {
             />
           )}
           <Image
-            style={styles.image}
+            style={[styles.image, { height: imageHeight }]}
             source={{ uri: imagelink }}
             onLoadEnd={() => setLoading(false)}
             onError={() => setLoading(false)}
@@ -26,7 +33,12 @@ function PopularDishes({ imagelink, dishName, recommended = '123' }) {
           <Text style={styles.dishName} numberOfLines={1}>
             {dishName}
           </Text>
-          <Text style={styles.recommended}>{`${recommended} recommended`}</Text>
+          {
+            // recomndState &&
+            <Text
+              style={styles.recommended}
+            >{`${recommended} recommended`}</Text>
+          }
         </View>
       </View>
     </View>
@@ -54,7 +66,8 @@ const styles = StyleSheet.create({
   imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 80,
+    // height: 80,
+    // height: 'auto',
   },
   activityIndicator: {
     position: 'absolute',
@@ -64,8 +77,9 @@ const styles = StyleSheet.create({
     marginLeft: -18,
   },
   image: {
-    width: 135,
-    height: 80,
+    // width: 135,
+    width: '100%',
+    // height: 80,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
     position: 'absolute',

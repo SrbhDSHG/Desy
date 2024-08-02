@@ -19,6 +19,7 @@ function PhotoFromDesyMembers({
   restaurantId,
 }) {
   const [photos, setPhotos] = useState([])
+  const [currentUserIn, setCurrentUserIn] = useState('')
 
   console.log('all users passed are:', allUsers)
   const pressHandler = (user) => {
@@ -28,51 +29,55 @@ function PhotoFromDesyMembers({
   return (
     <View style={styles.container}>
       {allUsers.map((user, index) => (
-        <Pressable
-          onPress={() => pressHandler(user)}
-          key={index}
-          style={({ pressed }) => [
-            pressed && styles.pressedContainer,
-            styles.photoContainer,
-          ]}
-          // style={[styles.photoContainer]}
-        >
-          {loading && (
-            <ActivityIndicator
-              size="large"
-              color="#03A4FF"
-              style={styles.activityIndicator}
-            />
-          )}
-          <ImageBackground
-            source={{ uri: user.dishPhotos[0].imagelink }}
-            onLoad={() => setLoading(false)}
-            onError={() => setLoading(false)}
-            style={styles.imageBackground}
-            imageStyle={{ borderRadius: 8 }}
+        <>
+          <Pressable
+            onPress={() => pressHandler(user)}
+            key={index}
+            style={({ pressed }) => [
+              pressed && styles.pressedContainer,
+              styles.photoContainer,
+            ]}
+            // style={[styles.photoContainer]}
           >
-            <View style={styles.textAndIconContainer}>
-              <LinearGradient
-                colors={['rgba(0, 0, 0, 0.03)', 'rgba(0, 0, 0, 0.6)']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 0, y: 0.5 }}
-                style={styles.gradient}
-              >
-                <View style={styles.textAndIcon}>
-                  {/* <Text style={styles.text}>{photo.dishType}</Text> */}
-                  <View style={styles.iconContainer}>
-                    <View style={styles.iconBox}>
-                      <FontAwesome5 name="fire" size={14} color="white" />
-                    </View>
-                    <View style={styles.iconBox}>
-                      <AntDesign name="hearto" size={14} color="white" />
+            {loading && (
+              <ActivityIndicator
+                size="large"
+                color="#03A4FF"
+                style={styles.activityIndicator}
+              />
+            )}
+            <ImageBackground
+              source={{ uri: user.dishPhotos[0].imagelink }}
+              onLoad={() => setLoading(false)}
+              onError={() => setLoading(false)}
+              style={styles.imageBackground}
+              imageStyle={{ borderRadius: 8 }}
+            >
+              <View style={styles.textAndIconContainer}>
+                <LinearGradient
+                  colors={['rgba(0, 0, 0, 0.03)', 'rgba(0, 0, 0, 0.6)']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 0, y: 0.5 }}
+                  style={styles.gradient}
+                >
+                  <View style={styles.textAndIcon}>
+                    <Text style={styles.text}>
+                      {user.dishPhotos[0].dishType}
+                    </Text>
+                    <View style={styles.iconContainer}>
+                      <View style={styles.iconBox}>
+                        <FontAwesome5 name="fire" size={14} color="white" />
+                      </View>
+                      <View style={styles.iconBox}>
+                        <AntDesign name="hearto" size={14} color="white" />
+                      </View>
                     </View>
                   </View>
-                </View>
-              </LinearGradient>
-            </View>
-          </ImageBackground>
-        </Pressable>
+                </LinearGradient>
+              </View>
+            </ImageBackground>
+          </Pressable>
+        </>
       ))}
     </View>
   )
