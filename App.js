@@ -72,8 +72,8 @@ export default function App() {
       <DataProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="RestaurantOptionOne"
-            // initialRouteName="Top10 Restaurants"
+            // initialRouteName="RestaurantOptionOne"
+            initialRouteName="Top10 Restaurants"
             // initialRouteName="email verify"
             // initialRouteName="Stay Connected"
             // initialRouteName="Home"
@@ -286,7 +286,7 @@ export default function App() {
                 headerBackTitleVisible: false,
               })}
             />
-            <Stack.Screen
+            {/* <Stack.Screen
               name="RestaurantOptionOne"
               component={RestaurantOptionOne}
               options={({ navigation, route }) => ({
@@ -296,9 +296,9 @@ export default function App() {
                     elevation={2}
                     backgroundColor="white"
                     title={true}
-                    headerTitle={route.params?.headerTitle || ''} // Use route.params to set the title dynamically
-                    iconFamily={['AntDesign']}
-                    icons={['ellipsis1']}
+                    headerTitle={`${route.params.list.name}, ${route.params.list.address.city}`}
+                    iconFamily={['Feather', 'AntDesign']}
+                    icons={['share', 'ellipsis1']}
                     color="black"
                     size={24}
                     style={{
@@ -314,7 +314,7 @@ export default function App() {
                 headerShown: true,
                 headerBackTitleVisible: false,
               })}
-            />
+            /> */}
           </Stack.Navigator>
         </NavigationContainer>
       </DataProvider>

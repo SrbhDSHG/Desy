@@ -136,6 +136,7 @@ function DataProvider({ children }) {
   useEffect(() => {
     const fetchRestaurantsList = async () => {
       const response = await fetchRestaurants()
+      console.log('response after fetching Top10', response)
       setTop10RestList(response.data.restaurants)
     }
 

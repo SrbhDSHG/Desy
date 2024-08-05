@@ -7,9 +7,7 @@ function FooterIcons({ navigation, list }) {
   const firstTwo = restauFooterIcon.slice(0, 2)
   const lastTwo = restauFooterIcon.slice(-2)
   const middlePressHandler = () => {
-    // console.log('middle icon pressed')
-    // console.log('middle icon pressed, list', list)
-    navigation.navigate('Member Dish Pics', { list })
+    // navigation.navigate('RestaurantOptionOne', { list })
   }
 
   return (

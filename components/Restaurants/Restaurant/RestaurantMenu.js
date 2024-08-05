@@ -1,48 +1,16 @@
 import React from 'react'
-import {
-  ImageBackground,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { useData } from '../../store/context/DataContext'
 import { useRoute } from '@react-navigation/native'
-import IconContainer from '../Top10/IconContainer'
-import MapScreen from '../../UI/MapScreen'
 import RestaurantMap from './RestaurantMap'
 import PriceAndLocatio from '../Top10/PriceAndLocatio'
 import InfoBoxCreator from '../../UI/InfoBoxCreator'
-import ScoreCreator from './ScoreCreator'
-import ImageWithLoadingIndicator from '../../Utility/ImageWithLoadingIndicator'
 import FooterIcons from './FooterIcons'
 import TopScrollingMenu from './TopScrollingMenu'
-import PopularDishes from './PopularDishes'
-import DishHorztScrollabe from './DishHorztScrollabe'
-
-const scoreData = [
-  {
-    score: '8.8',
-    scoredBy: '2k',
-    headerText: 'Rec Score',
-    bodyText: 'How much we think, you would like to it',
-  },
-  {
-    score: '9.8',
-    scoredBy: '1',
-    headerText: 'Friend Score',
-    bodyText: 'What your friends think',
-  },
-]
+import { renderItem } from './RestaurantMenuScrollItems' // Importing from external file
 
 function RestaurantMenu({ navigation }) {
-  const {
-    restauOptionHeader,
-    RestauInfo,
-    activeTab,
-    setActiveTab,
-    setTabSelected,
-  } = useData()
+  const { restauOptionHeader, RestauInfo } = useData()
   const route = useRoute()
   const { list } = route.params
 
@@ -51,8 +19,16 @@ function RestaurantMenu({ navigation }) {
     navigation.navigate('Restaurant Dish', { list })
   }
 
+  const scrollableData = [
+    { type: 'scores' },
+    { type: 'popularDishes' },
+    { type: 'restaurantOption' },
+    { type: 'whatfriendThinks' },
+  ]
+
   return (
     <View style={styles.container}>
+      {/* Non-scrollable top sections */}
       <View style={styles.mapContainer}>
         <RestaurantMap coordinates={list.coordinates} name={list.name} />
       </View>
@@ -67,32 +43,18 @@ function RestaurantMenu({ navigation }) {
           <InfoBoxCreator key={index} info={info} />
         ))}
       </View>
-      <View style={styles.scoreContainer}>
-        <Text style={styles.scoreText}>Scores</Text>
-        <View style={styles.scoreBox}>
-          {scoreData.map((score, index) => (
-            <ScoreCreator
-              key={index}
-              score={score.score}
-              scoredBy={score.scoredBy}
-              headerText={score.headerText}
-              bodyText={score.bodyText}
-            />
-          ))}
-        </View>
-      </View>
-      <View style={styles.popularDishesContainer}>
-        <View style={styles.popularDishesHeaderContainer}>
-          <Text style={styles.popularDishesHeader}>Popular Dishes</Text>
-          <Text
-            onPress={() => pressToViewAllPhotos(list)}
-            style={[styles.popularDishesHeader, styles.photoText]}
-          >
-            See All Photos
-          </Text>
-        </View>
-        <DishHorztScrollabe popularDish={list.dishes} />
-      </View>
+
+      {/* Scrollable section */}
+      <FlatList
+        data={scrollableData}
+        renderItem={({ item }) =>
+          renderItem({ item, list, pressToViewAllPhotos })
+        }
+        keyExtractor={(item) => item.type}
+        contentContainerStyle={styles.scrollableContentContainer}
+      />
+
+      {/* Non-scrollable footer section */}
       <View style={styles.footerContainer}>
         <FooterIcons navigation={navigation} list={list} />
       </View>
@@ -109,7 +71,7 @@ const styles = StyleSheet.create({
   },
   mapContainer: {
     width: '100%',
-    height: '30%',
+    height: 200, // Set a fixed height for the map section
   },
   menuContainer: {
     marginTop: -30,
@@ -123,47 +85,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     flexDirection: 'row',
   },
-  scoreContainer: {
-    marginHorizontal: 10,
-  },
-  scoreText: {
-    fontSize: 17,
-    fontFamily: 'Mulish-Bold',
-    marginVertical: 10,
-    paddingHorizontal: 5,
-  },
-  scoreBox: {
-    flexDirection: 'row',
-  },
-
-  popularDishesContainer: {
-    marginHorizontal: 5,
-    marginVertical: 20,
-    paddingHorizontal: 10,
-  },
-  popularDishesHeaderContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  popularDishesHeader: {
-    fontFamily: 'Mulish-Bold',
-    fontSize: 17,
-    marginVertical: 10,
-  },
-  photoText: {
-    color: '#03A4FF',
-    fontSize: 16,
-  },
   footerContainer: {
     width: '100%',
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
-    bottom: 0,
+    // paddingVertical: 20,
   },
-  dishContainer: {
-    flexDirection: 'row',
-    marginVertical: 10,
+  scrollableContentContainer: {
+    paddingBottom: 20, // Additional padding for scrollable content
+    paddingHorizontal: 10,
+    width: '100%',
+    flexGrow: 1, // To make the content scrollable if needed
   },
 })

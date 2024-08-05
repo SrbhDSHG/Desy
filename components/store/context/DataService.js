@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 //look for the ipv4 address and paste here
-const baseUrl = 'http://192.168.142.141:8080/api/v1/'
+const baseUrl = 'http://192.168.238.168:8080/api/v1/'
 // const baseUrl = 'http://192.168.23.187:8000/api/v1/'
 
 export const fetchEmailVerify = async (email, firstName, lastName) => {
@@ -42,7 +42,7 @@ export const fetchOtpVerify = async (email, otp) => {
 export const fetchRestaurants = async () => {
   try {
     const response = await axios.get(`${baseUrl}restaurants`)
-    // console.log('Restaurant response:', response.restaurants)
+    console.log('Restaurant response:', response.restaurants)
     return response
   } catch (error) {
     console.log('unable to fetch Restaurant list', error)

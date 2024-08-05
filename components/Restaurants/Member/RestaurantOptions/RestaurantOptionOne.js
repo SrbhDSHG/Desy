@@ -1,55 +1,109 @@
 import React, { useState } from 'react'
-import { AntDesign, Entypo, SimpleLineIcons } from '@expo/vector-icons'
-import { StyleSheet, Text, TextInput, View } from 'react-native'
-import Container from '../../../UI/Container'
-import FooterIcons from '../../Restaurant/FooterIcons'
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import {
+  AntDesign,
+  Entypo,
+  SimpleLineIcons,
+  Ionicons,
+  Feather,
+} from '@expo/vector-icons'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import OptionsLists from './OptionsLists'
 
-function RestaurantOptionOne({ navigation }) {
+const optionList = [
+  {
+    id: 0,
+    icon: <Icon name="camera-alt" size={24} color="rgba(3, 163, 255, 0.52)" />,
+    headerText: 'Add Photos',
+    subText: 'Upload your photos',
+    color: '#03A4FF26',
+  },
+  {
+    id: 1,
+    icon: (
+      <Icon
+        name="label-outline"
+        size={24}
+        color="#FFA100"
+        style={{ transform: [{ rotate: '-45deg' }] }}
+      />
+    ),
+    headerText: 'Add Labels',
+    subText: 'Add labels to your profile',
+    color: '#FFA90326',
+  },
+  {
+    id: 2,
+    icon: <SimpleLineIcons name="note" size={24} color="#00B2E8" />,
+    headerText: 'Add Notes',
+    subText: 'Add notes to your profile',
+    color: '#03FFFF26',
+  },
+  {
+    id: 3,
+    icon: <Ionicons name="restaurant-outline" size={24} color="#7A46FF" />,
+    headerText: 'Add Favorite Dishes',
+    subText: 'Add your favorite dishes',
+    color: '#AE6FFF26',
+  },
+  {
+    id: 4,
+    icon: <Feather name="eye-off" size={24} color="#19BA1E" />,
+    headerText: 'Add Personal Notes',
+    subText: 'Add your notes that are only accessible to you',
+    color: '#10FA1A26',
+  },
+]
+
+function RestaurantOptionOne({ list }) {
   const [searchValue, setSearchValue] = useState('')
+  const [isOptionsVisible, setIsOptionsVisible] = useState(false)
+
   const onValueChange = (text) => {
     console.log('search value', text)
     setSearchValue(text)
   }
+
+  const toggleOptionsVisibility = () => {
+    setIsOptionsVisible(!isOptionsVisible)
+  }
+
   return (
-    <View style={styles.container}>
-      <View style={styles.subContainer}>
-        <View style={styles.popularDish}></View>
-        <View style={styles.notesAndPhotos}>
-          <Text>Your notes nad photos</Text>
-          <AntDesign name="up" size={18} color="black" />
-        </View>
+    <View style={styles.subContainer}>
+      {/* Toggle Button for Notes and Photos */}
+      <TouchableOpacity
+        onPress={toggleOptionsVisibility}
+        style={styles.notesAndPhotos}
+      >
+        <Text style={styles.notesAndPhotoText}>Your notes and photos</Text>
+        <AntDesign
+          name={isOptionsVisible ? 'down' : 'up'}
+          size={18}
+          color="black"
+          style={styles.upArrow}
+        />
+      </TouchableOpacity>
+
+      {/* Options List: Conditionally Rendered */}
+      {isOptionsVisible && (
         <View>
-          <Text>What your friends thins</Text>
-          <View style={styles.iconAndText}>
-            <View style={styles.maginfyIconAndText}>
-              <Entypo
-                name="magnifying-glass"
-                size={24}
-                color="#868686"
-                style={{ marginRight: 10 }}
-              />
-              <TextInput
-                placeholder="Search all dishes.."
-                keyboardType="default"
-                value={searchValue}
-                onChangeText={onValueChange}
-                style={styles.textInput}
-                placeholderTextColor={'#545454'}
-              />
-            </View>
-            <View style={styles.sliderContainer}>
-              <SimpleLineIcons
-                name="user-follow"
-                size={24}
-                style={styles.sliderIcon}
-              />
-            </View>
-          </View>
+          {optionList.map((item) => (
+            <OptionsLists
+              key={item.id}
+              headerText={item.headerText}
+              icon={item.icon}
+              subText={item.subText}
+              color={item.color}
+            />
+          ))}
         </View>
-      </View>
-      <View style={styles.footerContainer}>
-        <FooterIcons navigation={navigation} />
-      </View>
+      )}
     </View>
   )
 }
@@ -57,13 +111,8 @@ function RestaurantOptionOne({ navigation }) {
 export default RestaurantOptionOne
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-  },
   subContainer: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 12,
   },
   notesAndPhotos: {
     marginBottom: 20,
@@ -71,10 +120,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  upArrow: {
-    fontSize: 18,
+  notesAndPhotoText: {
+    fontFamily: 'Mulish-Bold',
+    fontSize: 17,
   },
-  text: {},
+  upArrow: {
+    marginRight: 10,
+  },
   iconAndText: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -87,15 +139,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-
-    // paddingVertical: 10,
   },
-  footerContainer: {
-    width: '100%',
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 0,
+  textInput: {
+    // Add textInput styling here
   },
 })
