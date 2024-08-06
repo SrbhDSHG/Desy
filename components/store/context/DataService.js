@@ -4,6 +4,20 @@ import axios from 'axios'
 const baseUrl = 'http://192.168.238.168:8080/api/v1/'
 // const baseUrl = 'http://192.168.23.187:8000/api/v1/'
 
+export const userLogin = async (email, password) => {
+  try {
+    const response = await axios.post(`${baseUrl}users/login`, {
+      email,
+      password,
+    })
+    console.log('Login response:', response.data)
+    return response.data
+  } catch (err) {
+    console.log('Error during login:', err)
+    throw new Error('Network error')
+  }
+}
+
 export const fetchEmailVerify = async (email, firstName, lastName) => {
   console.log('email id for verification', email)
   try {
@@ -36,6 +50,21 @@ export const fetchOtpVerify = async (email, otp) => {
     //   console.log('error2 in fetchOtpVerify', error)
     //   throw new Error('Network error')
     // }
+  }
+}
+export const findFriends = async (contacts) => {
+  try {
+    const response = await axios.post(`${baseUrl}users/find-contacts`, {
+      contacts,
+    })
+    if (response.data.results.length > 0) {
+      // Navigate to another screen with matched friends
+      navigation.navigate('FriendsList', { friends: response.data.data })
+    } else {
+      Alert.alert('No friends found on Desy')
+    }
+  } catch (error) {
+    Alert.alert('Error finding friends', error.message)
   }
 }
 

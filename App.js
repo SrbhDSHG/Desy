@@ -34,6 +34,7 @@ import MemberProfile from './components/Restaurants/Members/MemberProfile'
 import UserOptions from './components/Restaurants/Member/UserOptions'
 import RestaurantPoplrAndUserDishes from './components/Restaurants/Restaurant/RestaurantAllDish2'
 import RestaurantOptionOne from './components/Restaurants/Member/RestaurantOptions/RestaurantOptionOne'
+import FriendsList from './components/Utility/FriendList'
 
 // import AppLoading from 'expo-app-loading'
 
@@ -73,11 +74,12 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator
             // initialRouteName="RestaurantOptionOne"
-            initialRouteName="Top10 Restaurants"
+            // initialRouteName="Top10 Restaurants"
             // initialRouteName="email verify"
             // initialRouteName="Stay Connected"
             // initialRouteName="Home"
             // initialRouteName="User options"
+            initialRouteName="Find Your Freinds"
             screenOptions={{
               headerShown: true,
               title: '',
@@ -91,6 +93,11 @@ export default function App() {
           component={GradientText}
           options={{ headerShown: false }}
         /> */}
+            <Stack.Screen
+              name="Find Your Freinds "
+              component={FindYourFriends}
+            />
+            <Stack.Screen name="Friend List " component={FriendsList} />
             <Stack.Screen
               name="Home"
               component={HomeScreenDisplay}
@@ -142,10 +149,7 @@ export default function App() {
               name="Restaurant All Dish"
               component={RestaurantAllDish}
             /> */}
-            <Stack.Screen
-              name="Find Your Freinds "
-              component={FindYourFriends}
-            />
+
             <Stack.Screen name="Cuisine Not Like" component={CuisineNotLike} />
             <Stack.Screen name="Stay Connected" component={StayConnected} />
             <Stack.Screen
