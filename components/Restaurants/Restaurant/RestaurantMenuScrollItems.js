@@ -4,6 +4,7 @@ import ScoreCreator from './ScoreCreator'
 import DishHorztScrollabe from './DishHorztScrollabe'
 import RestaurantOptionOne from '../Member/RestaurantOptions/RestaurantOptionOne'
 import FriendThinks from '../Member/RestaurantOptions/FriendThinks'
+import FriendDishes from '../Members/FriendDishes'
 
 const scoreData = [
   {
@@ -59,6 +60,9 @@ export const renderItem = ({ item, list, pressToViewAllPhotos }) => {
 
     case 'whatfriendThinks':
       return <FriendThinks />
+
+    case 'FriendsDishes':
+      return <FriendDishes restaurantId={list._id} />
     default:
       return null
   }

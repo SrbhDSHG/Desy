@@ -15,7 +15,7 @@ function RestaurantMenu({ navigation }) {
   const { list } = route.params
 
   const pressToViewAllPhotos = () => {
-    console.log('In RestaurantMenu rest id:', list.id)
+    console.log('In RestaurantMenu rest id:', list._id)
     navigation.navigate('Restaurant Dish', { list })
   }
 
@@ -24,6 +24,7 @@ function RestaurantMenu({ navigation }) {
     { type: 'popularDishes' },
     { type: 'restaurantOption' },
     { type: 'whatfriendThinks' },
+    { type: 'FriendsDishes' },
   ]
 
   return (

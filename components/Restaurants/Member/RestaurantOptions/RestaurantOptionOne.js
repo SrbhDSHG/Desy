@@ -104,6 +104,7 @@ function RestaurantOptionOne({ list }) {
           ))}
         </View>
       )}
+      <View style={{ marginBottom: isOptionsVisible ? 20 : 0 }}></View>
     </View>
   )
 }
@@ -113,6 +114,7 @@ export default RestaurantOptionOne
 const styles = StyleSheet.create({
   subContainer: {
     paddingHorizontal: 12,
+    // marginBottom: 10,
   },
   notesAndPhotos: {
     marginBottom: 20,

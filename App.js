@@ -97,7 +97,22 @@ export default function App() {
               name="Find Your Freinds "
               component={FindYourFriends}
             />
-            <Stack.Screen name="Friend List " component={FriendsList} />
+            <Stack.Screen
+              name="FriendsList"
+              component={FriendsList}
+              options={{
+                headerShown: true,
+                headerBackTitleVisible: true,
+                headerShadowVisible: true,
+                headerTransparent: false,
+                headerTitle: 'Friends',
+                headerTitleAlign: 'center', // Center the title
+                headerTitleStyle: {
+                  fontSize: 20,
+                  fontFamily: 'Mulish-Bold',
+                },
+              }}
+            />
             <Stack.Screen
               name="Home"
               component={HomeScreenDisplay}

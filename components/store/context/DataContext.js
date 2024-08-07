@@ -42,6 +42,8 @@ const defaultValue = {
   setTabSelected: () => {},
   activeTab: '',
   setActiveTab: () => {},
+  friends: '',
+  setFriends: () => {},
 }
 export const tabs = [
   { text: 'List', iconName: 'list' },
@@ -130,6 +132,7 @@ function DataProvider({ children }) {
   const [emailVerified, setEmailVerified] = useState(false)
   const [top10RestList, setTop10RestList] = useState([])
   const [currentUser, setCurrentUser] = useState('')
+  const [friends, setFriends] = useState([])
 
   const { activeTab, setActiveTab, tabSelected, setTabSelected } = useTabs(tabs)
 
@@ -232,6 +235,8 @@ function DataProvider({ children }) {
     restauOptionHeader,
     RestauInfo,
     restauFooterIcon,
+    friends,
+    setFriends,
   }
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>
 }

@@ -28,6 +28,9 @@ function StayConnected({ navigation }) {
       }, 3000) // Delay of 3 seconds
     }
   }
+  const notNowPressHandler = () => {
+    navigation.navigate('Top10 Restaurants')
+  }
 
   return (
     <View style={styles.container}>
@@ -49,7 +52,7 @@ function StayConnected({ navigation }) {
           onPress={onPressHandler}
         />
       </View>
-      <Text style={styles.notNowText} onPress={onPressHandler}>
+      <Text style={styles.notNowText} onPress={notNowPressHandler}>
         Not Now
       </Text>
 

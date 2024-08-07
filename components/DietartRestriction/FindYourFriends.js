@@ -1,11 +1,19 @@
 import React, { useState } from 'react'
-import { Text, View, Alert, StyleSheet } from 'react-native'
+import {
+  Text,
+  View,
+  Alert,
+  StyleSheet,
+  ActivityIndicator,
+  Modal,
+} from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import * as Contacts from 'expo-contacts'
 import ButtonDesyV2 from '../Utility/ButtonDesy'
 import CircleWithGradient from '../Utility/CircleWithGradient'
 import CardContainer from '../UI/CardContainer'
 import axios from 'axios'
+import { useData } from '../store/context/DataContext'
 
 const bodyTextLines = [
   'Allow access to contacts to see which',
@@ -14,6 +22,8 @@ const bodyTextLines = [
 
 function FindYourFriends({ navigation }) {
   const [contactsAllowed, setContactsAllowed] = useState(false)
+  const [loading, setLoading] = useState(false) // State for modal visibility
+  const { setFriends } = useData()
 
   const fetchContacts = async () => {
     const { status } = await Contacts.requestPermissionsAsync()
@@ -50,19 +60,27 @@ function FindYourFriends({ navigation }) {
   }
 
   const findFriends = async (contacts) => {
+    setLoading(true) // Show modal
     try {
       const response = await axios.post(
         'http://192.168.238.168:8080/api/v1/users/find-contacts',
         { contacts }
       )
-      if (response.data.results.length > 0) {
+      console.log('response after friend search request', response.data)
+      if (response.data.results > 0) {
         // Navigate to another screen with matched friends
-        navigation.navigate('FriendsList', { friends: response.data.data })
+        setFriends(response.data.data)
+
+        navigation.navigate('FriendsList', {
+          friends: response.data.data,
+        })
       } else {
         Alert.alert('No friends found on Desy')
       }
     } catch (error) {
       Alert.alert('Error finding friends', error.message)
+    } finally {
+      setLoading(false) // Hide modal
     }
   }
 
@@ -129,10 +147,24 @@ function FindYourFriends({ navigation }) {
       <View style={styles.buttonContainer}>
         <ButtonDesyV2
           buttonText={'Allow Contacts'}
-          isEnabled={true}
+          isEnabled={!loading} // Disable button when loading
           onPress={pressToAllowContacts}
         />
       </View>
+
+      <Modal
+        transparent={true}
+        animationType="fade"
+        visible={loading}
+        onRequestClose={() => setLoading(false)}
+      >
+        <View style={styles.modalBackground}>
+          <View style={styles.modalContainer}>
+            <ActivityIndicator size="large" color="#03A4FF" />
+            <Text style={styles.loadingText}>Finding Friends...</Text>
+          </View>
+        </View>
+      </Modal>
 
       <Text onPress={onPressHandler} style={styles.notNowText}>
         Not Now
@@ -186,5 +218,24 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#6E6E6E',
     marginVertical: 20,
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Dark transparent background
+  },
+  modalContainer: {
+    width: 200,
+    height: 100,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: '#03A4FF',
   },
 })
