@@ -35,6 +35,8 @@ import UserOptions from './components/Restaurants/Member/UserOptions'
 import RestaurantPoplrAndUserDishes from './components/Restaurants/Restaurant/RestaurantAllDish2'
 import RestaurantOptionOne from './components/Restaurants/Member/RestaurantOptions/RestaurantOptionOne'
 import FriendsList from './components/Utility/FriendList'
+import AddFavDish from './components/Restaurants/Member/RestaurantOptions/NotesAndPhotoActions/AddFavDish'
+import { Text, TouchableOpacity } from 'react-native'
 
 // import AppLoading from 'expo-app-loading'
 
@@ -114,6 +116,49 @@ export default function App() {
               }}
             />
             <Stack.Screen
+              name="RestaurantOptionOne"
+              component={RestaurantOptionOne}
+              // options={{
+              //   headerShown: true,
+              //   headerBackTitleVisible: true,
+              //   headerShadowVisible: true,
+              //   headerTransparent: false,
+              //   headerTitle: 'Friends',
+              //   headerTitleAlign: 'center', // Center the title
+              //   headerTitleStyle: {
+              //     fontSize: 20,
+              //     fontFamily: 'Mulish-Bold',
+              //   },
+              // }}
+            />
+            <Stack.Screen
+              name="addFavDish"
+              component={AddFavDish}
+              options={({ navigation }) => ({
+                headerShown: true,
+                headerBackTitleVisible: false,
+                headerShadowVisible: true,
+                headerTransparent: false,
+                headerTitle: 'Add Favorite dishes',
+                headerTitleAlign: 'center', // Center the title
+                headerTitleStyle: {
+                  fontSize: 20,
+                  fontFamily: 'Mulish-Bold',
+                },
+                headerLeft: null, // Remove the default back button
+                // headerRight: () => (
+                //   <TouchableOpacity
+                //     onPress={() => navigation.goBack()} // Customize the navigation action if needed
+                //     style={{ paddingRight: 15 }}
+                //   >
+                //     <Text style={{ fontSize: 16, color: '#007AFF' }}>
+                //       Cancel
+                //     </Text>
+                //   </TouchableOpacity>
+                // ),
+              })}
+            />
+            <Stack.Screen
               name="Home"
               component={HomeScreenDisplay}
               options={{ headerShown: false }}
@@ -167,6 +212,7 @@ export default function App() {
 
             <Stack.Screen name="Cuisine Not Like" component={CuisineNotLike} />
             <Stack.Screen name="Stay Connected" component={StayConnected} />
+
             <Stack.Screen
               name="Top10 Restaurants"
               component={Top10Restaurants}

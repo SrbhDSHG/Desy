@@ -1,10 +1,21 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import AntDesign from '@expo/vector-icons/AntDesign'
 
-function OptionsLists({ icon, headerText, subText, color }) {
+function OptionsLists({
+  icon,
+  headerText,
+  subText,
+  color,
+  onPress,
+  action, // Add this prop
+  restaurant,
+}) {
   return (
-    <View style={styles.superContainer}>
+    <TouchableOpacity
+      style={styles.superContainer}
+      onPress={() => onPress(action, restaurant)} // Pass action identifier
+    >
       <View style={styles.container}>
         <View style={[styles.iconContainer, { backgroundColor: color }]}>
           {icon}
@@ -20,7 +31,7 @@ function OptionsLists({ icon, headerText, subText, color }) {
         color="black"
         style={styles.arrowIcon}
       />
-    </View>
+    </TouchableOpacity>
   )
 }
 
@@ -31,17 +42,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-
     paddingRight: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#E0E0E0',
+    paddingVertical: 10,
   },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 10,
     paddingHorizontal: 5,
-    marginVertical: 5,
+    paddingVertical: 3,
     flex: 1,
   },
   iconContainer: {
@@ -52,9 +62,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   textsContainer: {
-    flexDirection: 'column', // Stack text vertically
+    flexDirection: 'column',
     paddingHorizontal: 10,
-    flex: 1, // Allow the container to shrink and wrap text
+    flex: 1,
   },
   headerText: {
     fontFamily: 'Mulish-Regular',

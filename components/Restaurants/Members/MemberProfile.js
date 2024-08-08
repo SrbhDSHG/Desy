@@ -16,7 +16,7 @@ const formatDate = (timestamp) => {
 function MemberProfile({ navigation }) {
   const { currentUser, setCurrentUser } = useData()
   const route = useRoute()
-  const { user } = route.params
+  const { user, restaurantId } = route.params
   const [loading, setLoading] = useState(true)
   const [userDishes, setUserDishes] = useState([])
 

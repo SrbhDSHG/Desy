@@ -5,6 +5,7 @@ import DishHorztScrollabe from './DishHorztScrollabe'
 import RestaurantOptionOne from '../Member/RestaurantOptions/RestaurantOptionOne'
 import FriendThinks from '../Member/RestaurantOptions/FriendThinks'
 import FriendDishes from '../Members/FriendDishes'
+import FindFriends from '../Members/FindFreinds'
 
 const scoreData = [
   {
@@ -21,7 +22,12 @@ const scoreData = [
   },
 ]
 
-export const renderItem = ({ item, list, pressToViewAllPhotos }) => {
+export const renderItem = ({
+  item,
+  list,
+  pressToViewAllPhotos,
+  navigation,
+}) => {
   switch (item.type) {
     case 'scores':
       return (
@@ -56,13 +62,16 @@ export const renderItem = ({ item, list, pressToViewAllPhotos }) => {
         </View>
       )
     case 'restaurantOption':
-      return <RestaurantOptionOne list={list} />
+      return <RestaurantOptionOne list={list} navigation={navigation} />
+    // return <RestaurantOptionOne list={list} />
 
     case 'whatfriendThinks':
       return <FriendThinks />
 
     case 'FriendsDishes':
       return <FriendDishes restaurantId={list._id} />
+    case 'FindFriends':
+      return <FindFriends />
     default:
       return null
   }

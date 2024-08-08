@@ -24,7 +24,7 @@ function PhotoFromDesyMembers({
   console.log('all users passed are:', allUsers)
   const pressHandler = (user) => {
     console.log('pressed photo', user)
-    navigation.navigate('MemberProfile', { user })
+    navigation.navigate('MemberProfile', { user, restaurantId })
   }
   return (
     <View style={styles.container}>

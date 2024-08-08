@@ -25,6 +25,7 @@ function RestaurantMenu({ navigation }) {
     { type: 'restaurantOption' },
     { type: 'whatfriendThinks' },
     { type: 'FriendsDishes' },
+    { type: 'FindFriends' },
   ]
 
   return (
@@ -49,7 +50,7 @@ function RestaurantMenu({ navigation }) {
       <FlatList
         data={scrollableData}
         renderItem={({ item }) =>
-          renderItem({ item, list, pressToViewAllPhotos })
+          renderItem({ item, list, pressToViewAllPhotos, navigation })
         }
         keyExtractor={(item) => item.type}
         contentContainerStyle={styles.scrollableContentContainer}

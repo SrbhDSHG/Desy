@@ -1,20 +1,15 @@
 import React, { useState } from 'react'
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import {
   AntDesign,
-  Entypo,
   SimpleLineIcons,
   Ionicons,
   Feather,
 } from '@expo/vector-icons'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import OptionsLists from './OptionsLists'
+import AddFavDish from './NotesAndPhotoActions/AddFavDish'
+import AddLabels from './NotesAndPhotoActions/AddLabels' // Import other components as needed
 
 const optionList = [
   {
@@ -23,6 +18,7 @@ const optionList = [
     headerText: 'Add Photos',
     subText: 'Upload your photos',
     color: '#03A4FF26',
+    action: 'addPhotos',
   },
   {
     id: 1,
@@ -37,6 +33,7 @@ const optionList = [
     headerText: 'Add Labels',
     subText: 'Add labels to your profile',
     color: '#FFA90326',
+    action: 'addLabels',
   },
   {
     id: 2,
@@ -44,6 +41,7 @@ const optionList = [
     headerText: 'Add Notes',
     subText: 'Add notes to your profile',
     color: '#03FFFF26',
+    action: 'addNotes',
   },
   {
     id: 3,
@@ -51,6 +49,7 @@ const optionList = [
     headerText: 'Add Favorite Dishes',
     subText: 'Add your favorite dishes',
     color: '#AE6FFF26',
+    action: 'addFavDish',
   },
   {
     id: 4,
@@ -58,12 +57,14 @@ const optionList = [
     headerText: 'Add Personal Notes',
     subText: 'Add your notes that are only accessible to you',
     color: '#10FA1A26',
+    action: 'addPersonalNotes',
   },
 ]
 
-function RestaurantOptionOne({ list }) {
+function RestaurantOptionOne({ list, navigation }) {
   const [searchValue, setSearchValue] = useState('')
   const [isOptionsVisible, setIsOptionsVisible] = useState(false)
+  const [selectedAction, setSelectedAction] = useState(null) // Track the selected action
 
   const onValueChange = (text) => {
     console.log('search value', text)
@@ -72,6 +73,27 @@ function RestaurantOptionOne({ list }) {
 
   const toggleOptionsVisibility = () => {
     setIsOptionsVisible(!isOptionsVisible)
+  }
+
+  const handleOptionPress = (action, restaurant) => {
+    navigation.navigate(action, { restaurant }) // Navigate to the respective screen
+  }
+
+  const renderSelectedComponent = () => {
+    switch (selectedAction) {
+      case 'addPhotos':
+        return <Text>Component for Adding Photos</Text> // Replace with actual component
+      case 'addLabels':
+        return <AddLabels /> // Ensure AddLabels is imported
+      case 'addNotes':
+        return <Text>Component for Adding Notes</Text> // Replace with actual component
+      case 'addFavDish':
+        return <AddFavDish />
+      case 'addPersonalNotes':
+        return <Text>Component for Adding Personal Notes</Text> // Replace with actual component
+      default:
+        return null
+    }
   }
 
   return (
@@ -100,11 +122,17 @@ function RestaurantOptionOne({ list }) {
               icon={item.icon}
               subText={item.subText}
               color={item.color}
+              restaurant={list}
+              action={item.action} // Pass the action identifier
+              onPress={() => handleOptionPress(item.action, list)}
             />
           ))}
         </View>
       )}
       <View style={{ marginBottom: isOptionsVisible ? 20 : 0 }}></View>
+
+      {/* Conditionally Render Selected Component
+      {renderSelectedComponent()} */}
     </View>
   )
 }
