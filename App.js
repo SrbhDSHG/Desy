@@ -37,6 +37,7 @@ import RestaurantOptionOne from './components/Restaurants/Member/RestaurantOptio
 import FriendsList from './components/Utility/FriendList'
 import AddFavDish from './components/Restaurants/Member/RestaurantOptions/NotesAndPhotoActions/AddFavDish'
 import { Text, TouchableOpacity } from 'react-native'
+import AddLabels from './components/Restaurants/Member/RestaurantOptions/NotesAndPhotoActions/AddLabels'
 
 // import AppLoading from 'expo-app-loading'
 
@@ -156,6 +157,29 @@ export default function App() {
                 //     </Text>
                 //   </TouchableOpacity>
                 // ),
+              })}
+            />
+            <Stack.Screen
+              name="addLabels"
+              component={AddLabels}
+              options={({ navigation, route }) => ({
+                headerShown: true,
+                headerBackTitleVisible: false,
+                headerShadowVisible: true,
+                headerTransparent: false,
+                header: () => (
+                  <CustomHeader
+                    navigation={navigation}
+                    // backButtonEnabled={false}
+                    elevation={2}
+                    backgroundColor="white"
+                    iconFamily={['MaterialIcons', 'MaterialIcons']}
+                    icons={['check-circle', 'cancel']}
+                    iconColor="#03A4FF"
+                    size={30}
+                    headerTitle={route.params?.headerTitle || 'Add Lables'}
+                  />
+                ),
               })}
             />
             <Stack.Screen

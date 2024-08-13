@@ -10,20 +10,24 @@ const CustomHeader = ({
   icons = [],
   size = 24,
   color = 'black',
+  iconColor = 'black',
   title = true,
   headerTitle = '',
   backgroundColor = 'transparent',
   style = {},
+  backButtonEnabled = true,
 }) => {
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor }, style]}>
       <View style={[styles.headerContainer, { backgroundColor }]}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <AntDesign name="arrowleft" size={size} color={color} />
-        </TouchableOpacity>
+        {backButtonEnabled && (
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.backButton}
+          >
+            <AntDesign name="arrowleft" size={size} color={color} />
+          </TouchableOpacity>
+        )}
         {title && (
           <View style={styles.titleContainer}>
             <Text style={[styles.headerTitle, { color }]}>{headerTitle}</Text>
@@ -36,7 +40,7 @@ const CustomHeader = ({
               iconFamily={iconFamily[index]}
               icon={icon}
               size={size}
-              color={color}
+              color={iconColor}
               onPress={() => {
                 // Add your icon press logic here if needed
               }}
