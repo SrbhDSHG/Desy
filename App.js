@@ -38,6 +38,9 @@ import FriendsList from './components/Utility/FriendList'
 import AddFavDish from './components/Restaurants/Member/RestaurantOptions/NotesAndPhotoActions/AddFavDish'
 import { Text, TouchableOpacity } from 'react-native'
 import AddLabels from './components/Restaurants/Member/RestaurantOptions/NotesAndPhotoActions/AddLabels'
+import AddNotes from './components/Restaurants/Member/RestaurantOptions/NotesAndPhotoActions/AddNotes'
+import AddPhotos from './components/Restaurants/Member/RestaurantOptions/NotesAndPhotoActions/AddPhotos'
+import AddPersonalNotes from './components/Restaurants/Member/RestaurantOptions/NotesAndPhotoActions/AddPersonalNotes'
 
 // import AppLoading from 'expo-app-loading'
 
@@ -167,10 +170,11 @@ export default function App() {
                 headerBackTitleVisible: false,
                 headerShadowVisible: true,
                 headerTransparent: false,
+
                 header: () => (
                   <CustomHeader
                     navigation={navigation}
-                    // backButtonEnabled={false}
+                    backButtonEnabled={false}
                     elevation={2}
                     backgroundColor="white"
                     iconFamily={['MaterialIcons', 'MaterialIcons']}
@@ -178,6 +182,125 @@ export default function App() {
                     iconColor="#03A4FF"
                     size={30}
                     headerTitle={route.params?.headerTitle || 'Add Lables'}
+                    style={{
+                      backgroundColor: '#FFFFFF',
+                      shadowColor: '#000000',
+                      shadowOffset: { width: 0, height: 2 },
+                      shadowOpacity: 0.15,
+                      shadowRadius: 8,
+                      elevation: 5,
+                    }}
+                  />
+                ),
+              })}
+            />
+            <Stack.Screen
+              name="addPersonalNotes"
+              component={AddPersonalNotes}
+              options={({ navigation, route }) => ({
+                headerShown: true,
+                headerBackTitleVisible: false,
+                headerShadowVisible: true,
+                headerTransparent: false,
+
+                header: () => (
+                  <CustomHeader
+                    navigation={navigation}
+                    backButtonEnabled={false}
+                    elevation={2}
+                    backgroundColor="white"
+                    iconFamily={['MaterialIcons', 'MaterialCommunityIcons']}
+                    icons={['check-circle', 'cancel']}
+                    iconColor="#1DBC24"
+                    size={30}
+                    headerTitle={'Your Personal Notes '}
+                    style={{
+                      backgroundColor: '#FFFFFF',
+                      shadowColor: '#000000',
+                      shadowOffset: { width: 0, height: 2 },
+                      shadowOpacity: 0.15,
+                      shadowRadius: 8,
+                      elevation: 5,
+                    }}
+                  />
+                ),
+              })}
+            />
+            <Stack.Screen
+              name="addPhotos"
+              component={AddPhotos}
+              options={({ navigation, route }) => ({
+                header: () => (
+                  <CustomHeader
+                    navigation={navigation}
+                    iconColor="#03A4FF"
+                    size={30}
+                    backgroundColor="white"
+                    headerTitle="Add Photos"
+                    backButtonEnabled={false}
+                    rightButton={{
+                      text: 'Cancel',
+                      enabled: true,
+                      color: '#1C8AC8',
+                      fontFamily: 'Mulish-Bold',
+                      fontSize: 15,
+                    }}
+                    onCancel={() => {
+                      navigation.goBack()
+                    }}
+                    style={{
+                      backgroundColor: '#FFFFFF',
+                      shadowColor: '#000000',
+                      shadowOffset: { width: 0, height: 2 },
+                      shadowOpacity: 0.15,
+                      shadowRadius: 8,
+                      elevation: 5,
+                    }}
+                    titleStyle={{
+                      flex: 0,
+                      alignItems: 'flex-start',
+                    }}
+                    iconContainerStyle={{
+                      justifyContent: 'flex-end',
+                    }}
+                    backButtonStyle={
+                      {
+                        // Custom style for back button (if enabled)
+                      }
+                    }
+                  />
+                ),
+              })}
+            />
+
+            <Stack.Screen
+              name="addNotes"
+              component={AddNotes}
+              options={({ navigation, route }) => ({
+                headerShown: true,
+                headerBackTitleVisible: false,
+                headerShadowVisible: true,
+                headerTransparent: false,
+
+                header: () => (
+                  <CustomHeader
+                    navigation={(navigation, route)}
+                    // headerTitle={`${route.params.list.title}`}
+                    iconFamily={['MaterialIcons', 'MaterialIcons']}
+                    icons={['check-circle', 'cancel']}
+                    iconColor="#03A4FF"
+                    size={30}
+                    backgroundColor="white"
+                    headerTitle="Your notes"
+                    backButtonEnabled={false}
+                    style={{
+                      backgroundColor: '#FFFFFF',
+                      shadowColor: '#000000',
+                      shadowOffset: { width: 0, height: 2 },
+                      shadowOpacity: 0.15,
+                      shadowRadius: 8,
+                      elevation: 5,
+                    }}
                   />
                 ),
               })}

@@ -1,6 +1,11 @@
 import React from 'react'
 import { TouchableOpacity } from 'react-native'
-import { Feather, AntDesign, MaterialIcons } from '@expo/vector-icons' // Add more icon families as needed
+import {
+  Feather,
+  AntDesign,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from '@expo/vector-icons' // Add more icon families as needed
 
 const Icon = ({ iconFamily, icon, size, color, onPress }) => {
   let IconComponent
@@ -13,6 +18,9 @@ const Icon = ({ iconFamily, icon, size, color, onPress }) => {
       break
     case 'MaterialIcons':
       IconComponent = MaterialIcons
+      break
+    case 'MaterialCommunityIcons':
+      IconComponent = MaterialCommunityIcons
       break
     // Add more cases for other icon families
     default:

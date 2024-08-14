@@ -16,6 +16,11 @@ const CustomHeader = ({
   backgroundColor = 'transparent',
   style = {},
   backButtonEnabled = true,
+  backButtonStyle = {},
+  titleStyle = {},
+  iconContainerStyle = {},
+  onCancel,
+  rightButton = {}, // Default to an empty object if not provided
 }) => {
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor }, style]}>
@@ -23,17 +28,17 @@ const CustomHeader = ({
         {backButtonEnabled && (
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            style={styles.backButton}
+            style={[styles.backButton, backButtonStyle]}
           >
             <AntDesign name="arrowleft" size={size} color={color} />
           </TouchableOpacity>
         )}
         {title && (
-          <View style={styles.titleContainer}>
+          <View style={[styles.titleContainer, titleStyle]}>
             <Text style={[styles.headerTitle, { color }]}>{headerTitle}</Text>
           </View>
         )}
-        <View style={styles.iconContainer}>
+        <View style={[styles.iconContainer, iconContainerStyle]}>
           {icons.map((icon, index) => (
             <Icon
               key={index}
@@ -46,6 +51,19 @@ const CustomHeader = ({
               }}
             />
           ))}
+          {rightButton?.enabled && (
+            <TouchableOpacity onPress={onCancel} style={styles.cancelButton}>
+              <Text
+                style={{
+                  color: rightButton.color,
+                  fontFamily: rightButton.fontFamily,
+                  fontSize: rightButton.fontSize,
+                }}
+              >
+                {rightButton.text}
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </SafeAreaView>
@@ -72,7 +90,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flex: 1,
-    alignItems: 'center',
+    justifyContent: 'center', // Center the title vertically
   },
   headerTitle: {
     fontSize: 18,
@@ -81,5 +99,8 @@ const styles = StyleSheet.create({
   iconContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  cancelButton: {
+    paddingLeft: 15, // Adjust padding to match your layout
   },
 })

@@ -1,10 +1,17 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import Container from '../../../../UI/Container'
 import {
   Entypo,
   SimpleLineIcons,
   MaterialCommunityIcons,
+  AntDesign,
 } from '@expo/vector-icons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import OptionsLists from '../OptionsLists'
@@ -82,6 +89,17 @@ const optionList = [
   },
 ]
 
+const shortList = [
+  {
+    id: 0,
+    icon: <AntDesign name="star" size={24} color="#03A4FF" />,
+    headerText: 'Short List',
+    subText: '7 Restaurants',
+    color: '#E3F2FD',
+    action: 'shortList',
+  },
+]
+
 function AddLabels() {
   const [searchValue, setSearchValue] = useState('')
   const [isOptionsVisible, setIsOptionsVisible] = useState(true)
@@ -89,6 +107,9 @@ function AddLabels() {
   const onValueChange = (text) => {
     console.log('search value', text)
     setSearchValue(text)
+  }
+  const toggleOptionsVisibility = () => {
+    setIsOptionsVisible(!isOptionsVisible)
   }
 
   return (
@@ -112,8 +133,30 @@ function AddLabels() {
         </View>
       </View>
       <View>
-        <Text style={styles.goodForText}>Good for:</Text>
+        {shortList.map((item, index) => (
+          <OptionsLists
+            key={item.id}
+            headerText={item.headerText}
+            icon={item.icon}
+            subText={item.subText}
+            color={item.color}
+            rightArrowEnabled={false}
+            borderBottomWidth={0}
+          />
+        ))}
       </View>
+      <TouchableOpacity
+        onPress={toggleOptionsVisibility}
+        style={styles.arrowIconAndText}
+      >
+        <Text style={styles.goodForText}>Good for:</Text>
+        <AntDesign
+          name={isOptionsVisible ? 'down' : 'up'}
+          size={18}
+          color="black"
+          style={styles.upArrow}
+        />
+      </TouchableOpacity>
       <View>
         {isOptionsVisible && (
           <View>
@@ -169,5 +212,11 @@ const styles = StyleSheet.create({
   goodForText: {
     fontFamily: 'Mulish-Bold',
     fontSize: 17,
+  },
+  arrowIconAndText: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 10,
   },
 })

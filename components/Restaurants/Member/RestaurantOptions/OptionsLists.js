@@ -10,10 +10,12 @@ function OptionsLists({
   onPress,
   action, // Add this prop
   restaurant,
+  rightArrowEnabled = true,
+  borderBottomWidth = 1,
 }) {
   return (
     <TouchableOpacity
-      style={styles.superContainer}
+      style={[styles.superContainer, { borderBottomWidth: borderBottomWidth }]}
       onPress={() => onPress(action, restaurant)} // Pass action identifier
     >
       <View style={styles.container}>
@@ -25,12 +27,14 @@ function OptionsLists({
           <Text style={styles.subText}>{subText}</Text>
         </View>
       </View>
-      <AntDesign
-        name="right"
-        size={16}
-        color="black"
-        style={styles.arrowIcon}
-      />
+      {rightArrowEnabled && (
+        <AntDesign
+          name="right"
+          size={16}
+          color="black"
+          style={styles.arrowIcon}
+        />
+      )}
     </TouchableOpacity>
   )
 }
@@ -43,7 +47,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingRight: 10,
-    borderBottomWidth: 1,
+
     borderBottomColor: '#E0E0E0',
     paddingVertical: 10,
   },
