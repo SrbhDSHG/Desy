@@ -12,15 +12,15 @@ import { useData } from '../../store/context/DataContext'
 import ImageWithLoadingIndicator from '../../Utility/ImageWithLoadingIndicator'
 import RestaurantMenu from '../Restaurant/RestaurantMenu'
 
-function Top10ListCreator({ navigation }) {
+function Top10ListCreator({ navigation, top10RestList, dishType }) {
   const [loading, setLoading] = useState(true)
-  const { top10RestList } = useData()
+  // const { top10RestList } = useData()
   // console.log('Top 10 list :', top10RestList)
   const pressHandler = (list) => {
     console.log('Pressed restuarant id:', list._id)
     navigation.navigate('Restaurant Menu', { list })
   }
-  console.log('restaurant length:', top10RestList.length > 0)
+  console.log('restaurant length:', top10RestList.length)
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {top10RestList
@@ -36,7 +36,7 @@ function Top10ListCreator({ navigation }) {
               <View style={styles.textContainer}>
                 <View style={styles.resHeaderCont}>
                   <Text style={[styles.resName, styles.number]}>{`${
-                    10 - index
+                    top10RestList.length - index
                   }.`}</Text>
                   <Text style={styles.resName}>{list.name}</Text>
                 </View>

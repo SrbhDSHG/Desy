@@ -44,6 +44,10 @@ const defaultValue = {
   setActiveTab: () => {},
   friends: '',
   setFriends: () => {},
+  dishType: '',
+  setDishType: () => {},
+  setDefaultCityForDish: () => {},
+  defaultCityForDish: '',
 }
 export const tabs = [
   { text: 'List', iconName: 'list' },
@@ -133,13 +137,15 @@ function DataProvider({ children }) {
   const [top10RestList, setTop10RestList] = useState([])
   const [currentUser, setCurrentUser] = useState('')
   const [friends, setFriends] = useState([])
+  const [dishType, setDishType] = useState('')
+  const [defaultCityForDish, setDefaultCityForDish] = useState('')
 
   const { activeTab, setActiveTab, tabSelected, setTabSelected } = useTabs(tabs)
 
   useEffect(() => {
     const fetchRestaurantsList = async () => {
       const response = await fetchRestaurants()
-      console.log('response after fetching Top10', response)
+      // console.log('response after fetching Top10', response.data.restaurants)
       setTop10RestList(response.data.restaurants)
     }
 
@@ -237,6 +243,10 @@ function DataProvider({ children }) {
     restauFooterIcon,
     friends,
     setFriends,
+    dishType,
+    setDishType,
+    defaultCityForDish,
+    setDefaultCityForDish,
   }
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>
 }

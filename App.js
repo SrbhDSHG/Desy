@@ -284,7 +284,7 @@ export default function App() {
 
                 header: () => (
                   <CustomHeader
-                    navigation={(navigation, route)}
+                    navigation={navigation}
                     // headerTitle={`${route.params.list.title}`}
                     iconFamily={['MaterialIcons', 'MaterialIcons']}
                     icons={['check-circle', 'cancel']}
@@ -377,35 +377,48 @@ export default function App() {
             <Stack.Screen
               name="List View Pressed"
               component={ListPressed}
-              options={({ navigation }) => ({
+              options={({ navigation, route }) => ({
+                headerShown: true,
+                headerBackTitleVisible: true,
+                // headerShadowVisible: true,
+                headerTransparent: false,
                 header: () => (
                   <CustomHeader
                     navigation={navigation}
                     iconFamily={['Feather']}
                     icons={['share']}
+                    headerTitle={`Top 10 ${route.params.top10RestList[0].address.city} ${route.params.dishType}`}
+                    backgroundColor="white"
+                    titleStyle={{ alignItems: 'center' }}
+                    style={
+                      {
+                        // backgroundColor: '#FFFFFF',
+                        // shadowColor: '#000000',
+                        // shadowOffset: { width: 0, height: 2 },
+                        // shadowOpacity: 0.15,
+                        // shadowRadius: 8,
+                        // elevation: 5,
+                      }
+                    }
                   />
                 ),
-
-                headerShown: true,
-                title: 'Top 10 NYC Italian',
-                headerBackTitleVisible: true,
-                headerShadowVisible: false,
-                headerTransparent: false,
               })}
             />
             <Stack.Screen
               name="OnMapListed"
               component={OnMapListed}
-              options={({ navigation }) => ({
+              options={({ navigation, route }) => ({
                 header: () => (
                   <CustomHeader
-                    navigation={navigation}
+                    navigation={navigation} // Correct way of passing navigation
                     iconFamily={['Feather']}
                     icons={['share']}
+                    headerTitle={`Top 10 ${route.params.top10RestList[0].address.city} ${route.params.dishType}`}
+                    titleStyle={{ alignItems: 'center' }}
+                    backgroundColor="white"
                   />
                 ),
                 headerShown: true,
-                title: 'Top 10 NYC Italian',
                 headerBackTitleVisible: true,
                 headerShadowVisible: true,
                 headerTransparent: false,
@@ -418,14 +431,12 @@ export default function App() {
                 header: () => (
                   <CustomHeader
                     navigation={navigation}
+                    iconFamily={['Feather', 'Entypo']}
+                    icons={['share', 'dots-three-horizontal']}
                     backgroundColor="transparent"
                   />
                 ),
                 headerShown: true,
-                // title: '',
-                // headerBackTitleVisible: false,
-                // headerShadowVisible: false,
-                // headerTransparent: true,
               })}
             />
             <Stack.Screen
@@ -459,9 +470,10 @@ export default function App() {
                 headerTransparent: false,
                 header: () => (
                   <CustomHeader
-                    navigation={(navigation, route)}
+                    navigation={navigation}
                     headerTitle={`${route.params.list.name}, ${route.params.list.address.city}`}
                     backgroundColor="white"
+                    titleStyle={{ alignItems: 'center' }}
                     style={{
                       backgroundColor: '#FFFFFF',
                       shadowColor: '#000000',

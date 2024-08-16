@@ -2,17 +2,30 @@ import React from 'react'
 import ListAndMapTab from './ListAndMapTab'
 import Top10ListCreator from './Top10ListCreator'
 import { StyleSheet, View } from 'react-native'
+import { useRoute } from '@react-navigation/native'
 
 function ListPressed({ navigation }) {
+  const route = useRoute()
+  const { top10RestList, dishType } = route.params
+  console.log('in the  list pressed', dishType)
   return (
     <View style={styles.container}>
       <View style={styles.forElevation}>
         <View style={styles.listAndMap}>
-          <ListAndMapTab navigation={navigation} backgroundColor={'#E9F7FF'} />
+          <ListAndMapTab
+            navigation={navigation}
+            backgroundColor={'#E9F7FF'}
+            top10RestList={top10RestList}
+            dishType={dishType}
+          />
         </View>
       </View>
       <View style={styles.top10ListContainer}>
-        <Top10ListCreator navigation={navigation} />
+        <Top10ListCreator
+          navigation={navigation}
+          top10RestList={top10RestList}
+          dishType={dishType}
+        />
       </View>
     </View>
   )

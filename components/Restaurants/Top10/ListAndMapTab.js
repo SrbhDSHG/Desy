@@ -2,7 +2,12 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import { useData } from '../../store/context/DataContext'
 
-function ListAndMapTab({ navigation, backgroundColor }) {
+function ListAndMapTab({
+  navigation,
+  backgroundColor,
+  top10RestList,
+  dishType,
+}) {
   const { tabs, activeTab, setActiveTab, setTabSelected } = useData()
 
   const handlePress = (tab) => {
@@ -11,10 +16,12 @@ function ListAndMapTab({ navigation, backgroundColor }) {
     console.log(`${tab} pressed`)
 
     if (tab === 'List') {
-      navigation.navigate('List View Pressed')
+      console.log('dish type ', dishType)
+      navigation.navigate('List View Pressed', { top10RestList, dishType })
     }
     if (tab === 'Map') {
-      navigation.navigate('OnMapListed')
+      console.log('dish type ', dishType)
+      navigation.navigate('OnMapListed', { top10RestList, dishType })
     }
   }
 

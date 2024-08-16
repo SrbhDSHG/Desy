@@ -5,12 +5,13 @@ import { MaterialIcons } from '@expo/vector-icons'
 const RestaurantAt = [{ location: 'NYC', type: 'Italian' }]
 const Number = 0
 
-function InfoText() {
+function InfoText({ location, dishType: type }) {
   return (
     <View style={styles.infoTextContainer}>
       <Text
         style={[styles.headerText, styles.textColor]}
-      >{`Top 10 ${RestaurantAt[0].location} ${RestaurantAt[0].type}`}</Text>
+        // >{`Top 10 ${RestaurantAt[0].location} ${RestaurantAt[0].type}`}</Text>
+      >{`Top 10 ${location} ${type}`}</Text>
       <View style={styles.threeIcons}>
         <View style={styles.iconBox}>
           <Feather name="bookmark" size={30} style={styles.iconStyle} />
@@ -27,7 +28,7 @@ function InfoText() {
         </View>
       </View>
       <Text style={[styles.subText1, styles.textColor]}>
-        The top 10 Italian restaurants in NYC, as ranked by Desy members
+        The top 10 {type} restaurants in {location}, as ranked by Desy members
       </Text>
       <Text
         style={[styles.subText2, styles.textColor]}

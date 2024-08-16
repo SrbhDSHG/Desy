@@ -1,9 +1,9 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import MapView, { Marker, Callout } from 'react-native-maps'
-import { FontAwesome5 } from '@expo/vector-icons'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import MapView, { Marker } from 'react-native-maps'
+import { FontAwesome5, Feather } from '@expo/vector-icons'
 
-const RestaurantMap = ({ coordinates, name }) => {
+const RestaurantMap = ({ coordinates, name, city }) => {
   if (!coordinates || coordinates.length !== 2) {
     return (
       <View style={styles.loadingContainer}>
@@ -16,23 +16,37 @@ const RestaurantMap = ({ coordinates, name }) => {
   const longitude = parseFloat(coordinates[1])
 
   return (
-    <View style={styles.mapContainer}>
+    <View style={styles.container}>
+      {/* Semi-transparent overlay over the entire map */}
       <MapView
         style={styles.map}
         initialRegion={{
           latitude: latitude,
           longitude: longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          latitudeDelta: 0.005, // Smaller delta for closer zoom
+          longitudeDelta: 0.005,
         }}
       >
         <Marker coordinate={{ latitude, longitude }}>
-          <View style={styles.markerAndTextContainer}>
-            <FontAwesome5 name="map-marker-alt" size={30} color="red" />
-            <Text style={styles.text}>{name}</Text>
-          </View>
+          <FontAwesome5 name="map-marker-alt" size={30} color="red" />
         </Marker>
       </MapView>
+
+      {/* Semi-transparent overlay */}
+      <View style={styles.transparentOverlay} />
+
+      {/* Overlay with restaurant name, city, and icons */}
+      <View style={styles.overlayContainer}>
+        <Text style={styles.name}>{name}</Text>
+        <View style={styles.iconsContainer}>
+          <TouchableOpacity>
+            <Feather name="bookmark" size={24} color="black" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconSpacing}>
+            <Feather name="plus-circle" size={24} color="black" />
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   )
 }
@@ -40,9 +54,10 @@ const RestaurantMap = ({ coordinates, name }) => {
 export default RestaurantMap
 
 const styles = StyleSheet.create({
-  mapContainer: {
+  container: {
     flex: 1,
     width: '100%',
+    position: 'relative',
   },
   map: {
     flex: 1,
@@ -52,14 +67,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  markerAndTextContainer: {
+  transparentOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255, 255, 255, 0.5)', // Semi-transparent background
+  },
+  overlayContainer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    right: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  name: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  iconsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  text: {
-    padding: 5,
-    fontSize: 15,
-    color: 'red',
-    fontFamily: 'Mulish-SemiBold',
+  iconSpacing: {
+    marginLeft: 15, // Space between icons
   },
 })

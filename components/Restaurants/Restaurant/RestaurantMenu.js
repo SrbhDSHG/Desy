@@ -12,7 +12,7 @@ import { renderItem } from './RestaurantMenuScrollItems' // Importing from exter
 function RestaurantMenu({ navigation }) {
   const { restauOptionHeader, RestauInfo } = useData()
   const route = useRoute()
-  const { list } = route.params
+  const { list } = route.params // list contains all info about the restuarant
 
   const pressToViewAllPhotos = () => {
     console.log('In RestaurantMenu rest id:', list._id)
@@ -32,7 +32,11 @@ function RestaurantMenu({ navigation }) {
     <View style={styles.container}>
       {/* Non-scrollable top sections */}
       <View style={styles.mapContainer}>
-        <RestaurantMap coordinates={list.coordinates} name={list.name} />
+        <RestaurantMap
+          coordinates={list.coordinates}
+          name={list.name}
+          city={list.address.city}
+        />
       </View>
       <View style={styles.menuContainer}>
         <TopScrollingMenu restauOptionHeader={restauOptionHeader} />

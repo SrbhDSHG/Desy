@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 //look for the ipv4 address and paste here
-const baseUrl = 'http://192.168.238.168:8080/api/v1/'
+// const baseUrl = 'http://192.168.238.168:8080/api/v1/'
+const baseUrl = 'http://192.168.31.100:8080/api/v1/'
 // const baseUrl = 'http://192.168.23.187:8000/api/v1/'
 
 export const userLogin = async (email, password) => {
@@ -52,29 +53,50 @@ export const fetchOtpVerify = async (email, otp) => {
     // }
   }
 }
-export const findFriends = async (contacts) => {
+export const fetchfindFriends = async (contacts) => {
   try {
     const response = await axios.post(`${baseUrl}users/find-contacts`, {
       contacts,
     })
-    if (response.data.results.length > 0) {
-      // Navigate to another screen with matched friends
-      navigation.navigate('FriendsList', { friends: response.data.data })
-    } else {
-      Alert.alert('No friends found on Desy')
-    }
+    console.log('response after fetch friend request', response.data)
+    return response
   } catch (error) {
     Alert.alert('Error finding friends', error.message)
+    throw new Error(error.message)
   }
 }
 
 export const fetchRestaurants = async () => {
   try {
     const response = await axios.get(`${baseUrl}restaurants`)
-    console.log('Restaurant response:', response.restaurants)
+    // console.log('Restaurant response:', response.data)
     return response
   } catch (error) {
     console.log('unable to fetch Restaurant list', error)
+  }
+}
+
+export const fetchRestaurantsByParams = async (params) => {
+  try {
+    // Construct the query string from the params object
+    const queryString = new URLSearchParams(params)
+      .toString()
+      .replace(/\+/g, '%20')
+    console.log('queryString', queryString)
+    const response = await axios.get(
+      `${baseUrl}restaurants/search?${queryString}`
+    )
+    console.log(
+      'response after fetching rest by pramas ',
+      'Total cout',
+      response.data.count,
+      'Restaurants',
+      response.data.restaurants
+    )
+    return response.data && response.data
+  } catch (error) {
+    console.log('Error fetching restaurants by params', error.response.data)
+    throw error
   }
 }
 

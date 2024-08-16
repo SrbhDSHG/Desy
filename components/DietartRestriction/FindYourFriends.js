@@ -14,6 +14,7 @@ import CircleWithGradient from '../Utility/CircleWithGradient'
 import CardContainer from '../UI/CardContainer'
 import axios from 'axios'
 import { useData } from '../store/context/DataContext'
+import { fetchfindFriends, findFriends } from '../store/context/DataService'
 
 const bodyTextLines = [
   'Allow access to contacts to see which',
@@ -44,10 +45,10 @@ function FindYourFriends({ navigation }) {
             : [],
         }))
 
-        console.log(
-          'Formatted contacts for finding friends:',
-          formattedContacts
-        )
+        // console.log(
+        //   'Formatted contacts for finding friends:',
+        //   formattedContacts
+        // )
 
         // Send contacts to the backend for matching
         findFriends(formattedContacts)
@@ -62,11 +63,8 @@ function FindYourFriends({ navigation }) {
   const findFriends = async (contacts) => {
     setLoading(true) // Show modal
     try {
-      const response = await axios.post(
-        'http://192.168.238.168:8080/api/v1/users/find-contacts',
-        { contacts }
-      )
-      console.log('response after friend search request', response.data)
+      const response = await fetchfindFriends(contacts)
+      // console.log('response after friend search request', response)
       if (response.data.results > 0) {
         // Navigate to another screen with matched friends
         setFriends(response.data.data)

@@ -5,6 +5,7 @@ import {
   AntDesign,
   MaterialIcons,
   MaterialCommunityIcons,
+  Entypo,
 } from '@expo/vector-icons' // Add more icon families as needed
 
 const Icon = ({ iconFamily, icon, size, color, onPress }) => {
@@ -21,6 +22,9 @@ const Icon = ({ iconFamily, icon, size, color, onPress }) => {
       break
     case 'MaterialCommunityIcons':
       IconComponent = MaterialCommunityIcons
+      break
+    case 'Entypo':
+      IconComponent = Entypo
       break
     // Add more cases for other icon families
     default:
