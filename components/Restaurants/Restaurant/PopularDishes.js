@@ -66,8 +66,6 @@ const styles = StyleSheet.create({
   imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    // height: 80,
-    // height: 'auto',
   },
   activityIndicator: {
     position: 'absolute',

@@ -38,8 +38,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textsContainer: {
-    marginVertical: 5,
-
+    // marginVertical: 5,
     // alignItems: 'flex-start',
   },
 
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
   // },
   bodyText: {
     fontSize: 14,
-    marginTop: 5,
+    // marginTop: 5,
     fontFamily: 'Mulish-Regular',
   },
 })

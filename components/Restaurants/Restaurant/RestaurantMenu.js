@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   },
   mapContainer: {
     width: '100%',
-    height: 200, // Set a fixed height for the map section
+    height: 220, // Set a fixed height for the map section
   },
   menuContainer: {
     marginTop: -30,

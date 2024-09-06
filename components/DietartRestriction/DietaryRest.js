@@ -1,5 +1,13 @@
-import React, { useState } from 'react'
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import {
+  ActivityIndicator,
+  FlatList,
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import { dietaryRestrictionList } from '../Utility/StaticData/DietaryJson'
 import SnackbarCreator from '../Utility/SnackbarCreator'
 import HeadingCreator from '../UI/HeadingCreator'
@@ -14,10 +22,24 @@ function DietaryRest({ navigation }) {
   const [restrictionArray, setRestrictionArray] = useState(
     dietaryRestrictionList.slice(0, 6)
   )
-  const { dietaryRestriction, setDietaryRestriction } = useData()
+  const {
+    dietaryRestriction,
+    setDietaryRestriction,
+    createUser,
+    setCurrentUser,
+  } = useData()
   const [showMore, setShowMore] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState('')
 
   const toggleItemSelect = (item) => {}
+
+  useEffect(() => {
+    if (message) {
+      const timeout = setTimeout(() => setMessage(''), 3000) // Clear message after 3 seconds
+      return () => clearTimeout(timeout) // Clear timeout on component unmount
+    }
+  }, [message])
 
   const pressHandler = (id) => {
     console.log(dietaryRestrictionList[id - 1].name)
@@ -25,12 +47,32 @@ function DietaryRest({ navigation }) {
     setDietaryRestriction((prev) => addArrayList(restriction, prev))
   }
   const toggleShowMore = () => {
-    setRestrictionArray(dietaryRestrictionList.slice(6, -1))
+    setRestrictionArray(dietaryRestrictionList.slice(6))
   }
-  const buttonPressHandler = () => {
-    setTimeout(() => {
-      navigation.navigate('Find Your Freinds ')
-    }, 300)
+  const buttonPressHandler = async () => {
+    setLoading(true)
+    try {
+      const response = await createUser()
+      console.log('response after creating user', response)
+      setLoading(false)
+
+      if (response.status === 'success') {
+        setCurrentUser(response.user)
+        setMessage(response.message)
+        setTimeout(() => {
+          navigation.navigate('Find Your Friends')
+        }, 3000) // Delay of 3 seconds
+      } else {
+        // Handle case where response is not successful
+        setMessage('Failed to create user. Please try again.')
+      }
+    } catch (error) {
+      // Log or handle error
+      console.error('Error during user creation:', error)
+      setMessage('An error occurred. Please try again later.')
+    } finally {
+      setLoading(false) // Ensure loading is turned off regardless of success or failure
+    }
   }
 
   return (
@@ -50,16 +92,19 @@ function DietaryRest({ navigation }) {
         />
       </View>
 
-      <View style={styles.moreOptContainer}>
-        <Pressable onPress={toggleShowMore}>
-          <View style={styles.moreText}>
-            <Text style={styles.moreOption}>More options</Text>
-            <View style={styles.arrowIcon}>
-              <Entypo name="chevron-down" size={24} color="#03A4FF" />
+      {!showMore && (
+        <View style={styles.moreOptContainer}>
+          <Pressable onPress={toggleShowMore}>
+            <View style={styles.moreText}>
+              <Text style={styles.moreOption}>More options</Text>
+              <View style={styles.arrowIcon}>
+                <Entypo name="chevron-down" size={24} color="#03A4FF" />
+              </View>
             </View>
-          </View>
-        </Pressable>
-      </View>
+          </Pressable>
+        </View>
+      )}
+
       <View style={styles.buttonContainer}>
         <ButtonDesyV2
           buttonText={dietaryRestriction.length > 0 ? 'Continue' : 'Nope'}
@@ -67,6 +112,29 @@ function DietaryRest({ navigation }) {
           onPress={buttonPressHandler}
         />
       </View>
+
+      <Modal
+        transparent={true}
+        animationType="none"
+        visible={loading || !!message} // Show modal during loading or if there's a message
+        onRequestClose={() => setMessage('')} // Allow modal to be closed by pressing back
+      >
+        <Pressable
+          style={styles.modalBackground}
+          onPress={() => setMessage('')}
+        >
+          <View style={styles.activityIndicatorWrapper}>
+            {loading ? (
+              <>
+                <ActivityIndicator size="large" color="#03A4FF" />
+                <Text style={styles.modalText}>Creating user...</Text>
+              </>
+            ) : (
+              <Text style={styles.modalText}>{message}</Text>
+            )}
+          </View>
+        </Pressable>
+      </Modal>
     </Container>
   )
 }
@@ -97,5 +165,24 @@ const styles = StyleSheet.create({
   arrowIcon: {
     position: 'absolute',
     marginLeft: 100,
+  },
+  modalBackground: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // semi-transparent background
+  },
+  activityIndicatorWrapper: {
+    backgroundColor: '#FFFFFF',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalText: {
+    marginTop: 15,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#03A4FF',
   },
 })

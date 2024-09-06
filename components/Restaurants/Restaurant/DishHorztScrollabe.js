@@ -3,7 +3,7 @@ import PopularDishes from './PopularDishes'
 import { ScrollView, StyleSheet, View } from 'react-native'
 
 function DishHorztScrollabe({ popularDish }) {
-  console.log('popularDish in DishHorztScrollabe', popularDish)
+  // console.log('popularDish in DishHorztScrollabe', popularDish)
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
       <View style={styles.dishContainer}>

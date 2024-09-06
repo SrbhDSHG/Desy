@@ -16,17 +16,8 @@ function StayConnected({ navigation }) {
   const [message, setMessage] = useState('')
 
   const onPressHandler = async () => {
-    setLoading(true)
-    const response = await createUser()
-    console.log('reponse after creating user', response)
-    setLoading(false)
-    if (response.status == 'success') {
-      setCurrentUser(response.user)
-      setMessage(response.message)
-      setTimeout(() => {
-        navigation.navigate('Top10 Restaurants')
-      }, 3000) // Delay of 3 seconds
-    }
+    console.log('Notifications allowed')
+    navigation.navigate('Top10 Restaurants')
   }
   const notNowPressHandler = () => {
     navigation.navigate('Top10 Restaurants')

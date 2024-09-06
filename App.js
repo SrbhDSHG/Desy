@@ -83,9 +83,10 @@ export default function App() {
             // initialRouteName="Top10 Restaurants"
             // initialRouteName="email verify"
             // initialRouteName="Stay Connected"
-            // initialRouteName="Home"
+            initialRouteName="Home"
             // initialRouteName="User options"
-            initialRouteName="Find Your Freinds"
+            // initialRouteName="Find Your Friends"
+            // initialRouteName="Dietary Restriction"
             screenOptions={{
               headerShown: true,
               title: '',
@@ -100,7 +101,7 @@ export default function App() {
           options={{ headerShown: false }}
         /> */}
             <Stack.Screen
-              name="Find Your Freinds "
+              name="Find Your Friends"
               component={FindYourFriends}
             />
             <Stack.Screen

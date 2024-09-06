@@ -178,6 +178,7 @@ function DataProvider({ children }) {
     }
   }
   const createUser = async () => {
+    console.log('Creating user')
     try {
       const response = await sendUserData({
         firstName,

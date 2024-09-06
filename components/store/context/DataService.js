@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 //look for the ipv4 address and paste here
-// const baseUrl = 'http://192.168.238.168:8080/api/v1/'
 const baseUrl = 'http://192.168.31.100:8080/api/v1/'
+// const baseUrl = 'http://192.168.188.138:8080/api/v1/'
 // const baseUrl = 'http://192.168.23.187:8000/api/v1/'
 
 export const userLogin = async (email, password) => {
@@ -39,7 +39,7 @@ export const fetchOtpVerify = async (email, otp) => {
       email,
       otp,
     })
-    console.log('response from fetchOtpVerify', response)
+    // console.log('response from fetchOtpVerify', response)
     return response
   } catch (error) {
     throw error
@@ -53,6 +53,34 @@ export const fetchOtpVerify = async (email, otp) => {
     // }
   }
 }
+
+export const resetPassOtp = async (email) => {
+  try {
+    const response = await axios.post(`${baseUrl}users/reset-password-otp`, {
+      email,
+    })
+    console.log('Reset password OTP response:', response.data)
+    return response.data
+  } catch (error) {
+    console.log('Error in reset password OTP:', error)
+    throw new Error('Network error')
+  }
+}
+
+export const fetchResetToNewPassword = async (email, password) => {
+  try {
+    const response = await axios.post(`${baseUrl}users/reset-password`, {
+      email,
+      password,
+    })
+    console.log('Reset password response:', response.data)
+    return response.data
+  } catch (error) {
+    console.log('Error in reset password:', error)
+    throw new Error('Network error')
+  }
+}
+
 export const fetchfindFriends = async (contacts) => {
   try {
     const response = await axios.post(`${baseUrl}users/find-contacts`, {
@@ -136,7 +164,7 @@ export const sendUserData = async (userdata) => {
 exports.fetchUserDishPhotos = async (id) => {
   try {
     const response = await axios.get(`${baseUrl}users/${id}/dishphotos`)
-    console.log('User dish photos response:', response.data.dishPhotos)
+    // console.log('User dish photos response:', response.data.dishPhotos)
     return response.data.dishPhotos
   } catch (error) {
     console.log('Unable to fetch user dishes', error)
