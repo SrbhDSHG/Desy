@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 //look for the ipv4 address and paste here
-const baseUrl = 'http://192.168.31.100:8080/api/v1/'
-// const baseUrl = 'http://192.168.188.138:8080/api/v1/'
+const baseUrl = 'http://192.168.31.72:8080/api/v1/'
+// const baseUrl = 'http://192.168.110.190:8080/api/v1/'
 // const baseUrl = 'http://192.168.23.187:8000/api/v1/'
 
 export const userLogin = async (email, password) => {
@@ -30,30 +30,41 @@ export const fetchEmailVerify = async (email, firstName, lastName) => {
     return response.data
   } catch (error) {
     console.log(error)
+    throw error
   }
 }
 
-export const fetchOtpVerify = async (email, otp) => {
+export const fetchOtpVerify = async (email, otp, newUser = false) => {
   try {
     const response = await axios.post(`${baseUrl}users/otpverify`, {
       email,
       otp,
+      newUser,
     })
-    // console.log('response from fetchOtpVerify', response)
-    return response
+    return response.data
   } catch (error) {
-    throw error
-    // if (error.response) {
-    //   console.log('error in fetchOtpVerify', error.response.data)
-    //   throw error.response.data
-    //   // throw new Error(error.response.data || 'An error occurred')
-    // } else {
-    //   console.log('error2 in fetchOtpVerify', error)
-    //   throw new Error('Network error')
-    // }
+    if (error.response && error.response.data) {
+      // If the server provides a specific error message, throw that.
+      throw new Error(error.response.data.message || 'Server error')
+    } else {
+      // Handle network or unexpected errors
+      throw new Error('Network error')
+    }
   }
 }
 
+// export const resetPassOtp = async (email) => {
+//   try {
+//     const response = await axios.post(`${baseUrl}users/reset-password-otp`, {
+//       email,
+//     })
+//     console.log('Reset password OTP response:', response.data)
+//     return response.data
+//   } catch (error) {
+//     console.log('Error in reset password OTP:', error)
+//     throw new Error('Network error')
+//   }
+// }
 export const resetPassOtp = async (email) => {
   try {
     const response = await axios.post(`${baseUrl}users/reset-password-otp`, {
@@ -63,7 +74,13 @@ export const resetPassOtp = async (email) => {
     return response.data
   } catch (error) {
     console.log('Error in reset password OTP:', error)
-    throw new Error('Network error')
+    if (error.response && error.response.data) {
+      // If the server provides an error message, return that.
+      throw new Error(error.response.data.message || 'Server error')
+    } else {
+      // Handle network errors or other unexpected issues
+      throw new Error('Network error')
+    }
   }
 }
 
@@ -104,6 +121,20 @@ export const fetchRestaurants = async () => {
   }
 }
 
+// restaurants visited by a user
+export const fetchRestVisitedByUser = async (id) => {
+  try {
+    const response = await axios.get(
+      `${baseUrl}users/visited-restaurants/${id}`
+    )
+    console.log('response after fetching visited restaurants', response.data)
+    return response.data
+  } catch (error) {
+    console.log('Error fetching visited restaurants', error)
+    throw error
+  }
+}
+
 export const fetchRestaurantsByParams = async (params) => {
   try {
     // Construct the query string from the params object
@@ -124,6 +155,20 @@ export const fetchRestaurantsByParams = async (params) => {
     return response.data && response.data
   } catch (error) {
     console.log('Error fetching restaurants by params', error.response.data)
+    throw error
+  }
+}
+
+// fetch restuarant visisted by user
+export const fetchResVistedByUser = async (userId) => {
+  try {
+    const response = await axios.get(
+      `${baseUrl}users/visited-restaurants/${userId}`
+    )
+    console.log('response after fetching visited restaurants', response.data)
+    return response.data
+  } catch (error) {
+    console.log('Error fetching visited restaurants', error)
     throw error
   }
 }

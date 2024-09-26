@@ -5,8 +5,9 @@ import {
   Modal,
   View,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native'
-import { AntDesign } from '@expo/vector-icons'
+import { AntDesign, Feather } from '@expo/vector-icons'
 import Container from '../UI/Container'
 import HeadingCreator from '../UI/HeadingCreator'
 import ButtonDesyV2 from '../Utility/ButtonDesy'
@@ -19,6 +20,10 @@ import {
 } from '../store/context/DataService'
 import { Snackbar } from 'react-native-paper'
 import { validateEmail } from '../Utility/validEmail'
+import sendMailForOtp from './LoginPageMethods/sendMailForOtp'
+import verifyOtpHandler from './LoginPageMethods/verifySentOtp'
+import resetToNewPassword from './LoginPageMethods/resetToNewPassword'
+import loginHandler from './LoginPageMethods/loginHandler'
 
 function LoginPage({ navigation }) {
   const [credentials, setCredentials] = useState({
@@ -30,6 +35,8 @@ function LoginPage({ navigation }) {
   const { setCurrentUser } = useData()
   const [passwordReset, setPasswordReset] = useState(false)
   const [focusedField, setFocusedField] = useState('email')
+  const [hidepassword, setChangeHidePassword] = useState(true)
+  const [hideConfpassword, setChangeHideConfPassword] = useState(true)
   const [statusHandle, setStatusHandle] = useState({
     message: '',
     loading: false,
@@ -47,32 +54,15 @@ function LoginPage({ navigation }) {
     console.log('Updated credentials:', name, value)
   }
 
-  //function send email for otp
-  const sendEmailHandler = async () => {
-    console.log('Sending mainl, Previous status', statusHandle)
-    setStatusHandle({ ...statusHandle, loading: true })
-    try {
-      const response = await resetPassOtp(credentials.email)
-      console.log('response from sendEmailHandler', response)
-      if (response.message === 'OTP sent successfully') {
-        setStatusHandle((prevStatusHandle) => ({
-          ...prevStatusHandle,
-          message: 'OTP sent to your email',
-          loading: false, // Hide loading
-          showSnackbar: true,
-          otpSent: true,
-        }))
-        // Reset password form
-      }
-    } catch (error) {
-      console.log('Error in sending email', error)
-      setStatusHandle((prevStatusHandle) => ({
-        ...prevStatusHandle,
-        message: 'Failed to send OTP',
-        loading: false, // Hide loading on failure
-        showSnackbar: true,
-      }))
-    }
+  // clear the  credentials selectively
+  const clearCredentials = () => {
+    setCredentials((prevCredentials) => ({
+      ...prevCredentials,
+      email: '',
+      password: '',
+      passwordConfirm: '',
+      otp: '',
+    }))
   }
 
   // Immediate validation when switching focus
@@ -97,110 +87,30 @@ function LoginPage({ navigation }) {
     }
   }
 
-  //verify sent otp
-  const verifyOtpHandler = async () => {
-    console.log('Verifying opt, Previous status', statusHandle)
-    setStatusHandle({ ...statusHandle, loading: true })
-    try {
-      const response = await fetchOtpVerify(credentials.email, credentials.otp)
-      console.log('response from verifyOtpHandler', response.data)
-      if (response.data.message === 'OTP Verified') {
-        setStatusHandle((prevStatusHandle) => ({
-          ...prevStatusHandle,
-          message: 'OTP verified successfully',
-          loading: false,
-          showSnackbar: true,
-          otpVerified: true,
-        }))
-      }
-    } catch (e) {
-      console.log('Error in verifying otp', e)
-    }
-  }
-
   // Password reset
   const passwordResetHandler = () => {
-    setPasswordReset(true)
-  }
-
-  const loginHandler = async () => {
-    setStatusHandle({
-      ...statusHandle,
-      loading: true,
-    })
-    try {
-      // Pass email and password to userLogin function
-      const response = await userLogin(credentials.email, credentials.password)
-      if (response.status === 'success') {
-        setCredentials({ email: '', password: '' })
-        setCurrentUser(response.user) // Assuming the response has a user object
-        setStatusHandle({
-          ...statusHandle,
-          message: 'Logged in successfully',
-          loading: false,
-          showSnackbar: true,
-        })
-        //navigate to find freinds
-        setTimeout(() => {
-          setStatusHandle({
-            ...statusHandle,
-            message: 'Lets find your friends',
-            loading: true,
-            showSnackbar: true,
-          })
-          navigation.navigate('Find Your Friends')
-        }, 2000)
-      }
-    } catch (e) {
-      console.log('Error during login:', e)
+    //reset password state
+    if (!credentials.email) {
       setStatusHandle({
-        message: 'Login failed. Please try again.',
-        loading: false,
+        message: 'Please enter your email address',
         showSnackbar: true,
+        loading: false, // Ensure loading is false in this case
       })
+      return // Stop execution if email is empty
     }
-  }
-
-  const resetToNewPassword = async () => {
-    setStatusHandle({
-      ...statusHandle,
-      loading: true,
-    })
-    try {
-      const response = await fetchResetToNewPassword(
-        credentials.email,
-        credentials.password
-      )
-      console.log('response from resetToNewPassword', response)
-      if (response.message === 'Password reset successfully') {
-        setStatusHandle((prevStatusHandle) => ({
-          ...prevStatusHandle,
-          message: 'Password reset successfully',
-          loading: false,
-          showSnackbar: true,
-        }))
-        console.log('Password reset successfully, user info', response.user)
-        setCurrentUser(response.user)
-        // setPasswordReset(false)
-        setTimeout(() => {
-          setStatusHandle({
-            ...statusHandle,
-            message: 'Lets find your friends',
-            loading: true,
-            showSnackbar: true,
-          })
-          navigation.navigate('Find Your Friends')
-        }, 2000)
-      }
-    } catch (e) {
-      console.log('Error in resetting password', e)
+    if (!validateEmail(credentials.email)) {
       setStatusHandle((prevStatusHandle) => ({
         ...prevStatusHandle,
-        message: 'Failed to reset password',
-        loading: false, // Hide loading on failure
+        message: 'Invalid email address',
         showSnackbar: true,
       }))
+      return
     }
+    setPasswordReset(true)
+    setCredentials({
+      password: '',
+      passwordConfirm: '',
+    })
   }
 
   return (
@@ -244,28 +154,54 @@ function LoginPage({ navigation }) {
         />
       )}
       {(!passwordReset || statusHandle.otpVerified) && (
-        <TextInput
-          style={styles.input}
-          value={credentials.password}
-          secureTextEntry={true}
-          autoCapitalize="none"
-          onChangeText={(text) => handleInputChange('password', text)}
-          placeholder="Password"
-          placeholderTextColor="#B2B2B2"
-          onFocus={() => handleFocus('password')}
-        />
+        <View style={styles.passInputContainer}>
+          <TextInput
+            style={styles.input}
+            value={credentials.password}
+            secureTextEntry={hidepassword}
+            autoCapitalize="none"
+            onChangeText={(text) => handleInputChange('password', text)}
+            placeholder="Password"
+            placeholderTextColor="#B2B2B2"
+            onFocus={() => handleFocus('password')}
+          />
+          {/* <View style={styles.eyeContainer}> */}
+          <TouchableOpacity
+            onPress={() => setChangeHidePassword((prevState) => !prevState)}
+            style={styles.eyeContainer}
+          >
+            <Feather
+              name={hidepassword ? 'eye-off' : 'eye'}
+              size={24}
+              color="black"
+            />
+          </TouchableOpacity>
+          {/* </View> */}
+        </View>
       )}
       {statusHandle.otpVerified && (
-        <TextInput
-          style={styles.input}
-          value={credentials.passwordConfirm}
-          secureTextEntry={true} // Secure text entry for password
-          autoCapitalize="none"
-          onChangeText={(text) => handleInputChange('passwordConfirm', text)}
-          placeholder="Password confirmation"
-          placeholderTextColor="#B2B2B2"
-          onFocus={() => handleFocus('passwordConfirm')} // Validate when focus is on password input
-        />
+        <View style={styles.passInputContainer}>
+          <TextInput
+            style={styles.input}
+            value={credentials.passwordConfirm}
+            secureTextEntry={hideConfpassword} // Secure text entry for password
+            autoCapitalize="none"
+            onChangeText={(text) => handleInputChange('passwordConfirm', text)}
+            placeholder="Password confirmation"
+            placeholderTextColor="#B2B2B2"
+            onFocus={() => handleFocus('passwordConfirm')} // Validate when focus is on password input
+          />
+          <TouchableOpacity
+            onPress={() => setChangeHideConfPassword((prevState) => !prevState)}
+            style={styles.eyeContainer}
+          >
+            <Feather
+              name={hidepassword ? 'eye-off' : 'eye'}
+              size={24}
+              color="black"
+            />
+          </TouchableOpacity>
+        </View>
       )}
 
       {!passwordReset ? (
@@ -273,7 +209,17 @@ function LoginPage({ navigation }) {
           <ButtonDesyV2
             buttonText={'Log in'}
             isEnabled={Boolean(credentials.email && credentials.password)}
-            onPress={loginHandler}
+            // onPress={loginHandler}
+            onPress={async () =>
+              await loginHandler(
+                credentials,
+                setCredentials,
+                statusHandle,
+                setStatusHandle,
+                setCurrentUser,
+                navigation
+              )
+            }
           />
 
           <ButtonDesyV2
@@ -288,7 +234,10 @@ function LoginPage({ navigation }) {
             <ButtonDesyV2
               buttonText={'Send mail '}
               isEnabled={Boolean(credentials.email)}
-              onPress={sendEmailHandler}
+              // onPress={sendEmailHandler}
+              onPress={async () => {
+                await sendMailForOtp(statusHandle, setStatusHandle, credentials)
+              }}
             />
           ) : !statusHandle.otpVerified ? (
             <ButtonDesyV2
@@ -296,13 +245,29 @@ function LoginPage({ navigation }) {
               isEnabled={
                 Boolean(credentials.otp) && credentials.otp.length === 6
               }
-              onPress={verifyOtpHandler}
+              // onPress={verifyOtpHandler}
+              onPress={async () => {
+                await verifyOtpHandler(
+                  statusHandle,
+                  setStatusHandle,
+                  credentials
+                )
+              }}
             />
           ) : (
             <ButtonDesyV2
               buttonText={'Reset Password'}
               isEnabled={Boolean(credentials.email)}
-              onPress={resetToNewPassword}
+              // onPress={resetToNewPassword}
+              onPress={async () => {
+                await resetToNewPassword(
+                  credentials,
+                  setStatusHandle,
+                  statusHandle,
+                  setCurrentUser,
+                  navigation
+                )
+              }}
             />
           )}
         </>
@@ -322,7 +287,7 @@ function LoginPage({ navigation }) {
             showSnackbar: false,
           })
         }
-        duration={1000} // Adjust the duration as needed
+        duration={2000} // Adjust the duration as needed
         action={{
           label: 'OK',
           onPress: () => {
@@ -361,6 +326,16 @@ const styles = StyleSheet.create({
   image: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  passInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'center',
+  },
+  eyeContainer: {
+    position: 'absolute',
+    right: 25,
   },
   modalBackground: {
     flex: 1,

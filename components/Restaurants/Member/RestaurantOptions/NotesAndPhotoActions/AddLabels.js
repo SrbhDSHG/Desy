@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   StyleSheet,
   Text,
@@ -15,6 +15,8 @@ import {
 } from '@expo/vector-icons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import OptionsLists from '../OptionsLists'
+import { useData } from '../../../../store/context/DataContext'
+import PopularDishes from '../../../Restaurant/PopularDishes'
 
 const optionList = [
   {
@@ -103,6 +105,22 @@ const shortList = [
 function AddLabels() {
   const [searchValue, setSearchValue] = useState('')
   const [isOptionsVisible, setIsOptionsVisible] = useState(true)
+  const [visitedRestaurant, setVisitedRestaurant] = useState([])
+  const [currentUser] = useData()
+
+  useEffect(() => {
+    const fetchVisitedRestaurants = async () => {
+      try {
+        const result = await fetchRestVisitedByUser(currentUser._id)
+        setVisitedRestaurant(result)
+      } catch (error) {
+        console.error('Error fetching visited restaurants:', error)
+      }
+    }
+    console.log('visite restaurants', visitedRestaurant)
+
+    fetchVisitedRestaurants()
+  }, [currentUser._id])
 
   const onValueChange = (text) => {
     console.log('search value', text)
@@ -142,9 +160,19 @@ function AddLabels() {
             color={item.color}
             rightArrowEnabled={false}
             borderBottomWidth={0}
+            touchOff={true}
           />
         ))}
       </View>
+      {/* <View style={styles.listRestaurants}>
+        {visitedRestaurant.map(visited, (index) => (
+          <PopularDishes
+            imagelink={visitedRestaurant.restaurant.imagelink}
+            recommended={false}
+          />
+        ))}
+      </View> */}
+
       <TouchableOpacity
         onPress={toggleOptionsVisibility}
         style={styles.arrowIconAndText}
@@ -218,5 +246,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 10,
+  },
+  listRestaurants: {
+    display: 'flex',
+    flexDirection: 'row',
   },
 })

@@ -63,7 +63,7 @@ const optionList = [
 
 function RestaurantOptionOne({ list, navigation }) {
   const [searchValue, setSearchValue] = useState('')
-  const [isOptionsVisible, setIsOptionsVisible] = useState(false)
+  const [isOptionsVisible, setIsOptionsVisible] = useState(true)
   const [selectedAction, setSelectedAction] = useState(null) // Track the selected action
 
   const onValueChange = (text) => {

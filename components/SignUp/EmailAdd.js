@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
-
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-
 import {
   ActivityIndicator,
   Modal,
@@ -9,6 +7,7 @@ import {
   TextInput,
   View,
   Alert,
+  Text,
 } from 'react-native'
 import validator from 'validator'
 import HeadingCreator from '../UI/HeadingCreator'
@@ -16,46 +15,45 @@ import ButtonDesyV2 from '../Utility/ButtonDesy'
 import { useData } from '../store/context/DataContext'
 
 function EmailAdd({ navigation }) {
-  const {
-    email,
-    setEmail,
-    emailVerified,
-    emailverification,
-    firstName,
-    lastName,
-  } = useData()
+  const { email, setEmail, emailverification, firstName, lastName } = useData()
   const [loading, setLoading] = useState(false)
-  const [showAlert, setShowAlert] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const handleEmailValueChange = (text) => {
     setEmail(text)
-    console.log('email value set', email)
+    setErrorMessage(null) // Clear error message when user types
   }
+
   const onPressHandler = async () => {
     if (!email) {
-      setShowAlert(true)
+      setErrorMessage('Please enter your email!')
       return
     }
+    if (!validator.isEmail(email)) {
+      setErrorMessage('Please enter a valid email address')
+      return
+    }
+
     setLoading(true)
     try {
       const response = await emailverification(email, firstName, lastName)
-      console.log('response from email verification', response)
-      if (response.data.email === email) {
-        navigation.navigate('email verify')
+      if (response.data.status === 'success') {
+        // OTP sent, navigate to OTP verification screen
+        navigation.navigate('EmailVerifyOtp')
       }
     } catch (error) {
-      console.log('Error during email verification:', error.message)
+      console.log('Error response:', error.response)
+      if (error.response && error.response.data) {
+        // Backend error messages
+        setErrorMessage(error.response.data.message)
+      } else {
+        // Network or other errors
+        setErrorMessage('Network error. Please try again later.')
+      }
     } finally {
       setLoading(false)
     }
   }
-  useEffect(() => {
-    if (showAlert) {
-      Alert.alert('Please enter your email!', '', [
-        { text: 'Ok', onPress: () => setShowAlert(false) },
-      ])
-    }
-  }, [showAlert])
 
   return (
     <View style={styles.container}>
@@ -83,6 +81,7 @@ function EmailAdd({ navigation }) {
             placeholderTextColor="#B2B2B2"
           />
         </View>
+        {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}
       </View>
       <View style={styles.buttonContainer}>
         <ButtonDesyV2
@@ -129,7 +128,11 @@ const styles = StyleSheet.create({
     color: '#B2B2B2',
     paddingHorizontal: 5,
   },
-
+  errorText: {
+    color: 'red',
+    marginTop: 10,
+    fontSize: 14,
+  },
   buttonContainer: {
     marginTop: 80,
   },

@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "."
+		},
+		{
+			"path": "../desy_admin_panel"
 		}
 	],
 	"settings": {}

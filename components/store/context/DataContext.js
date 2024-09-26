@@ -163,8 +163,14 @@ function DataProvider({ children }) {
 
   const emailverification = async (email, firstName, lastName) => {
     console.log('In the  data context, email:', email)
-    const response = await fetchEmailVerify(email, firstName, lastName)
-    return response
+    try {
+      const response = await fetchEmailVerify(email, firstName, lastName)
+      console.log('Email verification response:', response)
+      return response
+    } catch (err) {
+      console.log('Error in email verification', err)
+      throw err
+    }
   }
   const otpverification = async (email, otp) => {
     console.log('In the  data context', email, otp)

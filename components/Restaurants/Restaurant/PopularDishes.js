@@ -5,7 +5,7 @@ function PopularDishes({
   imagelink,
   dishName,
   recommended = '123',
-  // recomndState = true,
+  recomndState = true,
   imageHeight = 80,
 }) {
   const [loading, setLoading] = useState(true)
@@ -33,12 +33,11 @@ function PopularDishes({
           <Text style={styles.dishName} numberOfLines={1}>
             {dishName}
           </Text>
-          {
-            // recomndState &&
+          {recomndState && (
             <Text
               style={styles.recommended}
             >{`${recommended} recommended`}</Text>
-          }
+          )}
         </View>
       </View>
     </View>

@@ -12,11 +12,13 @@ function OptionsLists({
   restaurant,
   rightArrowEnabled = true,
   borderBottomWidth = 1,
+  touchOff = false,
 }) {
   return (
     <TouchableOpacity
       style={[styles.superContainer, { borderBottomWidth: borderBottomWidth }]}
       onPress={() => onPress(action, restaurant)} // Pass action identifier
+      disabled={touchOff}
     >
       <View style={styles.container}>
         <View style={[styles.iconContainer, { backgroundColor: color }]}>
